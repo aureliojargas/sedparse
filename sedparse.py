@@ -168,7 +168,8 @@ class struct_subst:
     def __str__(self):
         return self.slash + str(self.regx.pattern) + \
                self.slash + str(self.replacement.text) + \
-               self.slash + ''.join(self.flags)
+               self.slash + ''.join(self.flags) + \
+               (' ' + self.outf.name if 'w' in self.flags else '')
 
 class struct_sed_cmd_x:
     "auxiliary data for various commands"
@@ -664,7 +665,10 @@ def match_slash(slash, regex):  # char, bool
     return NULL
 
 
-def mark_subst_opts():
+# sedparse: this function works differently from the original.
+# In gsed, there's no return, since it just sets all the flags as properties of
+# 'cmd_s'. Here it collects and returns the flags as a list.
+def mark_subst_opts(cmd_s):
     flags = []
     numb = False
 
@@ -695,11 +699,15 @@ def mark_subst_opts():
             numb = True
 
         elif ch == 'w':
+            flags.append(ch)
+            # This flag will always be at the end of the list, since after w
+            # cannot exist any other flag because the filename consumes
+            # everything until the end of the line.
             b = read_filename()
             if not b:
                 bad_prog(MISSING_FILENAME)
-            debug("s flag filename: %r" % ''.join(b))
-            flags.append("%s %s" % (ch, ''.join(b)))
+            cmd_s.outf.name = ''.join(b)
+            debug("s flag filename: %r" % cmd_s.outf.name)
             return flags
 
         elif ch == '#':
@@ -1058,7 +1066,7 @@ def compile_program(vector):
             # setup_replacement(cur_cmd.x.cmd_subst, b2)
             free_buffer(b2)
 
-            flags = mark_subst_opts()  #cur_cmd.x.cmd_subst)
+            flags = mark_subst_opts(cur_cmd.x.cmd_subst)
             cur_cmd.x.cmd_subst.flags = flags
             debug("s flags: %r" % ''.join(flags))
             # cur_cmd.x.cmd_subst.regx = compile_regex(b, flags, cur_cmd.x.cmd_subst.max_id + 1)
