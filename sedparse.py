@@ -4,7 +4,6 @@
 # - identify and document all sedparse additions
 # - document how it works
 # - descriptive header with a sed script and its object after parsing
-# - fix the 1~0 problem (see unit tests for step)
 
 # Based on this GNU sed version:
 #   commit a9cb52bcf39f0ee307301ac73c11acb24372b9d8
@@ -856,9 +855,11 @@ def compile_address(addr, ch):  # struct_addr, str
 
     elif ch in ('+', '~'):  #and posixicity != POSIXLY_BASIC:
         addr.addr_step = in_integer(in_nonblank())
-        if addr.addr_step == 0:
-            pass  # default to ADDR_IS_NULL; forces matching to stop on next line
-        elif ch == '+':
+        # sedparse: skipping this to match and save 1,~0p and 1,+0p
+        # if addr.addr_step == 0:
+        #     pass  # default to ADDR_IS_NULL; forces matching to stop on next line
+        # elif ch == '+':
+        if ch == '+':
             addr.addr_type = ADDR_IS_STEP
         else:
             addr.addr_type = ADDR_IS_STEP_MOD
