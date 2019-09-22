@@ -20,6 +20,9 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
 # The global holder for all the test data
 TEST_DATA = {}
 
+# Aligning test cases makes them way more readable, so...
+# pylint: disable=bad-whitespace
+
 TEST_DATA['error'] = [
     # Note: Not all possible error messages are tested, those that were left
     #       out are not available in the port.
@@ -648,6 +651,8 @@ TEST_DATA['block'] = [
     ('{;p;}', '{', 'p', '}'),
 ]
 
+# End of test cases, white space can get back to normal
+# pylint: enable=bad-whitespace
 
 # Capture stdout and stderr for the asserts
 # https://stackoverflow.com/a/17981937
@@ -664,23 +669,23 @@ def captured_output():
 
 class TestSedParser(unittest.TestCase):
 
-    def my_setUp(self):
+    def _my_setup(self):
         # start from scratch to avoid module state leak between tests
         import sedparse
-        self.x = sedparse  # pylint: disable=attribute-defined-outside-init
-        self.x.the_program = []
+        self.sedparse = sedparse  # pylint: disable=attribute-defined-outside-init
+        self.sedparse.the_program = []
 
-    def my_tearDown(self):
+    def _my_tear_down(self):
         # Make sure it's really gone - https://stackoverflow.com/a/11199969
-        del self.x
+        del self.sedparse
         sys.modules.pop('sedparse', None)
 
     def _parse(self, script):
         parsed = []
-        self.x.compile_string(parsed, script)
+        self.sedparse.compile_string(parsed, script)
         return parsed
 
-    def _assertDefaultValues(self, data, skip=None):
+    def _assert_defaults(self, data, skip=None):  # pylint: disable=too-many-branches
         """Assert that all command attributes are set to their default values.
         Use `skip=['foo']` to skip checking the `foo` attribute.
         """
@@ -717,22 +722,22 @@ class TestSedParser(unittest.TestCase):
         for script, exp_nr, char_nr, _, message in TEST_DATA['error']:
             expected = "sed: -e expression #%d, char %d: %s" % (exp_nr, char_nr, message)
 
-            self.my_setUp()
+            self._my_setup()
             with captured_output() as (_, err):
                 try:
                     _ = self._parse(script)
-                    self.x.check_final_program()
+                    self.sedparse.check_final_program()
                 except SystemExit:
                     pass
                 with self.subTest(script=script):
                     self.assertEqual(expected, err.getvalue().rstrip())
-            self.my_tearDown()
+            self._my_tear_down()
 
     def test_address(self):
         for script, bang, addr1, addr2 in TEST_DATA['address']:
             expected = [bang, addr1, addr2]
 
-            self.my_setUp()
+            self._my_setup()
             # only the first command matters, i.e., { when {}
             parsed = self._parse(script)[0]
             with self.subTest(script=script):
@@ -743,7 +748,7 @@ class TestSedParser(unittest.TestCase):
                         str(parsed.a1) if parsed.a1 else None,
                         str(parsed.a2) if parsed.a2 else None
                     ])
-            self.my_tearDown()
+            self._my_tear_down()
 
     def test_commands_with_no_args(self):
         commands = (
@@ -752,84 +757,84 @@ class TestSedParser(unittest.TestCase):
         for command in commands:
             for template in ('%s', '%s;', '{%s}', '%s#foo', '{ \t%s \t}'):
                 script = template % command
-                self.my_setUp()
+                self._my_setup()
                 parsed = self._parse(script)
                 parsed = parsed[1] if '{' in script else parsed[0]
                 with self.subTest(script=script):
                     self.assertEqual(command, parsed.cmd)
-                    self._assertDefaultValues(parsed, skip=[])
-                self.my_tearDown()
+                    self._assert_defaults(parsed, skip=[])
+                self._my_tear_down()
 
     def test_commands_with_numeric_arg(self):
         # Note that those commands "solo", with no numeric arguments,
         # are already tested in test_commands_with_no_args().
         for command in ('l', 'L', 'q', 'Q'):
-            for n in (0, 5, 99):
+            for arg in (0, 5, 99):
                 for template in ('%s%d', '%s%d;', '{%s%d}', '%s%d#foo', '{ \t%s \t%d \t}'):
-                    script = template % (command, n)
-                    self.my_setUp()
+                    script = template % (command, arg)
+                    self._my_setup()
                     parsed = self._parse(script)
                     parsed = parsed[1] if '{' in script else parsed[0]
                     with self.subTest(script=script):
                         self.assertEqual(command, parsed.cmd)
-                        self.assertEqual(n, parsed.x.int_arg)
-                        self._assertDefaultValues(parsed, skip=['int_arg'])
-                    self.my_tearDown()
+                        self.assertEqual(arg, parsed.x.int_arg)
+                        self._assert_defaults(parsed, skip=['int_arg'])
+                    self._my_tear_down()
 
     def test_commands_with_filename(self):
         for command in ('r', 'R', 'w', 'W'):
             for script_end in ('', '\n'):  # empty=EOF
                 for script, filename in TEST_DATA[command]:
                     script = script + script_end
-                    self.my_setUp()
+                    self._my_setup()
                     parsed = self._parse(script)[0]
                     with self.subTest(script=script):
                         self.assertEqual(command, parsed.cmd)
                         self.assertEqual(filename, parsed.x.fname)
-                        self._assertDefaultValues(parsed, skip=['fname'])
-                    self.my_tearDown()
+                        self._assert_defaults(parsed, skip=['fname'])
+                    self._my_tear_down()
 
     def test_commands_with_label(self):
         for command in (':', 'b', 't', 'T', 'v'):
             for script_end in ('', '\n'):  # empty=EOF
                 for script, label in TEST_DATA[command]:
                     script = script + script_end
-                    self.my_setUp()
+                    self._my_setup()
                     parsed = self._parse(script)[0]
                     with self.subTest(script=script):
                         self.assertEqual(command, parsed.cmd)
                         self.assertEqual(label, parsed.x.label_name)
-                        self._assertDefaultValues(parsed, skip=['label_name'])
-                    self.my_tearDown()
+                        self._assert_defaults(parsed, skip=['label_name'])
+                    self._my_tear_down()
 
     def test_commands_with_text(self):
         for command in ('a', 'i', 'c', 'e'):
             for script, text in TEST_DATA[command]:
-                self.my_setUp()
+                self._my_setup()
                 parsed = self._parse(script)[0]
                 with self.subTest(script=script):
                     self.assertEqual(command, parsed.cmd)
                     self.assertEqual(text, str(parsed.x.cmd_txt))
-                    self._assertDefaultValues(parsed, skip=['cmd_txt'])
-                self.my_tearDown()
+                    self._assert_defaults(parsed, skip=['cmd_txt'])
+                self._my_tear_down()
 
     def test_commands_y_and_s(self):
         for command in ('y', 's'):
             for script, delimiter, arg1, arg2 in TEST_DATA[command]:
-                self.my_setUp()
+                self._my_setup()
                 parsed = self._parse(script)[0]
                 with self.subTest(script=script):
                     self.assertEqual(command, parsed.cmd)
                     self.assertEqual(delimiter, parsed.x.cmd_subst.slash)
                     self.assertEqual(arg1, parsed.x.cmd_subst.regx.pattern)
                     self.assertEqual(arg2, parsed.x.cmd_subst.replacement.text)
-                    self._assertDefaultValues(parsed, skip=['slash', 'pattern', 'replacement'])
-                self.my_tearDown()
+                    self._assert_defaults(parsed, skip=['slash', 'pattern', 'replacement'])
+                self._my_tear_down()
 
     def test_command_s_flags(self):
         command = 's'
         for script, delimiter, pattern, replacement, flags, flag_arg in TEST_DATA['s-flags']:
-            self.my_setUp()
+            self._my_setup()
             parsed = self._parse(script)[0]
             with self.subTest(script=script):
                 self.assertEqual(command, parsed.cmd)
@@ -838,43 +843,43 @@ class TestSedParser(unittest.TestCase):
                 self.assertEqual(replacement, parsed.x.cmd_subst.replacement.text)
                 self.assertEqual(flags, ''.join(parsed.x.cmd_subst.flags))
                 self.assertEqual(flag_arg, parsed.x.cmd_subst.outf.name)
-                self._assertDefaultValues(parsed, skip=['slash', 'pattern', 'replacement', 'flags', 'outf'])
-            self.my_tearDown()
+                self._assert_defaults(parsed, skip=['slash', 'pattern', 'replacement', 'flags', 'outf'])
+            self._my_tear_down()
 
     def test_comments(self):  # sedparse extension
         command = '#'
         for script_end in ('', '\n'):  # empty=EOF
             for index, script, comment in TEST_DATA[command]:
                 script = script + script_end
-                self.my_setUp()
+                self._my_setup()
                 parsed = self._parse(script)[index]
                 with self.subTest(script=script):
                     self.assertEqual(command, parsed.cmd)
                     self.assertEqual(comment, parsed.x.comment)
-                    self._assertDefaultValues(parsed, skip=['comment'])
-                self.my_tearDown()
+                    self._assert_defaults(parsed, skip=['comment'])
+                self._my_tear_down()
 
     def test_blank_lines(self):  # sedparse extension
         for script, *expected_commands in TEST_DATA['\n']:
             with self.subTest(script=script):
-                self.my_setUp()
+                self._my_setup()
                 self.assertEqual(
                     expected_commands,
                     [x.cmd for x in self._parse(script)]
                 )
-                self.my_tearDown()
+                self._my_tear_down()
 
     def test_blocks(self):
         for script_end in ('', '\n'):  # empty=EOF
             for script, *expected_commands in TEST_DATA['block']:
                 script = script + script_end
                 with self.subTest(script=script):
-                    self.my_setUp()
+                    self._my_setup()
                     self.assertEqual(
                         expected_commands,
                         [x.cmd for x in self._parse(script)]
                     )
-                    self.my_tearDown()
+                    self._my_tear_down()
 
     def test_ignore_trailing_fluff(self):
         pass

@@ -1,0 +1,24 @@
+# Run all checks except those
+
+[MESSAGES CONTROL]
+enable=all
+disable=
+    fixme,
+    locally-disabled,
+    locally-enabled,
+    suppressed-message,
+    missing-docstring,
+
+# Wide screen monitors are nice
+
+[FORMAT]
+max-line-length=120
+
+# No reports, please
+
+[MASTER]
+persistent=no
+
+[REPORTS]
+reports=no
+score=no

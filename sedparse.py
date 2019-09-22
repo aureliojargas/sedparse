@@ -18,7 +18,15 @@
 # Check if command is a GNU extension
 # if (posixicity == POSIXLY_EXTENDED)
 
+# Since sedparse is a literal translation, maintaining the same code, variables
+# and method names, I have to disable the following checks.
 # pylint: disable=global-statement
+# pylint: disable=invalid-name
+# pylint: disable=too-few-public-methods
+# pylint: disable=too-many-branches
+# pylint: disable=too-many-instance-attributes
+# pylint: disable=too-many-lines
+# pylint: disable=too-many-statements
 
 import argparse
 import sys
