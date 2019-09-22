@@ -5,8 +5,8 @@
 # If Python 2 is required, remove subTest() and use the msg= parameter in
 # self.assert*() to identify the individual test.
 
-#TODO fun: \ssssss, \,,,\,,=, \rrrr \::::, yyyy, \{{,\}}{}, //,//{}
-#TODO I also need to test ignore_trailing_fluff()
+# TODO fun: \ssssss, \,,,\,,=, \rrrr \::::, yyyy, \{{,\}}{}, //,//{}
+# TODO I also need to test ignore_trailing_fluff()
 
 import contextlib
 import io
@@ -863,10 +863,7 @@ class TestSedParser(unittest.TestCase):
         for script, *expected_commands in TEST_DATA['\n']:
             with self.subTest(script=script):
                 self._my_setup()
-                self.assertEqual(
-                    expected_commands,
-                    [x.cmd for x in self._parse(script)]
-                )
+                self.assertEqual(expected_commands, [x.cmd for x in self._parse(script)])
                 self._my_tear_down()
 
     def test_blocks(self):
@@ -875,14 +872,12 @@ class TestSedParser(unittest.TestCase):
                 script = script + script_end
                 with self.subTest(script=script):
                     self._my_setup()
-                    self.assertEqual(
-                        expected_commands,
-                        [x.cmd for x in self._parse(script)]
-                    )
+                    self.assertEqual(expected_commands, [x.cmd for x in self._parse(script)])
                     self._my_tear_down()
 
     def test_ignore_trailing_fluff(self):
         pass
+
 
 if __name__ == '__main__':
     unittest.main()

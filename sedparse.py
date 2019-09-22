@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-#TODO
+# TODO
 # - identify and document all sedparse additions
 # - document how it works
 # - descriptive header with a sed script and its object after parsing
@@ -43,14 +43,18 @@ NULL = None
 
 ######################################## translated from basicdefs.h
 
+
 def ISBLANK(c):
     return c in (' ', '\t')
+
 
 def ISDIGIT(ch):
     return ch in '0123456789'
 
+
 def ISSPACE(c):
     return c in (' ', '\t', '\n', '\v', '\f', '\r')
+
 
 ######################################## translated from sed.c
 
@@ -68,13 +72,17 @@ class struct_output:
     fp = None
     link = None
 
+
 class struct_text_buf:
     text = []
     text_length = 0
+
     def __str__(self):
         return ''.join(self.text)[:-1]  # remove trailing \n
+
     def __repr__(self):
         return repr(''.join(self.text)[:-1])
+
 
 class struct_regex:
     pattern = ""
@@ -91,8 +99,10 @@ class struct_regex:
 
     def __repr__(self):
         return "[pattern=%s flags=%s]" % (self.pattern, self.flags)
+
     def __str__(self):
         return self.escape() + self.slash + self.pattern + self.slash + self.flags
+
 
 # enum replacement_types {
 REPL_ASIS = 0
@@ -131,9 +141,15 @@ class struct_addr:
     addr_number = 0
     addr_step = 0
     addr_regex = struct_regex()
+
     def __repr__(self):
         return "[type=%s number=%s step=%s regex=%s]" % (
-            self.addr_type, self.addr_number, self.addr_step, self.addr_regex)
+            self.addr_type,
+            self.addr_number,
+            self.addr_step,
+            self.addr_regex,
+        )
+
     def __str__(self):
         ret = ''
         if self.addr_type == ADDR_IS_REGEX:
@@ -152,6 +168,7 @@ class struct_addr:
             ret = '<unknown address type "%s">' % self.addr_type
         return ret
 
+
 class struct_replacement:
     prefix = ""
     prefix_length = 0
@@ -159,6 +176,7 @@ class struct_replacement:
     repl_type = REPL_ASIS  # enum replacement_types
     next_ = None  # struct_replacement
     text = ""  # sedparse
+
 
 class struct_subst:
     regx = struct_regex()
@@ -169,14 +187,21 @@ class struct_subst:
     print_ = False  # 'p' option given (before/after eval)
     eval_ = False  # 'e' option given
     max_id = 0  # maximum backreference on the RHS
-    replacement_buffer = ""  #ifdef lint
+    replacement_buffer = ""  # ifdef lint
     flags = []  # sedparse
     slash = ""  # sedparse
+
     def __str__(self):
-        return self.slash + str(self.regx.pattern) + \
-               self.slash + str(self.replacement.text) + \
-               self.slash + ''.join(self.flags) + \
-               (' ' + self.outf.name if 'w' in self.flags else '')
+        return (
+            self.slash
+            + str(self.regx.pattern)
+            + self.slash
+            + str(self.replacement.text)
+            + self.slash
+            + ''.join(self.flags)
+            + (' ' + self.outf.name if 'w' in self.flags else '')
+        )
+
 
 class struct_sed_cmd_x:
     "auxiliary data for various commands"
@@ -201,6 +226,7 @@ class struct_sed_cmd_x:
     # This is used for the ':' command (debug only).
     label_name = ""
     comment = ""  # sedparse
+
 
 class struct_sed_cmd:
     a1 = struct_addr()
@@ -245,11 +271,13 @@ class struct_sed_cmd:
 
         return ''.join(ret)
 
+
 # Struct vector is used to describe a compiled sed program.
 class struct_vector:
     v = struct_sed_cmd()
     v_allocated = 0
     v_length = 0
+
 
 # sedparse: This is probably from regex.c, but I'll fake it here
 # just saving the collected strings
@@ -259,9 +287,11 @@ def compile_regex(pattern, flags):
     r.flags = ''.join(flags)
     return r
 
+
 def IS_MB_CHAR(ch):
     return ch != EOF and ord(ch) > 127
     # This exception is because I chose to store EOF as '<EOF>'
+
 
 ######################################## translated from utils.h
 
@@ -278,18 +308,23 @@ def panic(msg):
     print("%s: %s" % (program_name, msg), file=sys.stderr)
     sys.exit(EXIT_PANIC)
 
+
 MIN_ALLOCATE = 50
+
 
 def init_buffer():
     return []
+
 
 def add1_buffer(buffer, ch):
     if ch != EOF:
         buffer.append(ch)  # in-place
     # the return is never used
 
+
 def free_buffer(b):
     del b
+
 
 ######################################## translated from compile.c
 
@@ -344,8 +379,11 @@ class error_info:
 # Where we are in the processing of the input.
 class prog(prog_info):
     pass
+
+
 class cur_input(error_info):
     pass
+
 
 # /* Information about labels and jumps-to-labels.  This is used to do
 #   the required backpatching after we have compiled all the scripts. */
@@ -404,14 +442,18 @@ MISSING_FILENAME = "missing filename in r/R/w/W commands"
 def bad_command(ch):
     bad_prog(UNKNOWN_CMD % ch)
 
+
 # Complain about a programming error and exit.
 def bad_prog(why):
     if cur_input.name:
-        msg = "%s: file %s line %d: %s" % (
-            program_name, cur_input.name, cur_input.line, why)
+        msg = "%s: file %s line %d: %s" % (program_name, cur_input.name, cur_input.line, why)
     else:
         msg = "%s: -e expression #%d, char %d: %s" % (
-            program_name, cur_input.string_expr_count, prog.cur - prog.base, why)
+            program_name,
+            cur_input.string_expr_count,
+            prog.cur - prog.base,
+            why,
+        )
     print(msg, file=sys.stderr)
     sys.exit(EXIT_BAD_USAGE)
 
@@ -435,6 +477,7 @@ def inchar():
     debug(ch, stats=True)
     return ch
 
+
 # unget `ch' so the next call to inchar will return it.
 def savchar(ch):
     debug("savchar(%s)" % ch, stats=True)
@@ -444,9 +487,12 @@ def savchar(ch):
         cur_input.line -= 1
     if prog.cur:
         prog.cur -= 1
-        if prog.cur <= prog.base or prog.text[prog.cur+1] != ch:  # XXX not sure about cur+1
+        if prog.cur <= prog.base or prog.text[prog.cur + 1] != ch:  # XXX not sure about cur+1
             # panic("Called savchar with unexpected pushback (%s)" % ch)
-            panic("Called savchar with unexpected pushback (curr=%s %s!=%s)" % (prog.cur, prog.text[prog.cur], ch))
+            panic(
+                "Called savchar with unexpected pushback (curr=%s %s!=%s)"
+                % (prog.cur, prog.text[prog.cur], ch)
+            )
     else:
         try:
             # Go back one position in prog.file file descriptor pointer
@@ -477,6 +523,7 @@ def ignore_trailing_fluff():
         else:  # start of a new command
             savchar(ch)
             return
+
 
 # /* Consume script input until a valid end of command marker is found:
 #      comment, closing brace, newline, semicolon or EOF.
@@ -536,7 +583,7 @@ def next_cmd_entry(vector):
     cmd.range_state = RANGE_INACTIVE
     cmd.addr_bang = False
     cmd.cmd = '\0'  # something invalid, to catch bugs early
-    #TODO fix this struct reset mess
+    # TODO fix this struct reset mess
     cmd.x = struct_sed_cmd_x()
     cmd.x.cmd_txt = struct_text_buf()
     cmd.x.cmd_subst = struct_subst()
@@ -549,7 +596,7 @@ def next_cmd_entry(vector):
     return cmd
 
 
-def snarf_char_class(b):  #, cur_stat):
+def snarf_char_class(b):  # , cur_stat):
     state = 0
     delim = None  # delim IF_LINT( = 0)
 
@@ -572,7 +619,7 @@ def snarf_char_class(b):  #, cur_stat):
             ch = add_then_next(b, ch)
         first_loop_run = False
 
-        mb_char = IS_MB_CHAR(ch)  #, cur_stat)
+        mb_char = IS_MB_CHAR(ch)  # , cur_stat)
 
         if ch in (EOF, '\n'):
             return ch
@@ -625,7 +672,7 @@ def match_slash(slash, regex):  # char, bool
     # mbstate_t cur_stat = { 0, }
 
     # We allow only 1 byte characters for a slash.
-    if IS_MB_CHAR(slash):  #, &cur_stat):
+    if IS_MB_CHAR(slash):  # , &cur_stat):
         bad_prog(BAD_DELIM)
 
     # memset(&cur_stat, 0, sizeof cur_stat)
@@ -660,7 +707,7 @@ def match_slash(slash, regex):  # char, bool
                     add1_buffer(b, '\\')
             elif ch == OPEN_BRACKET and regex:
                 add1_buffer(b, ch)
-                ch = snarf_char_class(b)  #, &cur_stat)
+                ch = snarf_char_class(b)  # , &cur_stat)
                 if ch != CLOSE_BRACKET:
                     break
 
@@ -740,7 +787,7 @@ def mark_subst_opts(cmd_s):
 
         else:
             bad_prog(UNKNOWN_S_OPT)
-         #NOTREACHED
+        # NOTREACHED
 
 
 # read in a label for a `:', `b', or `t' command
@@ -814,7 +861,7 @@ def read_text(buf, leadin_ch):
 def compile_address(addr, ch):  # struct_addr, str
     addr.addr_type = ADDR_IS_NULL
     addr.addr_step = 0
-    addr.addr_number = 0      # extremely unlikely to ever match
+    addr.addr_number = 0  # extremely unlikely to ever match
     addr.addr_regex = NULL
 
     if ch in ('/', '\\'):
@@ -842,7 +889,7 @@ def compile_address(addr, ch):  # struct_addr, str
                 # flags |= REG_NEWLINE
                 flags.append(ch)
             else:
-            #   posix_address_modifier:  # GOTO label
+                #   posix_address_modifier:  # GOTO label
                 savchar(ch)
                 addr.addr_regex = compile_regex(b, flags)
                 addr.addr_regex.slash = slash
@@ -861,7 +908,7 @@ def compile_address(addr, ch):  # struct_addr, str
                 addr.addr_step = step
                 addr.addr_type = ADDR_IS_NUM_MOD
 
-    elif ch in ('+', '~'):  #and posixicity != POSIXLY_BASIC:
+    elif ch in ('+', '~'):  # and posixicity != POSIXLY_BASIC:
         addr.addr_step = in_integer(in_nonblank())
         # sedparse: skipping this to match and save 1,~0p and 1,+0p
         # if addr.addr_step == 0:
@@ -892,10 +939,10 @@ def compile_program(vector):
 
         a = struct_addr()
 
-#       while ((ch=inchar ()) == ';' || ISSPACE (ch))
-#         ;
-#       if (ch == EOF)
-#         break;
+        # while ((ch=inchar ()) == ';' || ISSPACE (ch))
+        #   ;
+        # if (ch == EOF)
+        #   break;
         while True:
             ch = inchar()
 
@@ -922,7 +969,6 @@ def compile_program(vector):
 
             cur_cmd.a1 = a  # MEMDUP(&a, 1, struct addr)
             debug("----- Found address 1: %r" % cur_cmd.a1)
-
 
             a = struct_addr()  # reset a
             ch = in_nonblank()
@@ -1009,7 +1055,7 @@ def compile_program(vector):
         elif ch in ('a', 'i', 'c', 'e'):
             ch = in_nonblank()
 
-#GOTO read_text_to_slash:
+            # GOTO read_text_to_slash:
             # sedparse: Empty 'e' at EOF is allowed
             if ch == EOF and cur_cmd.cmd == 'e':
                 break
@@ -1027,11 +1073,11 @@ def compile_program(vector):
 
             read_text(cur_cmd.x.cmd_txt, ch)
             debug("text: %r" % cur_cmd.x.cmd_txt)
-#ENDGOTO
+        # ENDGOTO
 
         elif ch in (':', 'T', 'b', 't'):
-#           if (cur_cmd->a1)
-#             bad_prog (_(NO_COLON_ADDR));
+            # if (cur_cmd->a1)
+            #   bad_prog (_(NO_COLON_ADDR));
             label = read_label()
             cur_cmd.x.label_name = label
             debug("label: %r" % label)
@@ -1182,7 +1228,7 @@ def compile_file(cur_program, cmdfile):
 # Make any checks which require the whole program to have been read.
 #   In particular: this backpatches the jump targets.
 #   Any cleanup which can be done after these checks is done here also.
-def check_final_program():  #program):
+def check_final_program():  # program):
     global pending_text
 
     # do all "{"s have a corresponding "}"?
@@ -1195,6 +1241,7 @@ def check_final_program():  #program):
         old_text_buf.text = pending_text
         free_buffer(pending_text)
         pending_text = NULL
+
 
 # sedparse
 def print_program(compiled_program):
@@ -1212,15 +1259,21 @@ def print_program(compiled_program):
         if x.cmd == '{':
             indent_level += 1
 
+
 # sedparse
 PARSER_DEBUG = False
+
+
 def debug(msg, stats=False):
     if PARSER_DEBUG:
         if stats:
-            print("exp=%s line=%s cur=%s end=%s text=%r ch=%r" % (
-                cur_input.string_expr_count, cur_input.line, prog.cur, prog.end, prog.text, msg))
+            print(
+                "exp=%s line=%s cur=%s end=%s text=%r ch=%r"
+                % (cur_input.string_expr_count, cur_input.line, prog.cur, prog.end, prog.text, msg)
+            )
         else:
             print(msg)
+
 
 if __name__ == '__main__':
     argparser = argparse.ArgumentParser()
