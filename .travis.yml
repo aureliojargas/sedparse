@@ -1,0 +1,26 @@
+language: python
+python:
+  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.7"
+install:
+  - if test $TRAVIS_PYTHON_VERSION = 3.6; then pip install -q pylint; fi
+script:
+  - if test $TRAVIS_PYTHON_VERSION = 3.6; then pylint sedparse.py tests/test_sedparse.py; fi
+  - python tests/test_sedparse.py
+  - python sedparse.py --verbose tests/sample.sed > tests/sample.out
+  - git diff --exit-code
+
+### Environment
+# Ubuntu 14.04.5 LTS
+# uid=2000(travis) groups=2000(travis),999(docker)
+# PWD=/home/travis/build/aureliojargas/sedparse
+# PATH=/home/travis/bin
+#      /home/travis/.local/bin
+#      /usr/local/sbin
+#      /usr/local/bin
+#      /usr/sbin
+#      /usr/bin
+#      /sbin
+#      /bin
