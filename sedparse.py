@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 # TODO
 # - identify and document all sedparse additions
 # - document how it works
