@@ -671,7 +671,7 @@ class TestSedParser(unittest.TestCase):
 
     def _my_setup(self):
         # start from scratch to avoid module state leak between tests
-        import sedparse
+        import sedparse  # pylint: disable=import-outside-toplevel
         self.sedparse = sedparse  # pylint: disable=attribute-defined-outside-init
         self.sedparse.the_program = []
 

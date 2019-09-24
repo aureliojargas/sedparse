@@ -636,7 +636,7 @@ def snarf_char_class(b):  # , cur_stat):
 
             continue
 
-        elif ch == OPEN_BRACKET:
+        if ch == OPEN_BRACKET:
             if mb_char:
                 continue
 
@@ -644,7 +644,7 @@ def snarf_char_class(b):  # , cur_stat):
                 state = 1
             continue
 
-        elif ch == CLOSE_BRACKET:
+        if ch == CLOSE_BRACKET:
             if mb_char:
                 continue
 
@@ -691,7 +691,7 @@ def match_slash(slash, regex):  # char, bool
 
             if ch == '\\':
                 ch = inchar()
-                if ch == EOF:
+                if ch == EOF:  # pylint: disable=no-else-break
                     break
                 # sedparse
                 # # GNU sed interprets \n here, we don't
