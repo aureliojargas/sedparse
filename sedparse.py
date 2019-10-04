@@ -1241,7 +1241,24 @@ def check_final_program():  # program):
         pending_text = NULL
 
 
-# sedparse
+######################################## end of translations
+
+# From now on it's all sedparse exclusive code
+
+PARSER_DEBUG = False
+
+
+def debug(msg, stats=False):
+    if PARSER_DEBUG:
+        if stats:
+            print(
+                "exp=%s line=%s cur=%s end=%s text=%r ch=%r"
+                % (cur_input.string_expr_count, cur_input.line, prog.cur, prog.end, prog.text, msg)
+            )
+        else:
+            print(msg)
+
+
 def print_program(compiled_program):
     indent_level = 0
     indent_prefix = ' ' * 4
@@ -1256,21 +1273,6 @@ def print_program(compiled_program):
 
         if x.cmd == '{':
             indent_level += 1
-
-
-# sedparse
-PARSER_DEBUG = False
-
-
-def debug(msg, stats=False):
-    if PARSER_DEBUG:
-        if stats:
-            print(
-                "exp=%s line=%s cur=%s end=%s text=%r ch=%r"
-                % (cur_input.string_expr_count, cur_input.line, prog.cur, prog.end, prog.text, msg)
-            )
-        else:
-            print(msg)
 
 
 if __name__ == '__main__':
