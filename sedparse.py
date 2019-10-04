@@ -120,6 +120,12 @@ TEXT_BUFFER = 1
 TEXT_REPLACEMENT = 2
 TEXT_REGEX = 3
 
+# enum posixicity_types {
+POSIXLY_EXTENDED = 1         # with GNU extensions
+POSIXLY_CORRECT = 2          # with POSIX-compatible GNU extensions
+POSIXLY_BASIC = 3            # pedantically POSIX
+POSIXLY_SEDPARSE = 4         # with GNU extensions + sedparse extensions
+
 # enum addr_state {
 RANGE_INACTIVE = 1           # never been active
 RANGE_ACTIVE = 2             # between first and second address
