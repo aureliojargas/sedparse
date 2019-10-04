@@ -978,10 +978,10 @@ def compile_program(vector):
                 debug("----- Found address 2: %r" % cur_cmd.a2)
                 ch = in_nonblank()
 
-            if (cur_cmd.a1.addr_type == ADDR_IS_NUM and cur_cmd.a1.addr_number == 0) \
-                    and (not cur_cmd.a2 or cur_cmd.a2.addr_type != ADDR_IS_REGEX):
-                    #or posixicity == POSIXLY_BASIC)):
-                bad_prog(INVALID_LINE_0)
+            # sedparse: removed: or posixicity == POSIXLY_BASIC)):
+            if cur_cmd.a1.addr_type == ADDR_IS_NUM and cur_cmd.a1.addr_number == 0:
+                if not cur_cmd.a2 or cur_cmd.a2.addr_type != ADDR_IS_REGEX:
+                    bad_prog(INVALID_LINE_0)
 
         if ch == '!':
             cur_cmd.addr_bang = True
