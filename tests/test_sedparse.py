@@ -4,9 +4,8 @@
 # the first error in each test_* function and to identify the current script.
 # If Python 2 is required, remove subTest() and use the msg= parameter in
 # self.assert*() to identify the individual test.
-
-# TODO fun: \ssssss, \,,,\,,=, \rrrr \::::, yyyy, \{{,\}}{}, //,//{}
-# TODO I also need to test ignore_trailing_fluff()
+#
+# sed fun: \ssssss  \,,,\,,=  \rrrr  \::::  yyyy  \{{,\}}{}  //,//{}
 
 import contextlib
 import io
@@ -651,6 +650,30 @@ TEST_DATA['block'] = [
     ('{;p;}', '{', 'p', '}'),
 ]
 
+
+#------------------------------------------------------------------------------
+
+TEST_DATA['trailing_fluff'] = [
+    # Test cases for ignore_trailing_fluff()
+    # Note: all scripts end in EOF. At run time the \n ending is also tested.
+    # Format: (sed script, *expected_parsed_commands)
+
+    # Ignore trailing spaces and tabs
+    ('p      ', 'p'),
+    ('p\t\t\t', 'p'),
+    ('p\t \t ', 'p'),
+
+    # Ignore trailing semicolons
+    ('p;',      'p'),
+    ('p;;;;;',  'p'),
+    ('p;;;;;x', 'p', 'x'),
+
+    # Mixing spaces and semicolons
+    ('p ;\t; ', 'p'),
+    ('p ;;\tx', 'p', 'x'),
+]
+
+
 # End of test cases, white space can get back to normal
 # pylint: enable=bad-whitespace
 
@@ -876,7 +899,13 @@ class TestSedParser(unittest.TestCase):
                     self._my_tear_down()
 
     def test_ignore_trailing_fluff(self):
-        pass
+        for script_end in ('', '\n'):  # empty=EOF
+            for script, *expected_commands in TEST_DATA['trailing_fluff']:
+                script = script + script_end
+                with self.subTest(script=script):
+                    self._my_setup()
+                    self.assertEqual(expected_commands, [x.cmd for x in self._parse(script)])
+                    self._my_tear_down()
 
 
 if __name__ == '__main__':

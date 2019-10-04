@@ -516,7 +516,7 @@ def ignore_trailing_fluff():
         ch = in_nonblank()
         if ch == ';':  # skip it
             pass
-        elif ch in ('EOF', '\n'):  # EOF, EOL
+        elif ch in (EOF, '\n'):  # EOF, EOL
             return
         else:  # start of a new command
             savchar(ch)
