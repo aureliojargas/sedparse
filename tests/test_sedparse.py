@@ -31,7 +31,8 @@ TEST_DATA["error"] = [
     #                    ANCIENT_VERSION  expected newer version of sed
     ("!!p",       1, 2, "BAD_BANG", "multiple `!'s"),
     ("1,p",       1, 3, "BAD_COMMA", "unexpected `,'"),
-    ("s★a★b★",    1, 2, "BAD_DELIM", "delimiter character is not a single-byte character"),
+    ("s★a★b★",    1, 2, "BAD_DELIM",
+                            "delimiter character is not a single-byte character"),
     ("+1p",       1, 2, "BAD_STEP", "invalid usage of +N or ~N as first address"),
     ("~1p",       1, 2, "BAD_STEP", "invalid usage of +N or ~N as first address"),
     (":",         1, 1, "COLON_LACKS_LABEL", '":" lacks a label'),
@@ -745,7 +746,11 @@ class TestSedParser(unittest.TestCase):  # pylint: disable=unused-variable
 
     def test_errors(self):
         for script, exp_nr, char_nr, _, message in TEST_DATA["error"]:
-            expected = "sed: -e expression #%d, char %d: %s" % (exp_nr, char_nr, message)
+            expected = "sed: -e expression #%d, char %d: %s" % (
+                exp_nr,
+                char_nr,
+                message,
+            )
 
             self._my_setup()
             with captured_output() as (_, err):
@@ -813,7 +818,13 @@ class TestSedParser(unittest.TestCase):  # pylint: disable=unused-variable
         # are already tested in test_commands_with_no_args().
         for command in ("l", "L", "q", "Q"):
             for arg in (0, 5, 99):
-                for template in ("%s%d", "%s%d;", "{%s%d}", "%s%d#foo", "{ \t%s \t%d \t}"):
+                for template in (
+                    "%s%d",
+                    "%s%d;",
+                    "{%s%d}",
+                    "%s%d#foo",
+                    "{ \t%s \t%d \t}",
+                ):
                     script = template % (command, arg)
                     self._my_setup()
                     parsed = self._parse(script)
@@ -871,12 +882,16 @@ class TestSedParser(unittest.TestCase):  # pylint: disable=unused-variable
                     self.assertEqual(delimiter, parsed.x.cmd_subst.slash)
                     self.assertEqual(arg1, parsed.x.cmd_subst.regx.pattern)
                     self.assertEqual(arg2, parsed.x.cmd_subst.replacement.text)
-                    self._assert_defaults(parsed, skip=["slash", "pattern", "replacement"])
+                    self._assert_defaults(
+                        parsed, skip=["slash", "pattern", "replacement"]
+                    )
                 self._my_tear_down()
 
     def test_command_s_flags(self):
         command = "s"
-        for script, delimiter, pattern, replacement, flags, flag_arg in TEST_DATA["s-flags"]:
+        for script, delimiter, pattern, replacement, flags, flag_arg in TEST_DATA[
+            "s-flags"
+        ]:
             self._my_setup()
             parsed = self._parse(script)[0]
             with self.subTest(script=script):
@@ -908,7 +923,9 @@ class TestSedParser(unittest.TestCase):  # pylint: disable=unused-variable
         for script, *expected_commands in TEST_DATA["\n"]:
             with self.subTest(script=script):
                 self._my_setup()
-                self.assertEqual(expected_commands, [x.cmd for x in self._parse(script)])
+                self.assertEqual(
+                    expected_commands, [x.cmd for x in self._parse(script)]
+                )
                 self._my_tear_down()
 
     def test_blocks(self):
@@ -917,7 +934,9 @@ class TestSedParser(unittest.TestCase):  # pylint: disable=unused-variable
                 script = script + script_end
                 with self.subTest(script=script):
                     self._my_setup()
-                    self.assertEqual(expected_commands, [x.cmd for x in self._parse(script)])
+                    self.assertEqual(
+                        expected_commands, [x.cmd for x in self._parse(script)]
+                    )
                     self._my_tear_down()
 
     def test_ignore_trailing_fluff(self):
@@ -926,7 +945,9 @@ class TestSedParser(unittest.TestCase):  # pylint: disable=unused-variable
                 script = script + script_end
                 with self.subTest(script=script):
                     self._my_setup()
-                    self.assertEqual(expected_commands, [x.cmd for x in self._parse(script)])
+                    self.assertEqual(
+                        expected_commands, [x.cmd for x in self._parse(script)]
+                    )
                     self._my_tear_down()
 
 

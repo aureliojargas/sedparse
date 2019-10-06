@@ -454,7 +454,12 @@ def bad_command(ch):
 # Complain about a programming error and exit.
 def bad_prog(why):
     if cur_input.name:
-        msg = "%s: file %s line %d: %s" % (program_name, cur_input.name, cur_input.line, why)
+        msg = "%s: file %s line %d: %s" % (
+            program_name,
+            cur_input.name,
+            cur_input.line,
+            why,
+        )
     else:
         msg = "%s: -e expression #%d, char %d: %s" % (
             program_name,
@@ -495,7 +500,8 @@ def savchar(ch):
         cur_input.line -= 1
     if prog.cur:
         prog.cur -= 1
-        if prog.cur <= prog.base or prog.text[prog.cur + 1] != ch:  # XXX not sure about cur+1
+        # XXX not sure about cur+1
+        if prog.cur <= prog.base or prog.text[prog.cur + 1] != ch:
             # panic("Called savchar with unexpected pushback (%s)" % ch)
             panic(
                 "Called savchar with unexpected pushback (curr=%s %s!=%s)"
@@ -873,7 +879,8 @@ def compile_address(addr, ch):  # struct_addr, str
     addr.addr_regex = NULL
 
     if ch in ("/", "\\"):
-        # sedparse: Instead of using bit flags as regex.c, I'll just save the flags as text
+        # sedparse: Instead of using bit flags as regex.c, I'll just save the
+        # flags as text
         flags = []
         # flags = 0
         # struct buffer *b
@@ -1104,7 +1111,22 @@ def compile_program(vector):
                 savchar(ch)
             read_end_of_cmd()
 
-        elif ch in ("=", "d", "D", "F", "g", "G", "h", "H", "n", "N", "p", "P", "z", "x"):
+        elif ch in (
+            "=",
+            "d",
+            "D",
+            "F",
+            "g",
+            "G",
+            "h",
+            "H",
+            "n",
+            "N",
+            "p",
+            "P",
+            "z",
+            "x",
+        ):
             read_end_of_cmd()
 
         elif ch in ("r", "R", "w", "W"):
@@ -1136,7 +1158,9 @@ def compile_program(vector):
             flags = mark_subst_opts(cur_cmd.x.cmd_subst)
             cur_cmd.x.cmd_subst.flags = flags
             debug("s flags: %r" % "".join(flags))
-            # cur_cmd.x.cmd_subst.regx = compile_regex(b, flags, cur_cmd.x.cmd_subst.max_id + 1)
+            # cur_cmd.x.cmd_subst.regx = compile_regex(
+            #     b, flags, cur_cmd.x.cmd_subst.max_id + 1
+            # )
             free_buffer(b)
 
             # if cur_cmd.x.cmd_subst.eval and sandbox:
@@ -1263,7 +1287,14 @@ def debug(msg, stats=False):
         if stats:
             print(
                 "exp=%s line=%s cur=%s end=%s text=%r ch=%r"
-                % (cur_input.string_expr_count, cur_input.line, prog.cur, prog.end, prog.text, msg)
+                % (
+                    cur_input.string_expr_count,
+                    cur_input.line,
+                    prog.cur,
+                    prog.end,
+                    prog.text,
+                    msg,
+                )
             )
         else:
             print(msg)

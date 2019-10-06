@@ -7,12 +7,13 @@ disable=
     locally-enabled,
     suppressed-message,
     missing-docstring,
+    bad-continuation,  # black handles formatting
 
 [VARIABLES]
 allow-global-unused-variables=no
 
 [FORMAT]
-max-line-length=100  # wide screen monitors are nice
+max-line-length=88  # black compatible
 expected-line-ending-format=LF  # enforce Unix \n
 
 # No reports, please
