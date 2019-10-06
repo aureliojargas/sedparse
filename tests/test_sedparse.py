@@ -783,6 +783,7 @@ class TestSedParser(unittest.TestCase):  # pylint: disable=unused-variable
 
     def test_commands_with_no_args(self):
         commands = (
+            "=",
             "d",
             "D",
             "F",
@@ -800,7 +801,6 @@ class TestSedParser(unittest.TestCase):  # pylint: disable=unused-variable
             "Q",
             "x",
             "z",
-            "=",
         )
         for command in commands:
             for template in ("%s", "%s;", "{%s}", "%s#foo", "{ \t%s \t}"):
