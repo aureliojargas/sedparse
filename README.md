@@ -1,5 +1,12 @@
 # sedparse
 
+This is a work in progress, not yet officially released.
+
+I'm still force pushing and doing wild west cowboy dev.
+
+For now, I do not recommend investing any time on it.
+
+
 ## Development environment
 
 To create (and update in the future):
