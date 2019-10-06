@@ -21,7 +21,7 @@ script:
 
   # black
   - if test $TRAVIS_PYTHON_VERSION = 3.6; then
-    black --check -t py34 sedparse.py tests/test_sedparse.py;
+    black --check sedparse.py tests/test_sedparse.py;
     fi
 
   # unit tests

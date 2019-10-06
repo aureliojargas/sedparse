@@ -36,4 +36,4 @@ More info at https://packaging.python.org/guides/installing-using-pip-and-virtua
 
 In the CI, [black](https://github.com/psf/black) formatting is enforced. To run it locally:
 
-    black -t py34 sedparse.py tests/test_sedparse.py
+    black sedparse.py tests/test_sedparse.py
