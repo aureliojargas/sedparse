@@ -866,7 +866,9 @@ class TestSedParser(unittest.TestCase):  # pylint: disable=unused-variable
                 self.assertEqual(replacement, parsed.x.cmd_subst.replacement.text)
                 self.assertEqual(flags, ''.join(parsed.x.cmd_subst.flags))
                 self.assertEqual(flag_arg, parsed.x.cmd_subst.outf.name)
-                self._assert_defaults(parsed, skip=['slash', 'pattern', 'replacement', 'flags', 'outf'])
+                self._assert_defaults(
+                    parsed, skip=['slash', 'pattern', 'replacement', 'flags', 'outf']
+                )
             self._my_tear_down()
 
     def test_comments(self):  # sedparse extension

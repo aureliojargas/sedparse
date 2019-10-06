@@ -12,7 +12,7 @@ disable=
 allow-global-unused-variables=no
 
 [FORMAT]
-max-line-length=120  # wide screen monitors are nice
+max-line-length=100  # wide screen monitors are nice
 expected-line-ending-format=LF  # enforce Unix \n
 
 # No reports, please
