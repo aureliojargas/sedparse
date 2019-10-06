@@ -8,6 +8,7 @@ disable=
     suppressed-message,
     missing-docstring,
     bad-continuation,  # black handles formatting
+    duplicate-code,  # test_commands_with_no_args() commands list
 
 [VARIABLES]
 allow-global-unused-variables=no
