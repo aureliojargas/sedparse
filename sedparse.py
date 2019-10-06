@@ -164,7 +164,7 @@ class struct_addr:
         elif self.addr_type == ADDR_IS_LAST:
             ret = "$"
         else:  # sedparse: this condition should not happen
-            ret = '<unknown address type "%s">' % self.addr_type
+            ret = "<unknown address type '%s'>" % self.addr_type
         return ret
 
 
@@ -182,15 +182,15 @@ class struct_replacement:
 class struct_subst:
     regx = struct_regex()
     replacement = struct_replacement()
-    outf = struct_output()  # 'w' option given
+    outf = struct_output()  # "w" option given
     flags = []  # sedparse
     slash = ""  # sedparse
 
     # sedparse: not used
     # numb = 0  # if >0, only substitute for match number "numb"
-    # global_ = False  # 'g' option given
-    # print_ = False  # 'p' option given (before/after eval)
-    # eval_ = False  # 'e' option given
+    # global_ = False  # "g" option given
+    # print_ = False  # "p" option given (before/after eval)
+    # eval_ = False  # "e" option given
     # max_id = 0  # maximum backreference on the RHS
     # replacement_buffer = ""  # ifdef lint
 
@@ -223,7 +223,7 @@ class struct_sed_cmd_x:
     # This is used for the w command.
     outf = struct_output()
 
-    # This is used for the ':' command.
+    # This is used for the ":" command.
     label_name = ""
 
     # This is used for the command comment.
@@ -305,7 +305,7 @@ def compile_regex(pattern, flags):
 
 def IS_MB_CHAR(ch):
     return ch != EOF and ord(ch) > 127
-    # This exception is because I chose to store EOF as '<EOF>'
+    # This exception is because I chose to store EOF as "<EOF>"
 
 
 ######################################## translated from utils.h
@@ -343,7 +343,7 @@ def free_buffer(b):
 
 OPEN_BRACKET = "["
 CLOSE_BRACKET = "]"
-# OPEN_BRACE = '{'
+# OPEN_BRACE = "{"
 CLOSE_BRACE = "}"
 
 # struct prog_info {
@@ -580,7 +580,7 @@ def read_filename():
     ch = in_nonblank()
     while ch not in (EOF, "\n"):
         ch = add_then_next(b, ch)
-    # add1_buffer(b, '\0');  # not necessary in Python
+    # add1_buffer(b, "\0");  # not necessary in Python
     return b
 
 
@@ -705,12 +705,12 @@ def match_slash(slash, regex):  # char, bool
                     break
                 # sedparse
                 # # GNU sed interprets \n here, we don't
-                # elif ch == 'n' and regex:
-                #     ch = '\n'
+                # elif ch == "n" and regex:
+                #     ch = "\n"
                 # # Those exceptions remove the leading \ from known situations
-                # # For example, s/a\/b/.../ becames 'a/b' not 'a\/b'
+                # # For example, s/a\/b/.../ becames "a/b" not "a\/b"
                 # # Since I want to keep the original user text, this is disabled
-                # elif (ch != '\n' and (ch != slash or (not regex and ch == '&'))):
+                # elif (ch != "\n" and (ch != slash or (not regex and ch == "&"))):
                 else:
                     add1_buffer(b, "\\")
             elif ch == OPEN_BRACKET and regex:
@@ -729,7 +729,7 @@ def match_slash(slash, regex):  # char, bool
 
 # sedparse: this function works differently from the original.
 # In gsed, there's no return, since it just sets all the flags as properties of
-# 'cmd_s'. Here it collects and returns the flags as a list.
+# "cmd_s". Here it collects and returns the flags as a list.
 def mark_subst_opts(cmd_s):
     flags = []
     numb = False
@@ -814,7 +814,7 @@ def read_label():
     elif ch == ";" or ISBLANK(ch):
         ignore_trailing_fluff()
 
-    # add1_buffer(b, '\0')  # not necessary in Python
+    # add1_buffer(b, "\0")  # not necessary in Python
     ret = "".join(b)
     free_buffer(b)
     return ret
@@ -921,7 +921,7 @@ def compile_address(addr, ch):  # struct_addr, str
         # sedparse: skipping this to match and save 1,~0p and 1,+0p
         # if addr.addr_step == 0:
         #     pass  # default to ADDR_IS_NULL; forces matching to stop on next line
-        # elif ch == '+':
+        # elif ch == "+":
         if ch == "+":
             addr.addr_type = ADDR_IS_STEP
         else:
@@ -1023,7 +1023,7 @@ def compile_program(vector):
 
             ## I think I won't need this #n detection
             # ch = inchar()
-            # if ch == 'n' and first_script and cur_input.line < 2:
+            # if ch == "n" and first_script and cur_input.line < 2:
             #     if (prog.base and prog.cur == 2 + prog.base):
             #     # or (prog.file and not prog.base and 2 == ftell(prog.file)):
             #       no_default_output = true
@@ -1033,7 +1033,7 @@ def compile_program(vector):
             cur_cmd.x.comment = "".join(b)
             debug("comment: %r" % cur_cmd.x.comment)
             free_buffer(b)
-            # while ch != EOF and ch != '\n':
+            # while ch != EOF and ch != "\n":
             #     ch = inchar()
             # continue
 
@@ -1059,12 +1059,12 @@ def compile_program(vector):
             read_end_of_cmd()
             blocks -= 1  # done with this entry
 
-        # sedparse: 'e' handling was moved here (original code uses GOTO)
+        # sedparse: "e" handling was moved here (original code uses GOTO)
         elif ch in ("a", "i", "c", "e"):
             ch = in_nonblank()
 
             # GOTO read_text_to_slash:
-            # sedparse: Empty 'e' at EOF is allowed
+            # sedparse: Empty "e" at EOF is allowed
             if ch == EOF and cur_cmd.cmd == "e":
                 break
 
@@ -1215,7 +1215,7 @@ def compile_file(cur_program, cmdfile):
     # global first_script
 
     prog.file = sys.stdin
-    if cmdfile[0] != "-":  # or cmdfile[1] != '\0':
+    if cmdfile[0] != "-":  # or cmdfile[1] != "\0":
         prog.file = open(cmdfile, "r")
 
     cur_input.line = 1

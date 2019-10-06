@@ -23,54 +23,54 @@ TEST_DATA = {}
 # pylint: disable=bad-whitespace
 # fmt: off
 
-TEST_DATA['error'] = [
+TEST_DATA["error"] = [
     # Note: Not all possible error messages are tested, those that were left
     #       out are not available in the port.
     # Format: (sed script, expression nr, char nr, constant, error message)
 
     #                    ANCIENT_VERSION  expected newer version of sed
-    ('!!p',       1, 2, 'BAD_BANG', "multiple `!'s"),
-    ('1,p',       1, 3, 'BAD_COMMA', "unexpected `,'"),
-    ('s★a★b★',    1, 2, 'BAD_DELIM', "delimiter character is not a single-byte character"),
-    ('+1p',       1, 2, "BAD_STEP", "invalid usage of +N or ~N as first address"),
-    ('~1p',       1, 2, "BAD_STEP", "invalid usage of +N or ~N as first address"),
-    (':',         1, 1, 'COLON_LACKS_LABEL', "\":\" lacks a label"),
+    ("!!p",       1, 2, "BAD_BANG", "multiple `!'s"),
+    ("1,p",       1, 3, "BAD_COMMA", "unexpected `,'"),
+    ("s★a★b★",    1, 2, "BAD_DELIM", "delimiter character is not a single-byte character"),
+    ("+1p",       1, 2, "BAD_STEP", "invalid usage of +N or ~N as first address"),
+    ("~1p",       1, 2, "BAD_STEP", "invalid usage of +N or ~N as first address"),
+    (":",         1, 1, "COLON_LACKS_LABEL", '":" lacks a label'),
     #                    DISALLOWED_CMD  e/r/w commands disabled in sandbox mode
-    ('}',         1, 1, 'EXCESS_CLOSE_BRACE', "unexpected `}'"),
-    ('s/a/b/gg',  1, 8, 'EXCESS_G_OPT', "multiple `g' options to `s' command"),
-    ('dp',        1, 2, 'EXCESS_JUNK', "extra characters after command"),
-    ('xx',        1, 2, 'EXCESS_JUNK', "extra characters after command"),
-    ('s/a/b/2p2', 1, 9, 'EXCESS_N_OPT', "multiple number options to `s' command"),
-    ('{',         1, 1, 'EXCESS_OPEN_BRACE', "unmatched `{'"),  # GNU sed is "char 0"
-    ('s/a/b/pp',  1, 8, 'EXCESS_P_OPT', "multiple `p' options to `s' command"),
-    ('a',         1, 1, 'EXPECTED_SLASH', "expected \\ after `a', `c' or `i'"),
+    ("}",         1, 1, "EXCESS_CLOSE_BRACE", "unexpected `}'"),
+    ("s/a/b/gg",  1, 8, "EXCESS_G_OPT", "multiple `g' options to `s' command"),
+    ("dp",        1, 2, "EXCESS_JUNK", "extra characters after command"),
+    ("xx",        1, 2, "EXCESS_JUNK", "extra characters after command"),
+    ("s/a/b/2p2", 1, 9, "EXCESS_N_OPT", "multiple number options to `s' command"),
+    ("{",         1, 1, "EXCESS_OPEN_BRACE", "unmatched `{'"),  # GNU sed is "char 0"
+    ("s/a/b/pp",  1, 8, "EXCESS_P_OPT", "multiple `p' options to `s' command"),
+    ("a",         1, 1, "EXPECTED_SLASH", "expected \\ after `a', `c' or `i'"),
     #                    INCOMPLETE_CMD  incomplete command
-    ('0p',        1, 2, 'INVALID_LINE_0', "invalid usage of line address 0"),
-    ('0,5p',      1, 4, 'INVALID_LINE_0', "invalid usage of line address 0"),
-    ('s/a/b/w',   1, 7, 'MISSING_FILENAME', "missing filename in r/R/w/W commands"),
-    ('r',         1, 1, 'MISSING_FILENAME', "missing filename in r/R/w/W commands"),
-    ('{p;$}',     1, 5, 'NO_CLOSE_BRACE_ADDR', "`}' doesn't want any addresses"),
+    ("0p",        1, 2, "INVALID_LINE_0", "invalid usage of line address 0"),
+    ("0,5p",      1, 4, "INVALID_LINE_0", "invalid usage of line address 0"),
+    ("s/a/b/w",   1, 7, "MISSING_FILENAME", "missing filename in r/R/w/W commands"),
+    ("r",         1, 1, "MISSING_FILENAME", "missing filename in r/R/w/W commands"),
+    ("{p;$}",     1, 5, "NO_CLOSE_BRACE_ADDR", "`}' doesn't want any addresses"),
     #                    NO_COLON_ADDR  : doesn't want any addresses
-    ('1',         1, 1, 'NO_COMMAND', "missing command"),
-    ('1\n',       1, 2, 'NO_COMMAND', "missing command"),
+    ("1",         1, 1, "NO_COMMAND", "missing command"),
+    ("1\n",       1, 2, "NO_COMMAND", "missing command"),
     #                    NO_SHARP_ADDR  comments don't accept any addresses
     #                    ONE_ADDR  command only uses one address
     #                    RECURSIVE_ESCAPE_C  recursive escaping after \\c not allowed
-    ('u',         1, 1, 'UNKNOWN_CMD', "unknown command: `u'"),
-    ('s/a/b/z',   1, 7, 'UNKNOWN_S_OPT', "unknown option to `s'"),
-    ('s/a/b/\r',  1, 7, 'UNKNOWN_S_OPT', "unknown option to `s'"),
-    ('/a',        1, 2, 'UNTERM_ADDR_RE', "unterminated address regex"),
-    ('s/a/b',     1, 5, 'UNTERM_S_CMD', "unterminated `s' command"),
-    ('y/a/',      1, 4, 'UNTERM_Y_CMD', "unterminated `y' command"),
+    ("u",         1, 1, "UNKNOWN_CMD", "unknown command: `u'"),
+    ("s/a/b/z",   1, 7, "UNKNOWN_S_OPT", "unknown option to `s'"),
+    ("s/a/b/\r",  1, 7, "UNKNOWN_S_OPT", "unknown option to `s'"),
+    ("/a",        1, 2, "UNTERM_ADDR_RE", "unterminated address regex"),
+    ("s/a/b",     1, 5, "UNTERM_S_CMD", "unterminated `s' command"),
+    ("y/a/",      1, 4, "UNTERM_Y_CMD", "unterminated `y' command"),
     #                    Y_CMD_LEN  strings for `y' command are different lengths
-    ('s/a/b/0',   1, 7, 'ZERO_N_OPT', "number option to `s' command may not be zero"),
+    ("s/a/b/0",   1, 7, "ZERO_N_OPT", "number option to `s' command may not be zero"),
 ]
 
 
 #------------------------------------------------------------------------------
 # Test data for ADDRESSES
 
-TEST_DATA['address'] = [
+TEST_DATA["address"] = [
     # Test cases for addresses: numeric, $, /regex/
     # Source: compile_address(), match_slash()
 
@@ -78,447 +78,447 @@ TEST_DATA['address'] = [
     #---------------------------------------------
 
     # no address
-    ('p',              False,  None,         None),
-    ('!p',             True,   None,         None),
-    ('{}',             False,  None,         None),
-    ('!{}',            True,   None,         None),
+    ("p",              False,  None,         None),
+    ("!p",             True,   None,         None),
+    ("{}",             False,  None,         None),
+    ("!{}",            True,   None,         None),
 
     # last line
-    ('$p',             False,  '$',          None),
-    ('${}',            False,  '$',          None),
-    ('$!p',            True,   '$',          None),
-    (' $ p',           False,  '$',          None),
-    (' $ {}',          False,  '$',          None),
-    (' $ ! p',         True,   '$',          None),
+    ("$p",             False,  "$",          None),
+    ("${}",            False,  "$",          None),
+    ("$!p",            True,   "$",          None),
+    (" $ p",           False,  "$",          None),
+    (" $ {}",          False,  "$",          None),
+    (" $ ! p",         True,   "$",          None),
 
     # numeric
-    ('5p',             False,  '5',          None),
-    ('5{}',            False,  '5',          None),
-    ('5!p',            True,   '5',          None),
-    (' 5 p',           False,  '5',          None),
-    (' 5 {}',          False,  '5',          None),
-    (' 5 ! p',         True,   '5',          None),
+    ("5p",             False,  "5",          None),
+    ("5{}",            False,  "5",          None),
+    ("5!p",            True,   "5",          None),
+    (" 5 p",           False,  "5",          None),
+    (" 5 {}",          False,  "5",          None),
+    (" 5 ! p",         True,   "5",          None),
 
     # numeric range
-    ('1,5p',           False,  '1',          '5'),
-    ('1,5{}',          False,  '1',          '5'),
-    ('1,5!p',          True,   '1',          '5'),
-    (' 1 , 5 p',       False,  '1',          '5'),
-    (' 1 , 5 {}',      False,  '1',          '5'),
-    (' 1 , 5 ! p',     True,   '1',          '5'),
+    ("1,5p",           False,  "1",          "5"),
+    ("1,5{}",          False,  "1",          "5"),
+    ("1,5!p",          True,   "1",          "5"),
+    (" 1 , 5 p",       False,  "1",          "5"),
+    (" 1 , 5 {}",      False,  "1",          "5"),
+    (" 1 , 5 ! p",     True,   "1",          "5"),
 
     # inverted range
-    ('5,1p',           False,  '5',          '1'),
-    ('$,1p',           False,  '$',          '1'),
+    ("5,1p",           False,  "5",          "1"),
+    ("$,1p",           False,  "$",          "1"),
 
     # zero is allowed if second address is a regex
-    ('0,/x/p',         False,  '0',          '/x/'),
+    ("0,/x/p",         False,  "0",          "/x/"),
 
     # steps ~ and +
-    ('1~2p',           False,  '1~2',        None),
-    ('0~2p',           False,  '0~2',        None),
-    ('5~0p',           False,  '5',          None),  # source change
-    ('1,~2p',          False,  '1',          '~2'),
-    ('1,+2p',          False,  '1',          '+2'),
-    ('1,~0p',          False,  '1',          '~0'),
-    ('1,+0p',          False,  '1',          '+0'),
+    ("1~2p",           False,  "1~2",        None),
+    ("0~2p",           False,  "0~2",        None),
+    ("5~0p",           False,  "5",          None),  # source change
+    ("1,~2p",          False,  "1",          "~2"),
+    ("1,+2p",          False,  "1",          "+2"),
+    ("1,~0p",          False,  "1",          "~0"),
+    ("1,+0p",          False,  "1",          "+0"),
 
     # regex with /
-    ('/x/p',           False,  '/x/',        None),
-    ('/x/{}',          False,  '/x/',        None),
-    ('/x/!p',          True,   '/x/',        None),
-    (' /x/ p',         False,  '/x/',        None),
-    (' /x/ {}',        False,  '/x/',        None),
-    (' /x/ ! p',       True,   '/x/',        None),
+    ("/x/p",           False,  "/x/",        None),
+    ("/x/{}",          False,  "/x/",        None),
+    ("/x/!p",          True,   "/x/",        None),
+    (" /x/ p",         False,  "/x/",        None),
+    (" /x/ {}",        False,  "/x/",        None),
+    (" /x/ ! p",       True,   "/x/",        None),
 
-    ('/x/,/y/p',       False,  '/x/',        '/y/'),
-    ('/x/,/y/{}',      False,  '/x/',        '/y/'),
-    ('/x/,/y/!p',      True,   '/x/',        '/y/'),
-    (' /x/ , /y/ p',   False,  '/x/',        '/y/'),
-    (' /x/ , /y/ {}',  False,  '/x/',        '/y/'),
-    (' /x/ , /y/ ! p', True,   '/x/',        '/y/'),
+    ("/x/,/y/p",       False,  "/x/",        "/y/"),
+    ("/x/,/y/{}",      False,  "/x/",        "/y/"),
+    ("/x/,/y/!p",      True,   "/x/",        "/y/"),
+    (" /x/ , /y/ p",   False,  "/x/",        "/y/"),
+    (" /x/ , /y/ {}",  False,  "/x/",        "/y/"),
+    (" /x/ , /y/ ! p", True,   "/x/",        "/y/"),
 
     # flags (GNU extension)
-    ('/x/Ip',          False,  '/x/I',       None),
-    ('/x/I{}',         False,  '/x/I',       None),
-    ('/x/I!p',         True,   '/x/I',       None),
-    (' /x/ I p',       False,  '/x/I',       None),
-    (' /x/ I {}',      False,  '/x/I',       None),
-    (' /x/ I ! p',     True,   '/x/I',       None),
+    ("/x/Ip",          False,  "/x/I",       None),
+    ("/x/I{}",         False,  "/x/I",       None),
+    ("/x/I!p",         True,   "/x/I",       None),
+    (" /x/ I p",       False,  "/x/I",       None),
+    (" /x/ I {}",      False,  "/x/I",       None),
+    (" /x/ I ! p",     True,   "/x/I",       None),
 
     # combining flags
-    ('/x/IMp',         False,  '/x/IM',      None),
-    ('/x/MIp',         False,  '/x/MI',      None),
-    ('/x/ M I p',      False,  '/x/MI',      None),
+    ("/x/IMp",         False,  "/x/IM",      None),
+    ("/x/MIp",         False,  "/x/MI",      None),
+    ("/x/ M I p",      False,  "/x/MI",      None),
 
     # repeated flags are not removed
-    ('/x/MMIIMIp',     False,  '/x/MMIIMI',  None),
+    ("/x/MMIIMIp",     False,  "/x/MMIIMI",  None),
 
     # escaped / delimiter will loose the escape
-    (r'\/x/p',         False,  r'/x/',       None),  # source change
+    (r"\/x/p",         False,  r"/x/",       None),  # source change
 
     # regex with other delimiter (\n and non-ASCII not allowed)
-    (r'\;x;p',         False,  r'\;x;',      None),
-    (r'\,x,p',         False,  r'\,x,',      None),
-    (r'\(x(p',         False,  r'\(x(',      None),
-    (r'\[x[p',         False,  r'\[x[',      None),
-    (r'\ x p',         False,  r'\ x ',      None),
-    ( '\\\tx\tp',      False,  '\\\tx\t',    None),  # tab
-    (r'\\x\p',         False,  '\\\\x\\',    None),  # \
-    #(r'\★x★p',         False,  '\\★x★',      None),  # ★
+    (r"\;x;p",         False,  r"\;x;",      None),
+    (r"\,x,p",         False,  r"\,x,",      None),
+    (r"\(x(p",         False,  r"\(x(",      None),
+    (r"\[x[p",         False,  r"\[x[",      None),
+    (r"\ x p",         False,  r"\ x ",      None),
+    ( "\\\tx\tp",      False,  "\\\tx\t",    None),  # tab
+    (r"\\x\p",         False,  "\\\\x\\",    None),  # \
+    #(r"\★x★p",         False,  "\\★x★",      None),  # ★
 
     # regex: command as delimiter
-    (r'\pxpp',         False,  r'\pxp',      None),
-    (r'\=x==',         False,  r'\=x=',      None),
-    (r'\{x{{}',        False,  r'\{x{',      None),
+    (r"\pxpp",         False,  r"\pxp",      None),
+    (r"\=x==",         False,  r"\=x=",      None),
+    (r"\{x{{}",        False,  r"\{x{",      None),
 
     # regex: bang as delimiter
-    (r'\!x!p',         False,  r'\!x!',      None),
-    (r'\!x!!p',        True,   r'\!x!',      None),
+    (r"\!x!p",         False,  r"\!x!",      None),
+    (r"\!x!!p",        True,   r"\!x!",      None),
 
     # regex: flag letter as delimiter
-    (r'\IxIp',         False,  r'\IxI',      None),
-    (r'\IxIIp',        False,  r'\IxII',     None),
+    (r"\IxIp",         False,  r"\IxI",      None),
+    (r"\IxIIp",        False,  r"\IxII",     None),
 
     # empty regex
-    (r'//p',           False,  r'//',        None),
-    (r'\ppp',          False,  r'\pp',       None),
-    (r'//,//p',        False,  r'//',        r'//'),
-    (r'\,,,\ppp',      False,  r'\,,',       r'\pp'),
-    (r'\III,\MMMp',    False,  r'\III',      r'\MMM'),
+    (r"//p",           False,  r"//",        None),
+    (r"\ppp",          False,  r"\pp",       None),
+    (r"//,//p",        False,  r"//",        r"//"),
+    (r"\,,,\ppp",      False,  r"\,,",       r"\pp"),
+    (r"\III,\MMMp",    False,  r"\III",      r"\MMM"),
 
     # same address repeated
-    ('5,5p',           False,  '5',          '5'),
-    ('$,$p',           False,  '$',          '$'),
-    ('/x/,/x/p',       False,  '/x/',        '/x/'),
-    ('//,//p',         False,  '//',         '//'),
+    ("5,5p",           False,  "5",          "5"),
+    ("$,$p",           False,  "$",          "$"),
+    ("/x/,/x/p",       False,  "/x/",        "/x/"),
+    ("//,//p",         False,  "//",         "//"),
 
     # Non-ASCII chars are allowed
-    ('/★/,/★/p',       False,  '/★/',        '/★/'),
+    ("/★/,/★/p",       False,  "/★/",        "/★/"),
 
     # regex that looks numeric or last line
-    ('/0/p',           False,  '/0/',        None),
-    ('/5/p',           False,  '/5/',        None),
-    ('/1,5/p',         False,  '/1,5/',      None),
-    ('/$/p',           False,  '/$/',        None),
+    ("/0/p",           False,  "/0/",        None),
+    ("/5/p",           False,  "/5/",        None),
+    ("/1,5/p",         False,  "/1,5/",      None),
+    ("/$/p",           False,  "/$/",        None),
 
     # mixed extra tabs and spaces
-    (' 1\t ,\t 5\t p', False,  '1',          '5'),
-    ('\t /x/\t !\t p', True,   '/x/',        None),
-    ('\t /x/\t I\t p', False,  '/x/I',       None),
+    (" 1\t ,\t 5\t p", False,  "1",          "5"),
+    ("\t /x/\t !\t p", True,   "/x/",        None),
+    ("\t /x/\t I\t p", False,  "/x/I",       None),
 
     # regex: escaped delimiter (start, middle, end)
-    (r'/\/\/\//p',     False,  r'/\/\/\//',  None),
-    (r'\|\|\|\||p',    False,  r'\|\|\|\||', None),
+    (r"/\/\/\//p",     False,  r"/\/\/\//",  None),
+    (r"\|\|\|\||p",    False,  r"\|\|\|\||", None),
 
     # Delimiter inside a regex character class
-    ('/[/]/p',         False,  '/[/]/',      None),
+    ("/[/]/p",         False,  "/[/]/",      None),
 ]
 
 
 #------------------------------------------------------------------------------
 # Test data for FILENAME commands
 
-TEST_DATA['r'] = [
+TEST_DATA["r"] = [
     # Test cases for command: r, R, w, W
-    # Note that 's///w filename' is tested in the 's' tests.
+    # Note that "s///w filename" is tested in the "s" tests.
     # Note: all scripts end in EOF. At run time the \n ending is also tested.
     # Source: read_filename()
     # Format: (sed script, expected filename)
 
-    ('rname', 'name'),
+    ("rname", "name"),
 
     # Leading spaces are ignored
-    ('r space', 'space'),
-    ('r\ttab', 'tab'),
-    ('r \t \t mixed', 'mixed'),
+    ("r space", "space"),
+    ("r\ttab", "tab"),
+    ("r \t \t mixed", "mixed"),
 
     # Every char is valid (it reads until \n), so ;{# are not special
-    ('r;', ';'),
-    ('r}', '}'),
-    ('r#', '#'),
-    ('r\\', '\\'),
-    ('r foo}; \t#\\', 'foo}; \t#\\'),
+    ("r;", ";"),
+    ("r}", "}"),
+    ("r#", "#"),
+    ("r\\", "\\"),
+    ("r foo}; \t#\\", "foo}; \t#\\"),
 
     # Non-ASCII chars are allowed
-    ('r★', '★'),
+    ("r★", "★"),
 ]
 
-# Copy all 'r' tests to: R, w, W
-TEST_DATA['R'] = [('R' + script[1:], filename) for script, filename in TEST_DATA['r']]
-TEST_DATA['w'] = [('w' + script[1:], filename) for script, filename in TEST_DATA['r']]
-TEST_DATA['W'] = [('W' + script[1:], filename) for script, filename in TEST_DATA['r']]
+# Copy all "r" tests to: R, w, W
+TEST_DATA["R"] = [("R" + script[1:], filename) for script, filename in TEST_DATA["r"]]
+TEST_DATA["w"] = [("w" + script[1:], filename) for script, filename in TEST_DATA["r"]]
+TEST_DATA["W"] = [("W" + script[1:], filename) for script, filename in TEST_DATA["r"]]
 
 # Filename is the command name
-TEST_DATA['r'].append(('rr', 'r'))
-TEST_DATA['R'].append(('RR', 'R'))
-TEST_DATA['w'].append(('ww', 'w'))
-TEST_DATA['W'].append(('WW', 'W'))
+TEST_DATA["r"].append(("rr", "r"))
+TEST_DATA["R"].append(("RR", "R"))
+TEST_DATA["w"].append(("ww", "w"))
+TEST_DATA["W"].append(("WW", "W"))
 
 
 #------------------------------------------------------------------------------
 # Test data for LABEL commands
 
-TEST_DATA[':'] = [
+TEST_DATA[":"] = [
     # Test cases for commands: :, b, t, T, v
     # Note: all scripts end in EOF. At run time the \n ending is also tested.
     # Source: read_label()
     # Format: (sed script, expected label name)
 
-    (':name', 'name'),
+    (":name", "name"),
 
     # Leading spaces are ignored
-    (': space', 'space'),
-    (':\ttab', 'tab'),
-    (': \t \t mixed', 'mixed'),
+    (": space", "space"),
+    (":\ttab", "tab"),
+    (": \t \t mixed", "mixed"),
 
     # Those chars end a label: tab space ; } #
-    (':label\t', 'label'),
-    (':label ', 'label'),
-    (':label;', 'label'),
-    (':label}', 'label'),
-    (':label#', 'label'),
+    (":label\t", "label"),
+    (":label ", "label"),
+    (":label;", "label"),
+    (":label}", "label"),
+    (":label#", "label"),
 
     # All other chars are valid as labels
-    (':!', '!'),
-    (':{', '{'),
-    (':\\', '\\'),
+    (":!", "!"),
+    (":{", "{"),
+    (":\\", "\\"),
 
     # Non-ASCII chars are allowed
-    (':★', '★'),
+    (":★", "★"),
 ]
 
-# Copy all ':' tests to: b, t, T, v
-TEST_DATA['b'] = [('b' + script[1:], label) for script, label in TEST_DATA[':']]
-TEST_DATA['t'] = [('t' + script[1:], label) for script, label in TEST_DATA[':']]
-TEST_DATA['T'] = [('T' + script[1:], label) for script, label in TEST_DATA[':']]
-TEST_DATA['v'] = [('v' + script[1:], label) for script, label in TEST_DATA[':']]
+# Copy all ":" tests to: b, t, T, v
+TEST_DATA["b"] = [("b" + script[1:], label) for script, label in TEST_DATA[":"]]
+TEST_DATA["t"] = [("t" + script[1:], label) for script, label in TEST_DATA[":"]]
+TEST_DATA["T"] = [("T" + script[1:], label) for script, label in TEST_DATA[":"]]
+TEST_DATA["v"] = [("v" + script[1:], label) for script, label in TEST_DATA[":"]]
 
 # Empty labels are allowed when jumping
-TEST_DATA['b'].append(('b', ''))
-TEST_DATA['t'].append(('t', ''))
-TEST_DATA['T'].append(('T', ''))
+TEST_DATA["b"].append(("b", ""))
+TEST_DATA["t"].append(("t", ""))
+TEST_DATA["T"].append(("T", ""))
 
 # The v command can also be empty
-TEST_DATA['v'].append(('v', ''))
+TEST_DATA["v"].append(("v", ""))
 
 # Label name is the command name
-TEST_DATA[':'].append(('::', ':'))
-TEST_DATA['b'].append(('bb', 'b'))
-TEST_DATA['t'].append(('tt', 't'))
-TEST_DATA['T'].append(('TT', 'T'))
-TEST_DATA['v'].append(('vv', 'v'))
+TEST_DATA[":"].append(("::", ":"))
+TEST_DATA["b"].append(("bb", "b"))
+TEST_DATA["t"].append(("tt", "t"))
+TEST_DATA["T"].append(("TT", "T"))
+TEST_DATA["v"].append(("vv", "v"))
 
 
 #------------------------------------------------------------------------------
 # Test data for TEXT commands
 
-TEST_DATA['a'] = [
+TEST_DATA["a"] = [
     # Test cases for commands: a, i, c, e
     # Source: read_text()
     # Format: (sed script, expected text)
 
     # Traditional sed requires a line break after \
-    ('a\\\ntext', 'text'),
+    ("a\\\ntext", "text"),
 
     # GNU sed allows no line break
-    ('a\\text', 'text'),
+    ("a\\text", "text"),
 
     # GNU sed allows no \ either
-    ('atext', 'text'),
+    ("atext", "text"),
 
     # Multiline texts with leading a\\n, a\, a should produce the same output
-    ('a\\\n1\\\n2\\\n3', '1\\\n2\\\n3'),
-    (  'a\\1\\\n2\\\n3', '1\\\n2\\\n3'),
-    (    'a1\\\n2\\\n3', '1\\\n2\\\n3'),
+    ("a\\\n1\\\n2\\\n3", "1\\\n2\\\n3"),
+    (  "a\\1\\\n2\\\n3", "1\\\n2\\\n3"),
+    (    "a1\\\n2\\\n3", "1\\\n2\\\n3"),
 
     # Empty text at EOF is allowed (when having \ and/or \n)
-    ('a\\\n', ''),
-    ('a\\', ''),
-    ('a\n', ''),
-    #('a', ''),  # Error: expected \ after `a', `c' or `i'
+    ("a\\\n", ""),
+    ("a\\", ""),
+    ("a\n", ""),
+    #("a", ""),  # Error: expected \ after `a', `c' or `i'
 
     # Leading spaces before \ are ignored
-    ('a \\space', 'space'),
-    ('a\t\\tab', 'tab'),
-    ('a \t \t \\mixed', 'mixed'),
+    ("a \\space", "space"),
+    ("a\t\\tab", "tab"),
+    ("a \t \t \\mixed", "mixed"),
 
     # Leading spaces after \ are preserved
-    ('a\\ text', ' text'),
-    ('a\\\ttext', '\ttext'),
-    ('a\\ \t \t text', ' \t \t text'),
+    ("a\\ text", " text"),
+    ("a\\\ttext", "\ttext"),
+    ("a\\ \t \t text", " \t \t text"),
 
     # Leading spaces are ignored when no \ is used
-    ('a space', 'space'),
-    ('a\ttab', 'tab'),
-    ('a \t \t mixed', 'mixed'),
+    ("a space", "space"),
+    ("a\ttab", "tab"),
+    ("a \t \t mixed", "mixed"),
 
     # Trailing spaces are always preserved
-    ('atext ', 'text '),
-    ('atext\t', 'text\t'),
-    ('atext \t \t ', 'text \t \t '),
+    ("atext ", "text "),
+    ("atext\t", "text\t"),
+    ("atext \t \t ", "text \t \t "),
 
     # From second line on, leading and trailing spaces are always preserved
-    ('a\\\n1\\\n 2 \\\n\t3\t', '1\\\n 2 \\\n\t3\t'),
-    (  'a\\1\\\n 2 \\\n\t3\t', '1\\\n 2 \\\n\t3\t'),
-    (    'a1\\\n 2 \\\n\t3\t', '1\\\n 2 \\\n\t3\t'),
+    ("a\\\n1\\\n 2 \\\n\t3\t", "1\\\n 2 \\\n\t3\t"),
+    (  "a\\1\\\n 2 \\\n\t3\t", "1\\\n 2 \\\n\t3\t"),
+    (    "a1\\\n 2 \\\n\t3\t", "1\\\n 2 \\\n\t3\t"),
 
     # Literal escape at beginning and middle of the line
-    ('a\\\n\\text\\text', '\\text\\text'),
-    (  'a\\\\text\\text', '\\text\\text'),
-    (      'atext\\text',   'text\\text'),
+    ("a\\\n\\text\\text", "\\text\\text"),
+    (  "a\\\\text\\text", "\\text\\text"),
+    (      "atext\\text",   "text\\text"),
 
     # Literal escape at EOL is allowed except in the last line
     #XXX why only odd numbers work?
-    ('a\\\n1' + '\\'*1 + '\n2', '1' + '\\'*1 + '\n2'),
-    # ('a\\\n1' + '\\'*2 + '\n2p', '1' + '\\'*2 + '\n2p'),
-    ('a\\\n1' + '\\'*3 + '\n2', '1' + '\\'*3 + '\n2'),
-    # ('a\\\n1' + '\\'*4 + '\n2', '1' + '\\'*4 + '\n2'),
-    ('a\\\n1' + '\\'*5 + '\n2', '1' + '\\'*5 + '\n2'),
+    ("a\\\n1" + "\\"*1 + "\n2", "1" + "\\"*1 + "\n2"),
+    # ("a\\\n1" + "\\"*2 + "\n2p", "1" + "\\"*2 + "\n2p"),
+    ("a\\\n1" + "\\"*3 + "\n2", "1" + "\\"*3 + "\n2"),
+    # ("a\\\n1" + "\\"*4 + "\n2", "1" + "\\"*4 + "\n2"),
+    ("a\\\n1" + "\\"*5 + "\n2", "1" + "\\"*5 + "\n2"),
 
     # Every char is valid (it reads until \n), so ;{# are not special
-    ('a;', ';'),
-    ('a}', '}'),
-    ('a#', '#'),
-    ('a\\ foo}; \t#', ' foo}; \t#'),
+    ("a;", ";"),
+    ("a}", "}"),
+    ("a#", "#"),
+    ("a\\ foo}; \t#", " foo}; \t#"),
 
     # Non-ASCII chars are allowed
-    ('a★', '★'),
+    ("a★", "★"),
 ]
 
-# Copy all 'a' tests to: i, c, e
-TEST_DATA['i'] = [('i' + script[1:], text) for script, text in TEST_DATA['a']]
-TEST_DATA['c'] = [('c' + script[1:], text) for script, text in TEST_DATA['a']]
-TEST_DATA['e'] = [('e' + script[1:], text) for script, text in TEST_DATA['a']]
+# Copy all "a" tests to: i, c, e
+TEST_DATA["i"] = [("i" + script[1:], text) for script, text in TEST_DATA["a"]]
+TEST_DATA["c"] = [("c" + script[1:], text) for script, text in TEST_DATA["a"]]
+TEST_DATA["e"] = [("e" + script[1:], text) for script, text in TEST_DATA["a"]]
 
-# Empty bare 'e' is allowed (but forbidden for a, i, c)
-TEST_DATA['e'].append(('e', ''))
+# Empty bare "e" is allowed (but forbidden for a, i, c)
+TEST_DATA["e"].append(("e", ""))
 
 
 #------------------------------------------------------------------------------
-# Test data for 'y' and 's' commands
+# Test data for "y" and "s" commands
 
-TEST_DATA['y'] = [
+TEST_DATA["y"] = [
     # Test cases for commands: y, s
     # Source: match_slash()
     # Format: (sed script, delimiter, source, dest)
 
     # Simple usage
-    ('y/a/A/', '/', 'a', 'A'),
+    ("y/a/A/", "/", "a", "A"),
 
     # Empty source and dest
-    ('y///', '/', '', ''),
+    ("y///", "/", "", ""),
 
     # Source and dest are equal
-    ('y/a/a/', '/', 'a', 'a'),
+    ("y/a/a/", "/", "a", "a"),
 
     # Space and tab in source and dest
-    ('y/ /\t/', '/', ' ', '\t'),
-    ('y/\t/ /', '/', '\t', ' '),
+    ("y/ /\t/", "/", " ", "\t"),
+    ("y/\t/ /", "/", "\t", " "),
 
     # Otherwise special chars as delimiter
-    ('y;a;A;',    ';',  'a', 'A'),
-    ('y[a[A[',    '[',  'a', 'A'),
-    ('y{a{A{',    '{',  'a', 'A'),
-    ('y}a}A}',    '}',  'a', 'A'),
-    ('y#a#A#',    '#',  'a', 'A'),
-    ('y a A ',    ' ',  'a', 'A'),
-    ('y\ta\tA\t', '\t', 'a', 'A'),
-    ('y\\a\\A\\', '\\', 'a', 'A'),
+    ("y;a;A;",    ";",  "a", "A"),
+    ("y[a[A[",    "[",  "a", "A"),
+    ("y{a{A{",    "{",  "a", "A"),
+    ("y}a}A}",    "}",  "a", "A"),
+    ("y#a#A#",    "#",  "a", "A"),
+    ("y a A ",    " ",  "a", "A"),
+    ("y\ta\tA\t", "\t", "a", "A"),
+    ("y\\a\\A\\", "\\", "a", "A"),
 
     # Literal / must be escaped as \/ in source and dest
-    ('y/\\/a/\\/A/', '/', '\\/a', '\\/A'),
+    ("y/\\/a/\\/A/", "/", "\\/a", "\\/A"),
 
     # Literal x must be escaped as \x in source and dest when delim=x
-    ('y#\\#a#\\#A#', '#', '\\#a', '\\#A'),
+    ("y#\\#a#\\#A#", "#", "\\#a", "\\#A"),
 
     # Literal \ must be escaped as \\ in source and dest
-    ('y/\\\\/\\\\/', '/', '\\\\', '\\\\'),
+    ("y/\\\\/\\\\/", "/", "\\\\", "\\\\"),
 
     # Literal \n must be escaped as \\n in source and dest
-    ('y/\\\n/\\\n/', '/', '\\\n', '\\\n'),
+    ("y/\\\n/\\\n/", "/", "\\\n", "\\\n"),
 
     # Literal \ is not allowed when \ is the delimiter
-    #('y\\\\\\a\\\\\\A\\', '\\', '\\\\a', '\\\\A'),
+    #("y\\\\\\a\\\\\\A\\", "\\", "\\\\a", "\\\\A"),
 
     # Non-ASCII chars are allowed as source and dest
-    ('y/★/★/', '/', '★', '★'),
+    ("y/★/★/", "/", "★", "★"),
 
     # Non-ASCII chars are NOT allowed as delimiter
-    #('y★a★A★', '★', 'a', 'A'),
+    #("y★a★A★", "★", "a", "A"),
 ]
 
-# Copy all 'y' tests to: s
-TEST_DATA['s'] = [
-    ('s' + script[1:], delimiter, source, dest)
-    for script, delimiter, source, dest in TEST_DATA['y']
+# Copy all "y" tests to: s
+TEST_DATA["s"] = [
+    ("s" + script[1:], delimiter, source, dest)
+    for script, delimiter, source, dest in TEST_DATA["y"]
 ]
 
 # y: source and dest are allowed to have different lengths
 # Note: This differs from the GNU sed parser. Since we do not perform the
 #       de-escaping of \/, \\ and \\n, the length check is turned off.
-TEST_DATA['y'].append(('y/a/aa/', '/', 'a', 'aa'))
+TEST_DATA["y"].append(("y/a/aa/", "/", "a", "aa"))
 
 # Command name as delimiter
-TEST_DATA['y'].append(('yyayAy', 'y', 'a', 'A'))
-TEST_DATA['s'].append(('ssasAs', 's', 'a', 'A'))
+TEST_DATA["y"].append(("yyayAy", "y", "a", "A"))
+TEST_DATA["s"].append(("ssasAs", "s", "a", "A"))
 
 # Delimiter inside a regex character class
-TEST_DATA['s'].append(('s/[/]//', '/', '[/]', ''))
+TEST_DATA["s"].append(("s/[/]//", "/", "[/]", ""))
 
 
 #------------------------------------------------------------------------------
-# Test data for using flags in the 's' command
+# Test data for using flags in the "s" command
 
-TEST_DATA['s-flags'] = [
+TEST_DATA["s-flags"] = [
     # Source: match_slash(), mark_subst_opts()
     # Format: (sed script, delimiter, pattern, replacement, flags, flag_arg)
 
     # Flags: traditional sed
-    ('s/a/A/g',     '/', 'a', 'A', 'g',   ''),
-    ('s/a/A/p',     '/', 'a', 'A', 'p',   ''),
-    ('s/a/A/1',     '/', 'a', 'A', '1',   ''),
-    ('s/a/A/99',    '/', 'a', 'A', '99',  ''),
-    ('s/a/A/999',   '/', 'a', 'A', '999', ''),
-    ('s/a/A/wfile', '/', 'a', 'A', 'w',   'file'),
+    ("s/a/A/g",     "/", "a", "A", "g",   ""),
+    ("s/a/A/p",     "/", "a", "A", "p",   ""),
+    ("s/a/A/1",     "/", "a", "A", "1",   ""),
+    ("s/a/A/99",    "/", "a", "A", "99",  ""),
+    ("s/a/A/999",   "/", "a", "A", "999", ""),
+    ("s/a/A/wfile", "/", "a", "A", "w",   "file"),
 
     # Flags: GNU sed extensions
-    ('s/a/A/e', '/', 'a', 'A', 'e', ''),
-    ('s/a/A/m', '/', 'a', 'A', 'm', ''),
-    ('s/a/A/i', '/', 'a', 'A', 'i', ''),
-    ('s/a/A/M', '/', 'a', 'A', 'M', ''),
-    ('s/a/A/I', '/', 'a', 'A', 'I', ''),
+    ("s/a/A/e", "/", "a", "A", "e", ""),
+    ("s/a/A/m", "/", "a", "A", "m", ""),
+    ("s/a/A/i", "/", "a", "A", "i", ""),
+    ("s/a/A/M", "/", "a", "A", "M", ""),
+    ("s/a/A/I", "/", "a", "A", "I", ""),
 
     # Flags mixed (note that the order is preserved)
-    ('s/a/A/gpemiMIwfile', '/', 'a', 'A', 'gpemiMIw', 'file'),
+    ("s/a/A/gpemiMIwfile", "/", "a", "A", "gpemiMIw", "file"),
 
     # Flags: GNU sed extensions can be repeated
-    ('s/a/A/eemmiiMMII', '/', 'a', 'A', 'eemmiiMMII', ''),
-    ('s/a/A/emiMIemiMI', '/', 'a', 'A', 'emiMIemiMI', ''),
+    ("s/a/A/eemmiiMMII", "/", "a", "A", "eemmiiMMII", ""),
+    ("s/a/A/emiMIemiMI", "/", "a", "A", "emiMIemiMI", ""),
 
     # Flag w: must be the last flag (everything is a filename after it)
-    ('s/a/A/wfile gp', '/', 'a', 'A', 'w', 'file gp'),
+    ("s/a/A/wfile gp", "/", "a", "A", "w", "file gp"),
 
     # Flag w: leading spaces are ignored
-    ('s/a/A/w space',       '/', 'a', 'A', 'w', 'space'),
-    ('s/a/A/w\ttab',        '/', 'a', 'A', 'w', 'tab'),
-    ('s/a/A/w \t \t mixed', '/', 'a', 'A', 'w', 'mixed'),
+    ("s/a/A/w space",       "/", "a", "A", "w", "space"),
+    ("s/a/A/w\ttab",        "/", "a", "A", "w", "tab"),
+    ("s/a/A/w \t \t mixed", "/", "a", "A", "w", "mixed"),
 
     # Flag w: every char is valid (it reads until \n), so ;{# are not special
-    ('s/a/A/w;',  '/', 'a', 'A', 'w', ';'),
-    ('s/a/A/w}',  '/', 'a', 'A', 'w', '}'),
-    ('s/a/A/w#',  '/', 'a', 'A', 'w', '#'),
-    ('s/a/A/w\\', '/', 'a', 'A', 'w', '\\'),
-    ('s/a/A/w foo}; \t#\\', '/', 'a', 'A', 'w', 'foo}; \t#\\'),
+    ("s/a/A/w;",  "/", "a", "A", "w", ";"),
+    ("s/a/A/w}",  "/", "a", "A", "w", "}"),
+    ("s/a/A/w#",  "/", "a", "A", "w", "#"),
+    ("s/a/A/w\\", "/", "a", "A", "w", "\\"),
+    ("s/a/A/w foo}; \t#\\", "/", "a", "A", "w", "foo}; \t#\\"),
 
     # Flag w: non-ASCII chars are allowed
-    ('s/a/A/w★', '/', 'a', 'A', 'w', '★'),
+    ("s/a/A/w★", "/", "a", "A", "w", "★"),
 ]
 
 
 #------------------------------------------------------------------------------
 
-TEST_DATA['#'] = [
+TEST_DATA["#"] = [
     # Test cases for comments
     # Preserving comments is a sedparse extension. GNU sed discards them.
     # Note: all scripts end in EOF. At run time the \n ending is also tested.
@@ -527,151 +527,151 @@ TEST_DATA['#'] = [
     # Format: (result_index, sed script, comment)
 
     # Empty comment
-    (0, '#', ''),
-    (1, 'p#', ''),
-    (1, 'p;#', ''),
+    (0, "#", ""),
+    (1, "p#", ""),
+    (1, "p;#", ""),
 
     # No spaces around #
-    (0, '#foo', 'foo'),
-    (1, 'p#foo', 'foo'),
-    (1, 'p;#foo', 'foo'),
+    (0, "#foo", "foo"),
+    (1, "p#foo", "foo"),
+    (1, "p;#foo", "foo"),
 
     # Leading spaces before # are ignored
-    (0, ' \t#foo', 'foo'),
-    (1, 'p \t#foo', 'foo'),
-    (1, 'p; \t#foo', 'foo'),
+    (0, " \t#foo", "foo"),
+    (1, "p \t#foo", "foo"),
+    (1, "p; \t#foo", "foo"),
 
     # Leading and trailing spaces in the comment contents are preserved
-    (0, '#  foo  ', '  foo  '),
-    (0, '#\t\tfoo\t\t', '\t\tfoo\t\t'),
+    (0, "#  foo  ", "  foo  "),
+    (0, "#\t\tfoo\t\t", "\t\tfoo\t\t"),
 
     # Extra leading # are treated as comment content
-    (0, '##foo', '#foo'),
-    (0, '####foo', '###foo'),
+    (0, "##foo", "#foo"),
+    (0, "####foo", "###foo"),
 
     # An escape at line end is not special inside comments
-    (0, '#foo\\', 'foo\\'),
+    (0, "#foo\\", "foo\\"),
 
     # Command-ending characters are not special inside comments
-    (0, '#foo;', 'foo;'),
-    (0, '#foo}', 'foo}'),
+    (0, "#foo;", "foo;"),
+    (0, "#foo}", "foo}"),
 
     # Comment right after a label command
-    (1, ':a#foo', 'foo'),
-    (1, 'ba#foo', 'foo'),
-    (1, 'b #foo', 'foo'),
-    (1, 'b#foo',  'foo'),
+    (1, ":a#foo", "foo"),
+    (1, "ba#foo", "foo"),
+    (1, "b #foo", "foo"),
+    (1, "b#foo",  "foo"),
 
     # Comment right after y and s
-    (1, 'y/a/A/#foo',  'foo'),
-    (1, 's/a/A/g#foo', 'foo'),
+    (1, "y/a/A/#foo",  "foo"),
+    (1, "s/a/A/g#foo", "foo"),
 
     # Comment right after blocks
-    # Note: '{#foo' is the only allowed partial comment in BSD sed (no ; before)
-    (1, '{#foo\n}', 'foo'),
-    (2, '{}#foo',   'foo'),
+    # Note: "{#foo" is the only allowed partial comment in BSD sed (no ; before)
+    (1, "{#foo\n}", "foo"),
+    (2, "{}#foo",   "foo"),
 
     # The special #n at first line is treated as a normal comment by the parser.
     # After parsing, the calling code can make it special if desired.
-    (0, '#n', 'n'),
+    (0, "#n", "n"),
 ]
 
 
 #------------------------------------------------------------------------------
 
-TEST_DATA['\n'] = [
+TEST_DATA["\n"] = [
     # Test cases for blank lines
     # Preserving blank lines is a sedparse extension. GNU sed discards them.
-    # Source: ignore_trailing_fluff() and also search for 'sedparse' comments.
+    # Source: ignore_trailing_fluff() and also search for "sedparse" comments.
     # Format: (sed script, *expected_parsed_commands)
 
     # 100% blank lines script
-    ('\n', '\n'),
-    ('\n\n', '\n', '\n'),
-    ('\n\n\n', '\n', '\n', '\n'),
+    ("\n", "\n"),
+    ("\n\n", "\n", "\n"),
+    ("\n\n\n", "\n", "\n", "\n"),
 
     # blank lines at the top and bottom should be preserved
-    ('\n\np',   '\n', '\n', 'p'),
-    ('p\n\n\n', 'p', '\n', '\n'),
+    ("\n\np",   "\n", "\n", "p"),
+    ("p\n\n\n", "p", "\n", "\n"),
 
     # blank lines between solo commands should be preserved
-    ('p\nq',     'p', 'q'),
-    ('p\n\nq',   'p', '\n', 'q'),
-    ('p\n\n\nq', 'p', '\n', '\n', 'q'),
+    ("p\nq",     "p", "q"),
+    ("p\n\nq",   "p", "\n", "q"),
+    ("p\n\n\nq", "p", "\n", "\n", "q"),
 
     # blank lines between label commands should be preserved
-    ('b\nq',     'b', 'q'),
-    ('b\n\nq',   'b', '\n', 'q'),
-    ('b\n\n\nq', 'b', '\n', '\n', 'q'),
+    ("b\nq",     "b", "q"),
+    ("b\n\nq",   "b", "\n", "q"),
+    ("b\n\n\nq", "b", "\n", "\n", "q"),
 
     # blank lines between filename commands should be preserved
-    ('rfoo\nq',     'r', 'q'),
-    ('rfoo\n\nq',   'r', '\n', 'q'),
-    ('rfoo\n\n\nq', 'r', '\n', '\n', 'q'),
+    ("rfoo\nq",     "r", "q"),
+    ("rfoo\n\nq",   "r", "\n", "q"),
+    ("rfoo\n\n\nq", "r", "\n", "\n", "q"),
 
     # blank lines between text commands should be preserved
-    ('a\\\nfoo\nq',     'a', 'q'),
-    ('a\\\nfoo\n\nq',   'a', '\n', 'q'),
-    ('a\\\nfoo\n\n\nq', 'a', '\n', '\n', 'q'),
+    ("a\\\nfoo\nq",     "a", "q"),
+    ("a\\\nfoo\n\nq",   "a", "\n", "q"),
+    ("a\\\nfoo\n\n\nq", "a", "\n", "\n", "q"),
 
     # blank lines between consecutive blocks should be preserved
-    ('{\n}\n{}',         '{', '}', '{', '}'),
-    ('{\n\n}\n\n{}',     '{', '\n', '}', '\n', '{', '}'),
-    ('{\n\n\n}\n\n\n{}', '{', '\n', '\n', '}', '\n', '\n', '{', '}'),
+    ("{\n}\n{}",         "{", "}", "{", "}"),
+    ("{\n\n}\n\n{}",     "{", "\n", "}", "\n", "{", "}"),
+    ("{\n\n\n}\n\n\n{}", "{", "\n", "\n", "}", "\n", "\n", "{", "}"),
 
     # blank lines between nested blocks should be preserved
-    ('{\n{}\n}',         '{', '{', '}', '}'),
-    ('{\n\n{}\n\n}',     '{', '\n', '{', '}', '\n', '}'),
-    ('{\n\n\n{}\n\n\n}', '{', '\n', '\n', '{', '}', '\n', '\n', '}'),
+    ("{\n{}\n}",         "{", "{", "}", "}"),
+    ("{\n\n{}\n\n}",     "{", "\n", "{", "}", "\n", "}"),
+    ("{\n\n\n{}\n\n\n}", "{", "\n", "\n", "{", "}", "\n", "\n", "}"),
 
     # blank lines between comments should be preserved
-    ('#foo\n#bar',     '#', '#'),
-    ('#foo\n\n#bar',   '#', '\n', '#'),
-    ('#foo\n\n\n#bar', '#', '\n', '\n', '#'),
+    ("#foo\n#bar",     "#", "#"),
+    ("#foo\n\n#bar",   "#", "\n", "#"),
+    ("#foo\n\n\n#bar", "#", "\n", "\n", "#"),
 ]
 
 
 #------------------------------------------------------------------------------
 
-TEST_DATA['block'] = [
+TEST_DATA["block"] = [
     # Test cases for blocks
     # Note: all scripts end in EOF. At run time the \n ending is also tested.
     # Format: (sed script, *expected_parsed_commands)
 
     # Empty blocks are allowed
-    ('{}', '{', '}'),
+    ("{}", "{", "}"),
 
     # Nested empty blocks are allowed
-    ('{{}}', '{', '{', '}', '}'),
+    ("{{}}", "{", "{", "}", "}"),
 
     # Using ; is optional around { and }
-    ('{p}',   '{', 'p', '}'),
-    ('{p;}',  '{', 'p', '}'),
-    ('{;p}',  '{', 'p', '}'),
-    ('{;p;}', '{', 'p', '}'),
+    ("{p}",   "{", "p", "}"),
+    ("{p;}",  "{", "p", "}"),
+    ("{;p}",  "{", "p", "}"),
+    ("{;p;}", "{", "p", "}"),
 ]
 
 
 #------------------------------------------------------------------------------
 
-TEST_DATA['trailing_fluff'] = [
+TEST_DATA["trailing_fluff"] = [
     # Test cases for ignore_trailing_fluff()
     # Note: all scripts end in EOF. At run time the \n ending is also tested.
     # Format: (sed script, *expected_parsed_commands)
 
     # Ignore trailing spaces and tabs
-    ('p      ', 'p'),
-    ('p\t\t\t', 'p'),
-    ('p\t \t ', 'p'),
+    ("p      ", "p"),
+    ("p\t\t\t", "p"),
+    ("p\t \t ", "p"),
 
     # Ignore trailing semicolons
-    ('p;',      'p'),
-    ('p;;;;;',  'p'),
-    ('p;;;;;x', 'p', 'x'),
+    ("p;",      "p"),
+    ("p;;;;;",  "p"),
+    ("p;;;;;x", "p", "x"),
 
     # Mixing spaces and semicolons
-    ('p ;\t; ', 'p'),
-    ('p ;;\tx', 'p', 'x'),
+    ("p ;\t; ", "p"),
+    ("p ;;\tx", "p", "x"),
 ]
 
 
@@ -712,7 +712,7 @@ class TestSedParser(unittest.TestCase):  # pylint: disable=unused-variable
 
     def _assert_defaults(self, data, skip=None):  # pylint: disable=too-many-branches
         """Assert that all command attributes are set to their default values.
-        Use `skip=['foo']` to skip checking the `foo` attribute.
+        Use `skip=["foo"]` to skip checking the `foo` attribute.
         """
         if skip is None:
             skip = []
