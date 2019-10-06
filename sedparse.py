@@ -124,6 +124,7 @@ class struct_regex:
 # RANGE_CLOSED = 3             # like RANGE_INACTIVE, but range has ended once
 
 # enum addr_types {
+# fmt: off
 ADDR_IS_NULL = 1             # null address
 ADDR_IS_REGEX = 2            # a.addr_regex is valid
 ADDR_IS_NUM = 3              # a.addr_number is valid
@@ -131,6 +132,7 @@ ADDR_IS_NUM_MOD = 4          # a.addr_number is valid, addr_step is modulo
 ADDR_IS_STEP = 5             # address is +N (only valid for addr2)
 ADDR_IS_STEP_MOD = 6         # address is ~N (only valid for addr2)
 ADDR_IS_LAST = 7             # address is $
+# fmt: on
 
 
 class struct_addr:
@@ -310,10 +312,10 @@ def IS_MB_CHAR(ch):
 
 # sedparse: 0 and 2 are not used
 # enum exit_codes {
-# EXIT_SUCCESS = 0            # is already defined as 0
-EXIT_BAD_USAGE = 1          # bad program syntax, invalid command-line options
-# EXIT_BAD_INPUT = 2          # failed to open some of the input files
-EXIT_PANIC = 4              # PANIC during program execution
+# EXIT_SUCCESS = 0  # is already defined as 0
+EXIT_BAD_USAGE = 1  # bad program syntax, invalid command-line options
+# EXIT_BAD_INPUT = 2  # failed to open some of the input files
+EXIT_PANIC = 4  # PANIC during program execution
 
 ######################################## translated from utils.c
 
