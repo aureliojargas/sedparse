@@ -22,18 +22,11 @@
 # pylint: disable=invalid-name
 # pylint: disable=too-few-public-methods
 # pylint: disable=too-many-branches
-# pylint: disable=too-many-instance-attributes
 # pylint: disable=too-many-lines
 # pylint: disable=too-many-statements
 
 import argparse
 import sys
-
-######################################## translated from regex.h
-
-REG_EXTENDED = 1
-REG_ICASE = 2
-REG_NEWLINE = 4
 
 program_name = 'sed'
 EOF = '<EOF>'  # XXX read https://softwareengineering.stackexchange.com/a/197629
@@ -60,20 +53,20 @@ def ISSPACE(c):
 
 ######################################## translated from sed.h
 
-# This structure tracks files used by sed so that they may all be
-#   closed cleanly at normal program termination.  A flag is kept that tells
-#   if a missing newline was encountered, so that it is added on the
-#   next line and the two lines are not concatenated.
+# sedparse: The original code handles file open/read/write/close operations,
+# but here we only care about the filename.
 class struct_output:
     name = ""
-    missing_newline = False
-    fp = None
-    link = None
+
+    # sedparse: not used
+    # missing_newline = False
+    # fp = None
+    # link = None
 
 
 class struct_text_buf:
     text = []
-    text_length = 0
+    # text_length = 0  # sedparse: not used
 
     def __str__(self):
         return ''.join(self.text)[:-1]  # remove trailing \n
@@ -85,12 +78,14 @@ class struct_text_buf:
 class struct_regex:
     pattern = ""
     flags = ""  # sedparse: was 0 in the original
-    sz = 0
-    dfa = None  # struct_dfa()
-    begline = False
-    endline = False
-    re = ""
     slash = ""  # sedparse
+
+    # sedparse: not used
+    # sz = 0
+    # dfa = None  # struct_dfa()
+    # begline = False
+    # endline = False
+    # re = ""
 
     def escape(self):  # sedparse
         return '\\' if self.slash != '/' else ''
@@ -102,28 +97,31 @@ class struct_regex:
         return self.escape() + self.slash + self.pattern + self.slash + self.flags
 
 
-# enum replacement_types {
-REPL_ASIS = 0
-REPL_UPPERCASE = 1
-REPL_LOWERCASE = 2
-REPL_UPPERCASE_FIRST = 4
-REPL_LOWERCASE_FIRST = 8
-REPL_MODIFIERS = REPL_UPPERCASE_FIRST | REPL_LOWERCASE_FIRST
-# These are given to aid in debugging
-REPL_UPPERCASE_UPPERCASE = REPL_UPPERCASE_FIRST | REPL_UPPERCASE
-REPL_UPPERCASE_LOWERCASE = REPL_UPPERCASE_FIRST | REPL_LOWERCASE
-REPL_LOWERCASE_UPPERCASE = REPL_LOWERCASE_FIRST | REPL_UPPERCASE
-REPL_LOWERCASE_LOWERCASE = REPL_LOWERCASE_FIRST | REPL_LOWERCASE
+# sedparse: not used
+# # enum replacement_types {
+# REPL_ASIS = 0
+# REPL_UPPERCASE = 1
+# REPL_LOWERCASE = 2
+# REPL_UPPERCASE_FIRST = 4
+# REPL_LOWERCASE_FIRST = 8
+# REPL_MODIFIERS = REPL_UPPERCASE_FIRST | REPL_LOWERCASE_FIRST
+# # These are given to aid in debugging
+# REPL_UPPERCASE_UPPERCASE = REPL_UPPERCASE_FIRST | REPL_UPPERCASE
+# REPL_UPPERCASE_LOWERCASE = REPL_UPPERCASE_FIRST | REPL_LOWERCASE
+# REPL_LOWERCASE_UPPERCASE = REPL_LOWERCASE_FIRST | REPL_UPPERCASE
+# REPL_LOWERCASE_LOWERCASE = REPL_LOWERCASE_FIRST | REPL_LOWERCASE
 
-# enum text_types {
-TEXT_BUFFER = 1
-TEXT_REPLACEMENT = 2
-TEXT_REGEX = 3
+# sedparse: not used
+# # enum text_types {
+# TEXT_BUFFER = 1
+# TEXT_REPLACEMENT = 2
+# TEXT_REGEX = 3
 
-# enum addr_state {
-RANGE_INACTIVE = 1           # never been active
-RANGE_ACTIVE = 2             # between first and second address
-RANGE_CLOSED = 3             # like RANGE_INACTIVE, but range has ended once
+# sedparse: not used
+# # enum addr_state {
+# RANGE_INACTIVE = 1           # never been active
+# RANGE_ACTIVE = 2             # between first and second address
+# RANGE_CLOSED = 3             # like RANGE_INACTIVE, but range has ended once
 
 # enum addr_types {
 ADDR_IS_NULL = 1             # null address
@@ -133,6 +131,7 @@ ADDR_IS_NUM_MOD = 4          # a.addr_number is valid, addr_step is modulo
 ADDR_IS_STEP = 5             # address is +N (only valid for addr2)
 ADDR_IS_STEP_MOD = 6         # address is ~N (only valid for addr2)
 ADDR_IS_LAST = 7             # address is $
+
 
 class struct_addr:
     addr_type = ADDR_IS_NULL  # enum addr_types
@@ -168,26 +167,30 @@ class struct_addr:
 
 
 class struct_replacement:
-    prefix = ""
-    prefix_length = 0
-    subst_id = 0
-    repl_type = REPL_ASIS  # enum replacement_types
-    next_ = None  # struct_replacement
     text = ""  # sedparse
+
+    # sedparse: not used
+    # prefix = ""
+    # prefix_length = 0
+    # subst_id = 0
+    # repl_type = REPL_ASIS  # enum replacement_types
+    # next_ = None  # struct_replacement
 
 
 class struct_subst:
     regx = struct_regex()
     replacement = struct_replacement()
-    numb = 0  # if >0, only substitute for match number "numb"
     outf = struct_output()  # 'w' option given
-    global_ = False  # 'g' option given
-    print_ = False  # 'p' option given (before/after eval)
-    eval_ = False  # 'e' option given
-    max_id = 0  # maximum backreference on the RHS
-    replacement_buffer = ""  # ifdef lint
     flags = []  # sedparse
     slash = ""  # sedparse
+
+    # sedparse: not used
+    # numb = 0  # if >0, only substitute for match number "numb"
+    # global_ = False  # 'g' option given
+    # print_ = False  # 'p' option given (before/after eval)
+    # eval_ = False  # 'e' option given
+    # max_id = 0  # maximum backreference on the RHS
+    # replacement_buffer = ""  # ifdef lint
 
     def __str__(self):
         return (
@@ -205,35 +208,54 @@ class struct_sed_cmd_x:
     "auxiliary data for various commands"
     # This structure is used for a, i, and c commands.
     cmd_txt = struct_text_buf()
+
     # This is used for the l, q and Q commands.
     int_arg = -1
-    # This is used for the {}, b, and t commands.
-    jump_index = 0
+
     # This is used for the r command. (sedparse: and R w W)
     fname = ""
+
     # This is used for the hairy s command. (sedparse: and y)
     cmd_subst = struct_subst()
+
     # This is used for the w command.
     outf = struct_output()
-    # This is used for the R command.
-    # (despite the struct name, it is used for both in and out files). (sedparse: not used)
-    inf = struct_output()
-    # This is used for the y command.
-    translate = ""
-    translatemb = ""
-    # This is used for the ':' command (debug only).
+
+    # This is used for the ':' command.
     label_name = ""
+
+    # This is used for the command comment.
     comment = ""  # sedparse
+
+    # sedparse: not used
+    # # This is used for the {}, b, and t commands.
+    # jump_index = 0
+    # # This is used for the R command.
+    # # (despite the struct name, it is used for both in and out files).
+    # inf = struct_output()
+    # # This is used for the y command.
+    # translate = ""
+    # translatemb = ""
 
 
 class struct_sed_cmd:
     a1 = struct_addr()
     a2 = struct_addr()
-    range_state = RANGE_INACTIVE  # See enum addr_state
-    addr_bang = False  # Non-zero if command is to be applied to non-matches. (sedparse: using bool)
-    cmd = ""  # The actual command character.
-    line = 0
+
+    # Non-zero if command is to be applied to non-matches.
+    addr_bang = False  # sedparse: using bool
+
+    # The actual command character.
+    cmd = ""
+
+    # auxiliary data for various commands
     x = struct_sed_cmd_x()
+
+    # The original line number where this command was found
+    line = 0  # sedparse extension
+
+    # sedparse: not used
+    # range_state = RANGE_INACTIVE  # See enum addr_state
 
     def __str__(self):
         ret = []
@@ -270,13 +292,6 @@ class struct_sed_cmd:
         return ''.join(ret)
 
 
-# Struct vector is used to describe a compiled sed program.
-class struct_vector:
-    v = struct_sed_cmd()
-    v_allocated = 0
-    v_length = 0
-
-
 # sedparse: This is probably from regex.c, but I'll fake it here
 # just saving the collected strings
 def compile_regex(pattern, flags):
@@ -293,10 +308,11 @@ def IS_MB_CHAR(ch):
 
 ######################################## translated from utils.h
 
+# sedparse: 0 and 2 are not used
 # enum exit_codes {
-EXIT_SUCCESS = 0            # is already defined as 0
+# EXIT_SUCCESS = 0            # is already defined as 0
 EXIT_BAD_USAGE = 1          # bad program syntax, invalid command-line options
-EXIT_BAD_INPUT = 2          # failed to open some of the input files
+# EXIT_BAD_INPUT = 2          # failed to open some of the input files
 EXIT_PANIC = 4              # PANIC during program execution
 
 ######################################## translated from utils.c
@@ -305,9 +321,6 @@ EXIT_PANIC = 4              # PANIC during program execution
 def panic(msg):
     print("%s: %s" % (program_name, msg), file=sys.stderr)
     sys.exit(EXIT_PANIC)
-
-
-MIN_ALLOCATE = 50
 
 
 def init_buffer():
@@ -326,11 +339,9 @@ def free_buffer(b):
 
 ######################################## translated from compile.c
 
-YMAP_LENGTH = 256
-VECTOR_ALLOC_INCREMENT = 40
 OPEN_BRACKET = '['
 CLOSE_BRACKET = ']'
-OPEN_BRACE = '{'
+# OPEN_BRACE = '{'
 CLOSE_BRACE = '}'
 
 # struct prog_info {
@@ -383,15 +394,11 @@ class cur_input(error_info):
     pass
 
 
-# /* Information about labels and jumps-to-labels.  This is used to do
-#   the required backpatching after we have compiled all the scripts. */
-jumps = NULL
-labels = NULL
-
+# sedparse: not used
 # /* We wish to detect #n magic only in the first input argument;
 #   this flag tracks when we have consumed the first file of input. */
 # static bool first_script = true;
-first_script = True
+# first_script = True
 
 # Allow for scripts like "sed -e 'i\' -e foo":
 # static struct buffer *pending_text = NULL;
@@ -405,6 +412,7 @@ old_text_buf = NULL
 blocks = 0
 
 # Various error messages we may want to print
+# sedparse: not used messages are commented
 BAD_BANG = "multiple `!'s"
 BAD_COMMA = "unexpected `,'"
 BAD_STEP = "invalid usage of +N or ~N as first address"
@@ -413,10 +421,10 @@ EXCESS_CLOSE_BRACE = "unexpected `}'"
 EXCESS_JUNK = "extra characters after command"
 EXPECTED_SLASH = "expected \\ after `a', `c' or `i'"
 NO_CLOSE_BRACE_ADDR = "`}' doesn't want any addresses"
-NO_COLON_ADDR = ": doesn't want any addresses"
-NO_SHARP_ADDR = "comments don't accept any addresses"
+# NO_COLON_ADDR = ": doesn't want any addresses"
+# NO_SHARP_ADDR = "comments don't accept any addresses"
 NO_COMMAND = "missing command"
-ONE_ADDR = "command only uses one address"
+# ONE_ADDR = "command only uses one address"
 UNTERM_ADDR_RE = "unterminated address regex"
 UNTERM_S_CMD = "unterminated `s' command"
 UNTERM_Y_CMD = "unterminated `y' command"
@@ -425,15 +433,15 @@ EXCESS_P_OPT = "multiple `p' options to `s' command"
 EXCESS_G_OPT = "multiple `g' options to `s' command"
 EXCESS_N_OPT = "multiple number options to `s' command"
 ZERO_N_OPT = "number option to `s' command may not be zero"
-Y_CMD_LEN = "strings for `y' command are different lengths"
+# Y_CMD_LEN = "strings for `y' command are different lengths"
 BAD_DELIM = "delimiter character is not a single-byte character"
-ANCIENT_VERSION = "expected newer version of sed"
+# ANCIENT_VERSION = "expected newer version of sed"
 INVALID_LINE_0 = "invalid usage of line address 0"
 UNKNOWN_CMD = "unknown command: `%c'"
-INCOMPLETE_CMD = "incomplete command"
+# INCOMPLETE_CMD = "incomplete command"
 COLON_LACKS_LABEL = "\":\" lacks a label"
-RECURSIVE_ESCAPE_C = "recursive escaping after \\c not allowed"
-DISALLOWED_CMD = "e/r/w commands disabled in sandbox mode"
+# RECURSIVE_ESCAPE_C = "recursive escaping after \\c not allowed"
+# DISALLOWED_CMD = "e/r/w commands disabled in sandbox mode"
 MISSING_FILENAME = "missing filename in r/R/w/W commands"
 
 # Complain about an unknown command and exit.
@@ -578,7 +586,7 @@ def next_cmd_entry(vector):
     cmd = struct_sed_cmd()
     cmd.a1 = NULL
     cmd.a2 = NULL
-    cmd.range_state = RANGE_INACTIVE
+    # cmd.range_state = RANGE_INACTIVE  # sedparse: not used
     cmd.addr_bang = False
     cmd.cmd = '\0'  # something invalid, to catch bugs early
     # TODO fix this struct reset mess
@@ -589,7 +597,7 @@ def next_cmd_entry(vector):
     cmd.x.cmd_subst.replacement = struct_replacement()
     cmd.x.cmd_subst.outf = struct_output()
     cmd.x.outf = struct_output()
-    cmd.x.inf = struct_output()
+    # cmd.x.inf = struct_output()  # sedparse: not used
     vector.append(cmd)
     return cmd
 
@@ -819,7 +827,7 @@ def read_text(buf, leadin_ch):
             free_buffer(pending_text)
         pending_text = init_buffer()
         buf.text = []
-        buf.text_length = 0
+        # buf.text_length = 0  # sedparse: not used
         old_text_buf = buf
 
     if leadin_ch == EOF:
@@ -1168,8 +1176,8 @@ def compile_program(vector):
 
 # /* `str' is a string (from the command line) that contains a sed command.
 #   Compile the command, and add it to the end of `cur_program'. */
-def compile_string(cur_program, string):
-    global first_script
+def compile_string(cur_program, string):  # pylint: disable=unused-variable
+    # global first_script
 
     # string_expr_count = 0
 
@@ -1193,7 +1201,7 @@ def compile_string(cur_program, string):
     # prog.cur = NULL
     # prog.end = NULL
 
-    first_script = False
+    # first_script = False
     # no return, cur_program edited in place
 
 
@@ -1202,7 +1210,7 @@ def compile_string(cur_program, string):
 #
 def compile_file(cur_program, cmdfile):
     # prog and cur_input are global classes
-    global first_script
+    # global first_script
 
     prog.file = sys.stdin
     if cmdfile[0] != '-':  # or cmdfile[1] != '\0':
@@ -1219,14 +1227,14 @@ def compile_file(cur_program, cmdfile):
     # Reseting here breaks check_final_program() error messages (bad_prog())
     # prog.file = NULL
 
-    first_script = False
+    # first_script = False
     # no return, cur_program edited in place
 
 
 # Make any checks which require the whole program to have been read.
 #   In particular: this backpatches the jump targets.
 #   Any cleanup which can be done after these checks is done here also.
-def check_final_program():  # program):
+def check_final_program():  # program):  # pylint: disable=unused-variable
     global pending_text
 
     # do all "{"s have a corresponding "}"?

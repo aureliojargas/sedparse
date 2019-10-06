@@ -9,6 +9,11 @@ disable=
     suppressed-message,
     missing-docstring,
 
+# Please complain about unused global variables
+
+[VARIABLES]
+allow-global-unused-variables=no
+
 # Wide screen monitors are nice
 
 [FORMAT]

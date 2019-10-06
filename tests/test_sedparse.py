@@ -690,7 +690,7 @@ def captured_output():
         sys.stdout, sys.stderr = old_out, old_err
 
 
-class TestSedParser(unittest.TestCase):
+class TestSedParser(unittest.TestCase):  # pylint: disable=unused-variable
 
     def _my_setup(self):
         # start from scratch to avoid module state leak between tests
