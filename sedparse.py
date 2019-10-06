@@ -30,25 +30,25 @@ import sys
 
 # Adapt some C entities to Python
 NULL = None
-EOF = '<EOF>'  # XXX read https://softwareengineering.stackexchange.com/a/197629
+EOF = "<EOF>"  # XXX read https://softwareengineering.stackexchange.com/a/197629
 
 ######################################## translated from sed.c
 
-program_name = 'sed'
+program_name = "sed"
 
 ######################################## translated from basicdefs.h
 
 
 def ISBLANK(c):
-    return c in (' ', '\t')
+    return c in (" ", "\t")
 
 
 def ISDIGIT(ch):
-    return ch in '0123456789'
+    return ch in "0123456789"
 
 
 def ISSPACE(c):
-    return c in (' ', '\t', '\n', '\v', '\f', '\r')
+    return c in (" ", "\t", "\n", "\v", "\f", "\r")
 
 
 ######################################## translated from sed.h
@@ -69,10 +69,10 @@ class struct_text_buf:
     # text_length = 0  # sedparse: not used
 
     def __str__(self):
-        return ''.join(self.text)[:-1]  # remove trailing \n
+        return "".join(self.text)[:-1]  # remove trailing \n
 
     def __repr__(self):
-        return repr(''.join(self.text)[:-1])
+        return repr("".join(self.text)[:-1])
 
 
 class struct_regex:
@@ -88,7 +88,7 @@ class struct_regex:
     # re = ""
 
     def escape(self):  # sedparse
-        return '\\' if self.slash != '/' else ''
+        return "\\" if self.slash != "/" else ""
 
     def __repr__(self):
         return "[pattern=%s flags=%s]" % (self.pattern, self.flags)
@@ -150,19 +150,19 @@ class struct_addr:
         )
 
     def __str__(self):
-        ret = ''
+        ret = ""
         if self.addr_type == ADDR_IS_REGEX:
             ret = str(self.addr_regex)
         elif self.addr_type == ADDR_IS_NUM:
             ret = str(self.addr_number)
         elif self.addr_type == ADDR_IS_NUM_MOD:
-            ret = '%s~%s' % (self.addr_number, self.addr_step)
+            ret = "%s~%s" % (self.addr_number, self.addr_step)
         elif self.addr_type == ADDR_IS_STEP:
-            ret = '+%s' % self.addr_step
+            ret = "+%s" % self.addr_step
         elif self.addr_type == ADDR_IS_STEP_MOD:
-            ret = '~%s' % self.addr_step
+            ret = "~%s" % self.addr_step
         elif self.addr_type == ADDR_IS_LAST:
-            ret = '$'
+            ret = "$"
         else:  # sedparse: this condition should not happen
             ret = '<unknown address type "%s">' % self.addr_type
         return ret
@@ -201,8 +201,8 @@ class struct_subst:
             + self.slash
             + str(self.replacement.text)
             + self.slash
-            + ''.join(self.flags)
-            + (' ' + self.outf.name if 'w' in self.flags else '')
+            + "".join(self.flags)
+            + (" " + self.outf.name if "w" in self.flags else "")
         )
 
 
@@ -265,41 +265,41 @@ class struct_sed_cmd:
         if self.a1:
             ret.append(str(self.a1))
         if self.a2:
-            ret.append(',%s' % self.a2)
+            ret.append(",%s" % self.a2)
         if ret:
-            ret.append(' ')
+            ret.append(" ")
 
         if self.addr_bang:
-            ret.append('!')
+            ret.append("!")
 
         ret.append(self.cmd)
 
-        if self.cmd == '\n':
+        if self.cmd == "\n":
             pass
-        elif self.cmd == '#':
+        elif self.cmd == "#":
             ret.append(self.x.comment)
-        elif self.cmd == ':':
+        elif self.cmd == ":":
             ret.append(self.x.label_name)
-        elif self.cmd in ('s', 'y'):
+        elif self.cmd in ("s", "y"):
             ret.append(str(self.x.cmd_subst))
         elif self.x.label_name:
-            ret.append(' ' + self.x.label_name)
+            ret.append(" " + self.x.label_name)
         elif self.x.fname:
-            ret.append(' ' + self.x.fname)
+            ret.append(" " + self.x.fname)
         elif self.x.int_arg and self.x.int_arg > -1:
-            ret.append(' %s' % self.x.int_arg)
+            ret.append(" %s" % self.x.int_arg)
         elif self.x.cmd_txt.text:  # aic
-            ret.append('\\\n%s' % self.x.cmd_txt)
+            ret.append("\\\n%s" % self.x.cmd_txt)
 
-        return ''.join(ret)
+        return "".join(ret)
 
 
 # sedparse: This is probably from regex.c, but I'll fake it here
 # just saving the collected strings
 def compile_regex(pattern, flags):
     r = struct_regex()
-    r.pattern = ''.join(pattern)
-    r.flags = ''.join(flags)
+    r.pattern = "".join(pattern)
+    r.flags = "".join(flags)
     return r
 
 
@@ -341,10 +341,10 @@ def free_buffer(b):
 
 ######################################## translated from compile.c
 
-OPEN_BRACKET = '['
-CLOSE_BRACKET = ']'
+OPEN_BRACKET = "["
+CLOSE_BRACKET = "]"
 # OPEN_BRACE = '{'
-CLOSE_BRACE = '}'
+CLOSE_BRACE = "}"
 
 # struct prog_info {
 #   /* When we're reading a script command from a string, `prog.base'
@@ -382,7 +382,7 @@ class prog_info:
 #   countT string_expr_count;
 # };
 class error_info:
-    name = ''
+    name = ""
     line = 0
     string_expr_count = 0
 
@@ -441,7 +441,7 @@ BAD_DELIM = "delimiter character is not a single-byte character"
 INVALID_LINE_0 = "invalid usage of line address 0"
 UNKNOWN_CMD = "unknown command: `%c'"
 # INCOMPLETE_CMD = "incomplete command"
-COLON_LACKS_LABEL = "\":\" lacks a label"
+COLON_LACKS_LABEL = '":" lacks a label'
 # RECURSIVE_ESCAPE_C = "recursive escaping after \\c not allowed"
 # DISALLOWED_CMD = "e/r/w commands disabled in sandbox mode"
 MISSING_FILENAME = "missing filename in r/R/w/W commands"
@@ -480,7 +480,7 @@ def inchar():
         ch = prog.file.read(1)
         if not ch:
             ch = EOF
-    if ch == '\n':
+    if ch == "\n":
         cur_input.line += 1
     debug(ch, stats=True)
     return ch
@@ -491,7 +491,7 @@ def savchar(ch):
     debug("savchar(%s)" % ch, stats=True)
     if ch == EOF:
         return
-    if ch == '\n' and cur_input.line > 0:
+    if ch == "\n" and cur_input.line > 0:
         cur_input.line -= 1
     if prog.cur:
         prog.cur -= 1
@@ -524,9 +524,9 @@ def in_nonblank():
 def ignore_trailing_fluff():
     while True:
         ch = in_nonblank()
-        if ch == ';':  # skip it
+        if ch == ";":  # skip it
             pass
-        elif ch in (EOF, '\n'):  # EOF, EOL
+        elif ch in (EOF, "\n"):  # EOF, EOL
             return
         else:  # start of a new command
             savchar(ch)
@@ -540,13 +540,13 @@ def ignore_trailing_fluff():
 # */
 def read_end_of_cmd():
     ch = in_nonblank()
-    if ch in (CLOSE_BRACE, '#'):
+    if ch in (CLOSE_BRACE, "#"):
         savchar(ch)
-    elif ch not in (EOF, '\n', ';'):
+    elif ch not in (EOF, "\n", ";"):
         bad_prog(EXCESS_JUNK)
 
     # sedparse: Ignore multiple trailing blanks and ; until EOC/EOL/EOF
-    elif ch == ';':
+    elif ch == ";":
         ignore_trailing_fluff()
 
 
@@ -557,7 +557,7 @@ def in_integer(ch):
         num.append(ch)
         ch = inchar()
     savchar(ch)
-    return int(''.join(num))
+    return int("".join(num))
 
 
 def add_then_next(buffer, ch):
@@ -569,7 +569,7 @@ def add_then_next(buffer, ch):
 def read_comment():
     b = init_buffer()
     ch = inchar()
-    while ch not in (EOF, '\n'):
+    while ch not in (EOF, "\n"):
         ch = add_then_next(b, ch)
     return b
 
@@ -578,7 +578,7 @@ def read_comment():
 def read_filename():
     b = init_buffer()
     ch = in_nonblank()
-    while ch not in (EOF, '\n'):
+    while ch not in (EOF, "\n"):
         ch = add_then_next(b, ch)
     # add1_buffer(b, '\0');  # not necessary in Python
     return b
@@ -590,7 +590,7 @@ def next_cmd_entry(vector):
     cmd.a2 = NULL
     # cmd.range_state = RANGE_INACTIVE  # sedparse: not used
     cmd.addr_bang = False
-    cmd.cmd = '\0'  # something invalid, to catch bugs early
+    cmd.cmd = "\0"  # something invalid, to catch bugs early
     # TODO fix this struct reset mess
     cmd.x = struct_sed_cmd_x()
     cmd.x.cmd_txt = struct_text_buf()
@@ -609,7 +609,7 @@ def snarf_char_class(b):  # , cur_stat):
     delim = None  # delim IF_LINT( = 0)
 
     ch = inchar()
-    if ch == '^':
+    if ch == "^":
         ch = add_then_next(b, ch)
     if ch == CLOSE_BRACKET:
         ch = add_then_next(b, ch)
@@ -629,10 +629,10 @@ def snarf_char_class(b):  # , cur_stat):
 
         mb_char = IS_MB_CHAR(ch)  # , cur_stat)
 
-        if ch in (EOF, '\n'):
+        if ch in (EOF, "\n"):
             return ch
 
-        if ch in ('.', ':', '='):
+        if ch in (".", ":", "="):
             if mb_char:
                 continue
 
@@ -667,7 +667,7 @@ def snarf_char_class(b):  # , cur_stat):
         # Getting a character different from .=: whilst in state 1
         # goes back to state 0, getting a character different from ]
         # whilst in state 3 goes back to state 2.
-        if ch not in ('.', ':', '=') and state == 1:
+        if ch not in (".", ":", "=") and state == 1:
             state = 0
         elif ch != CLOSE_BRACKET and state == 3:
             state = 2
@@ -690,7 +690,7 @@ def match_slash(slash, regex):  # char, bool
     # while ((ch = inchar ()) != EOF && ch != '\n')
     while True:
         ch = inchar()
-        if ch in (EOF, '\n'):
+        if ch in (EOF, "\n"):
             break
 
         # const mb_char = IS_MB_CHAR(ch, &cur_stat)
@@ -699,7 +699,7 @@ def match_slash(slash, regex):  # char, bool
             if ch == slash:
                 return b
 
-            if ch == '\\':
+            if ch == "\\":
                 ch = inchar()
                 if ch == EOF:  # pylint: disable=no-else-break
                     break
@@ -712,7 +712,7 @@ def match_slash(slash, regex):  # char, bool
                 # # Since I want to keep the original user text, this is disabled
                 # elif (ch != '\n' and (ch != slash or (not regex and ch == '&'))):
                 else:
-                    add1_buffer(b, '\\')
+                    add1_buffer(b, "\\")
             elif ch == OPEN_BRACKET and regex:
                 add1_buffer(b, ch)
                 ch = snarf_char_class(b)  # , &cur_stat)
@@ -721,7 +721,7 @@ def match_slash(slash, regex):  # char, bool
 
         add1_buffer(b, ch)
 
-    if ch == '\n':
+    if ch == "\n":
         savchar(ch)  # for proper line number in error report
     free_buffer(b)
     return NULL
@@ -738,20 +738,20 @@ def mark_subst_opts(cmd_s):
         ch = in_nonblank()
         debug("s flag candidate: %r" % ch)
 
-        if ch in ('i', 'I', 'm', 'M', 'e'):  # GNU extensions
+        if ch in ("i", "I", "m", "M", "e"):  # GNU extensions
             flags.append(ch)
 
-        elif ch == 'p':
+        elif ch == "p":
             if ch in flags:
                 bad_prog(EXCESS_P_OPT)
             flags.append(ch)
 
-        elif ch == 'g':
+        elif ch == "g":
             if ch in flags:
                 bad_prog(EXCESS_G_OPT)
             flags.append(ch)
 
-        elif ch in '0123456789':
+        elif ch in "0123456789":
             if numb:
                 bad_prog(EXCESS_N_OPT)
             n = in_integer(ch)
@@ -760,7 +760,7 @@ def mark_subst_opts(cmd_s):
             flags.append(str(n))
             numb = True
 
-        elif ch == 'w':
+        elif ch == "w":
             flags.append(ch)
             # This flag will always be at the end of the list, since after w
             # cannot exist any other flag because the filename consumes
@@ -768,11 +768,11 @@ def mark_subst_opts(cmd_s):
             b = read_filename()
             if not b:
                 bad_prog(MISSING_FILENAME)
-            cmd_s.outf.name = ''.join(b)
+            cmd_s.outf.name = "".join(b)
             debug("s flag filename: %r" % cmd_s.outf.name)
             return flags
 
-        elif ch == '#':
+        elif ch == "#":
             savchar(ch)
             return flags
 
@@ -781,15 +781,15 @@ def mark_subst_opts(cmd_s):
             return flags
 
         # sedparse: Ignore multiple trailing blanks and ; until EOC/EOL/EOF
-        elif ch == ';':
+        elif ch == ";":
             ignore_trailing_fluff()
             return flags
 
-        elif ch in (EOF, '\n'):
+        elif ch in (EOF, "\n"):
             return flags
 
-        elif ch == '\r':
-            if inchar() == '\n':
+        elif ch == "\r":
+            if inchar() == "\n":
                 return flags
             bad_prog(UNKNOWN_S_OPT)
 
@@ -803,19 +803,19 @@ def read_label():
     b = init_buffer()
     ch = in_nonblank()
 
-    while ch not in (EOF, '\n', ';', CLOSE_BRACE, '#') and not ISBLANK(ch):
+    while ch not in (EOF, "\n", ";", CLOSE_BRACE, "#") and not ISBLANK(ch):
         ch = add_then_next(b, ch)
 
     # sedparse: Save comment identifier for later detection (i.e.: b#foo)
-    if ch == '#':
+    if ch == "#":
         savchar(ch)
 
     # sedparse: Ignore multiple trailing blanks and ; until EOC/EOL/EOF
-    elif ch == ';' or ISBLANK(ch):
+    elif ch == ";" or ISBLANK(ch):
         ignore_trailing_fluff()
 
     # add1_buffer(b, '\0')  # not necessary in Python
-    ret = ''.join(b)
+    ret = "".join(b)
     free_buffer(b)
     return ret
 
@@ -835,23 +835,23 @@ def read_text(buf, leadin_ch):
     if leadin_ch == EOF:
         return
 
-    if leadin_ch != '\n':
+    if leadin_ch != "\n":
         add1_buffer(pending_text, leadin_ch)
 
     ch = inchar()
-    while ch not in (EOF, '\n'):
-        if ch == '\\':
+    while ch not in (EOF, "\n"):
+        if ch == "\\":
             ch = inchar()
             if ch != EOF:
-                add1_buffer(pending_text, '\\')
+                add1_buffer(pending_text, "\\")
 
         if ch == EOF:
-            add1_buffer(pending_text, '\n')
+            add1_buffer(pending_text, "\n")
             return
 
         ch = add_then_next(pending_text, ch)
 
-    add1_buffer(pending_text, '\n')
+    add1_buffer(pending_text, "\n")
 
     if not buf:
         buf = old_text_buf
@@ -872,14 +872,14 @@ def compile_address(addr, ch):  # struct_addr, str
     addr.addr_number = 0  # extremely unlikely to ever match
     addr.addr_regex = NULL
 
-    if ch in ('/', '\\'):
+    if ch in ("/", "\\"):
         # sedparse: Instead of using bit flags as regex.c, I'll just save the flags as text
         flags = []
         # flags = 0
         # struct buffer *b
 
         addr.addr_type = ADDR_IS_REGEX
-        if ch == '\\':
+        if ch == "\\":
             ch = inchar()
         b = match_slash(ch, True)
         if b == NULL:
@@ -890,10 +890,10 @@ def compile_address(addr, ch):  # struct_addr, str
             ch = in_nonblank()
             # if posixicity == POSIXLY_BASIC:
             #     goto posix_address_modifier
-            if ch == 'I':  # GNU extension
+            if ch == "I":  # GNU extension
                 # flags |= REG_ICASE
                 flags.append(ch)
-            elif ch == 'M':  # GNU extension
+            elif ch == "M":  # GNU extension
                 # flags |= REG_NEWLINE
                 flags.append(ch)
             else:
@@ -908,7 +908,7 @@ def compile_address(addr, ch):  # struct_addr, str
         addr.addr_number = in_integer(ch)
         addr.addr_type = ADDR_IS_NUM
         ch = in_nonblank()
-        if ch != '~':  # or posixicity == POSIXLY_BASIC:
+        if ch != "~":  # or posixicity == POSIXLY_BASIC:
             savchar(ch)
         else:
             step = in_integer(in_nonblank())
@@ -916,18 +916,18 @@ def compile_address(addr, ch):  # struct_addr, str
                 addr.addr_step = step
                 addr.addr_type = ADDR_IS_NUM_MOD
 
-    elif ch in ('+', '~'):  # and posixicity != POSIXLY_BASIC:
+    elif ch in ("+", "~"):  # and posixicity != POSIXLY_BASIC:
         addr.addr_step = in_integer(in_nonblank())
         # sedparse: skipping this to match and save 1,~0p and 1,+0p
         # if addr.addr_step == 0:
         #     pass  # default to ADDR_IS_NULL; forces matching to stop on next line
         # elif ch == '+':
-        if ch == '+':
+        if ch == "+":
             addr.addr_type = ADDR_IS_STEP
         else:
             addr.addr_type = ADDR_IS_STEP_MOD
 
-    elif ch == '$':
+    elif ch == "$":
         addr.addr_type = ADDR_IS_LAST
 
     else:
@@ -941,7 +941,7 @@ def compile_program(vector):
     global blocks
 
     if pending_text:
-        read_text(NULL, '\n')
+        read_text(NULL, "\n")
 
     while True:
 
@@ -959,10 +959,10 @@ def compile_program(vector):
             # Sedsed keeps all cosmetic line breaks (i.e. \n\n) when formatting
             # code. So here sedparse creates the concept of the \n command, to
             # identify and preserve those breaks.
-            if ch == '\n':
+            if ch == "\n":
                 break
 
-            if ch != ';' and not ISSPACE(ch):
+            if ch != ";" and not ISSPACE(ch):
                 break
 
         if ch == EOF:
@@ -980,7 +980,7 @@ def compile_program(vector):
 
             a = struct_addr()  # reset a
             ch = in_nonblank()
-            if ch == ',':
+            if ch == ",":
                 if not compile_address(a, in_nonblank()):
                     bad_prog(BAD_COMMA)
 
@@ -993,11 +993,11 @@ def compile_program(vector):
                 if not cur_cmd.a2 or cur_cmd.a2.addr_type != ADDR_IS_REGEX:
                     bad_prog(INVALID_LINE_0)
 
-        if ch == '!':
+        if ch == "!":
             cur_cmd.addr_bang = True
             debug("----- Found negation: !")
             ch = in_nonblank()
-            if ch == '!':
+            if ch == "!":
                 bad_prog(BAD_BANG)
 
         # Do not accept extended commands in --posix mode.  Also,
@@ -1008,7 +1008,7 @@ def compile_program(vector):
         debug("----- Found command: %r" % ch)
 
         # sedparse
-        if ch == '\n':
+        if ch == "\n":
             # Adjust the line number for the empty lines, because they're just
             # detected in the next line
             cur_cmd.line -= 1
@@ -1017,7 +1017,7 @@ def compile_program(vector):
             if cur_cmd.a1:
                 bad_prog(NO_COMMAND)
 
-        elif ch == '#':
+        elif ch == "#":
             # if (cur_cmd->a1)
             #     bad_prog (_(NO_SHARP_ADDR));
 
@@ -1030,19 +1030,19 @@ def compile_program(vector):
 
             # GNU sed discards the comment contents, but I must save it
             b = read_comment()
-            cur_cmd.x.comment = ''.join(b)
+            cur_cmd.x.comment = "".join(b)
             debug("comment: %r" % cur_cmd.x.comment)
             free_buffer(b)
             # while ch != EOF and ch != '\n':
             #     ch = inchar()
             # continue
 
-        elif ch == 'v':
+        elif ch == "v":
             argument = read_label()
             cur_cmd.x.label_name = argument
             debug("argument: %s" % argument)
 
-        elif ch == '{':
+        elif ch == "{":
             blocks += 1
 
             # sedparse: Ignore multiple trailing blanks and ; until EOC/EOL/EOF
@@ -1050,7 +1050,7 @@ def compile_program(vector):
 
             # cur_cmd.addr_bang = not cur_cmd.addr_bang  # ?
 
-        elif ch == '}':
+        elif ch == "}":
             if not blocks:
                 bad_prog(EXCESS_CLOSE_BRACE)
             if cur_cmd.a1:
@@ -1060,40 +1060,40 @@ def compile_program(vector):
             blocks -= 1  # done with this entry
 
         # sedparse: 'e' handling was moved here (original code uses GOTO)
-        elif ch in ('a', 'i', 'c', 'e'):
+        elif ch in ("a", "i", "c", "e"):
             ch = in_nonblank()
 
             # GOTO read_text_to_slash:
             # sedparse: Empty 'e' at EOF is allowed
-            if ch == EOF and cur_cmd.cmd == 'e':
+            if ch == EOF and cur_cmd.cmd == "e":
                 break
 
             if ch == EOF:
                 bad_prog(EXPECTED_SLASH)
 
-            if ch == '\\':
+            if ch == "\\":
                 ch = inchar()
             else:
                 # if posixicity == POSIXLY_BASIC:
                 #     bad_prog(EXPECTED_SLASH)
                 savchar(ch)
-                ch = '\n'
+                ch = "\n"
 
             read_text(cur_cmd.x.cmd_txt, ch)
             debug("text: %r" % cur_cmd.x.cmd_txt)
         # ENDGOTO
 
-        elif ch in (':', 'T', 'b', 't'):
+        elif ch in (":", "T", "b", "t"):
             # if (cur_cmd->a1)
             #   bad_prog (_(NO_COLON_ADDR));
             label = read_label()
             cur_cmd.x.label_name = label
             debug("label: %r" % label)
-            if ch == ':' and not label:
+            if ch == ":" and not label:
                 bad_prog(COLON_LACKS_LABEL)
             # labels = setup_label (labels, vector->v_length, label, NULL);
 
-        elif ch in ('Q', 'q', 'L', 'l'):
+        elif ch in ("Q", "q", "L", "l"):
             ch = in_nonblank()
             if ISDIGIT(ch):
                 cur_cmd.x.int_arg = in_integer(ch)
@@ -1104,30 +1104,30 @@ def compile_program(vector):
                 savchar(ch)
             read_end_of_cmd()
 
-        elif ch in ('=', 'd', 'D', 'F', 'g', 'G', 'h', 'H', 'n', 'N', 'p', 'P', 'z', 'x'):
+        elif ch in ("=", "d", "D", "F", "g", "G", "h", "H", "n", "N", "p", "P", "z", "x"):
             read_end_of_cmd()
 
-        elif ch in ('r', 'R', 'w', 'W'):
+        elif ch in ("r", "R", "w", "W"):
             b = read_filename()
             if not b:
                 bad_prog(MISSING_FILENAME)
-            cur_cmd.x.fname = ''.join(b)
+            cur_cmd.x.fname = "".join(b)
             debug("filename: %r" % cur_cmd.x.fname)
             free_buffer(b)
 
-        elif ch == 's':
+        elif ch == "s":
             slash = inchar()
             cur_cmd.x.cmd_subst.slash = slash
             b = match_slash(slash, True)
             if b == NULL:
                 bad_prog(UNTERM_S_CMD)
-            cur_cmd.x.cmd_subst.regx.pattern = ''.join(b)
+            cur_cmd.x.cmd_subst.regx.pattern = "".join(b)
             debug("s pattern: %r" % cur_cmd.x.cmd_subst.regx.pattern)
 
             b2 = match_slash(slash, False)
             if b2 == NULL:
                 bad_prog(UNTERM_S_CMD)
-            cur_cmd.x.cmd_subst.replacement.text = ''.join(b2)
+            cur_cmd.x.cmd_subst.replacement.text = "".join(b2)
             debug("s replacement: %r" % cur_cmd.x.cmd_subst.replacement.text)
 
             # setup_replacement(cur_cmd.x.cmd_subst, b2)
@@ -1135,26 +1135,26 @@ def compile_program(vector):
 
             flags = mark_subst_opts(cur_cmd.x.cmd_subst)
             cur_cmd.x.cmd_subst.flags = flags
-            debug("s flags: %r" % ''.join(flags))
+            debug("s flags: %r" % "".join(flags))
             # cur_cmd.x.cmd_subst.regx = compile_regex(b, flags, cur_cmd.x.cmd_subst.max_id + 1)
             free_buffer(b)
 
             # if cur_cmd.x.cmd_subst.eval and sandbox:
             #     bad_prog(_(DISALLOWED_CMD))
 
-        elif ch == 'y':
+        elif ch == "y":
             slash = inchar()
             cur_cmd.x.cmd_subst.slash = slash
             b = match_slash(slash, False)
             if b == NULL:
                 bad_prog(UNTERM_Y_CMD)
-            cur_cmd.x.cmd_subst.regx.pattern = ''.join(b)
+            cur_cmd.x.cmd_subst.regx.pattern = "".join(b)
             debug("y pattern: %r" % cur_cmd.x.cmd_subst.regx.pattern)
 
             b2 = match_slash(slash, False)
             if b2 == NULL:
                 bad_prog(UNTERM_Y_CMD)
-            cur_cmd.x.cmd_subst.replacement.text = ''.join(b2)
+            cur_cmd.x.cmd_subst.replacement.text = "".join(b2)
             debug("y replacement: %r" % cur_cmd.x.cmd_subst.replacement.text)
 
             # sedparse: Since we do not perform the de-escaping of \/, \\ and \\n
@@ -1189,7 +1189,7 @@ def compile_string(cur_program, string):  # pylint: disable=unused-variable
     prog.base = 0  # first char of the string (will be 1-based)
     prog.cur = prog.base
     prog.end = prog.cur + len(string)
-    prog.text = '@' + string  # the leading @ is ignored, it's a 1-based index
+    prog.text = "@" + string  # the leading @ is ignored, it's a 1-based index
 
     cur_input.line = 1  # original was zero
     cur_input.name = NULL
@@ -1215,7 +1215,7 @@ def compile_file(cur_program, cmdfile):
     # global first_script
 
     prog.file = sys.stdin
-    if cmdfile[0] != '-':  # or cmdfile[1] != '\0':
+    if cmdfile[0] != "-":  # or cmdfile[1] != '\0':
         prog.file = open(cmdfile, "r")
 
     cur_input.line = 1
@@ -1271,24 +1271,24 @@ def debug(msg, stats=False):
 
 def print_program(compiled_program):
     indent_level = 0
-    indent_prefix = ' ' * 4
+    indent_prefix = " " * 4
     for x in compiled_program:
-        if x.cmd == '}':
+        if x.cmd == "}":
             indent_level -= 1
 
-        if x.cmd == '\n':
+        if x.cmd == "\n":
             print()
         else:
-            print('%s%s' % ((indent_prefix * indent_level), x))
+            print("%s%s" % ((indent_prefix * indent_level), x))
 
-        if x.cmd == '{':
+        if x.cmd == "{":
             indent_level += 1
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     argparser = argparse.ArgumentParser()
-    argparser.add_argument('-v', '--verbose', action='store_true', help='verbose mode')
-    argparser.add_argument('files', metavar='FILE', nargs='*', help='input files')
+    argparser.add_argument("-v", "--verbose", action="store_true", help="verbose mode")
+    argparser.add_argument("files", metavar="FILE", nargs="*", help="input files")
     args = argparser.parse_args()
 
     PARSER_DEBUG = args.verbose
