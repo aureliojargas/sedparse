@@ -30,3 +30,10 @@ deactivate
 ```
 
 More info at https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/
+
+
+## Code formatting
+
+In the CI, [black](https://github.com/psf/black) formatting is enforced. To run it locally:
+
+    black -S -l 100 -t py34 sedparse.py tests/test_sedparse.py

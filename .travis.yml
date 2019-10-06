@@ -7,13 +7,22 @@ python:
   - "3.6"
   - "3.7"
 
-# There's no need to run pylint in all Python versions, the code is the same
+# There's no need to run pylint/black in all Python versions, the code is the same
 install:
-  - if test $TRAVIS_PYTHON_VERSION = 3.6; then pip install -q pylint; fi
+  - if test $TRAVIS_PYTHON_VERSION = 3.6; then
+    pip install --quiet -r requirements-dev.txt;
+    fi
 
 script:
   # pylint
-  - if test $TRAVIS_PYTHON_VERSION = 3.6; then pylint sedparse.py tests/test_sedparse.py; fi
+  - if test $TRAVIS_PYTHON_VERSION = 3.6; then
+    pylint sedparse.py tests/test_sedparse.py;
+    fi
+
+  # black
+  - if test $TRAVIS_PYTHON_VERSION = 3.6; then
+    black --check -S -l 100 -t py34 sedparse.py tests/test_sedparse.py;
+    fi
 
   # unit tests
   - python tests/test_sedparse.py
