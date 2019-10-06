@@ -19,8 +19,9 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
 # The global holder for all the test data
 TEST_DATA = {}
 
-# Aligning test cases makes them way more readable, so...
+# Aligning test cases makes them way more readable, so no pylint/black here
 # pylint: disable=bad-whitespace
+# fmt: off
 
 TEST_DATA['error'] = [
     # Note: Not all possible error messages are tested, those that were left
@@ -676,6 +677,7 @@ TEST_DATA['trailing_fluff'] = [
 
 # End of test cases, white space can get back to normal
 # pylint: enable=bad-whitespace
+# fmt: on
 
 # Capture stdout and stderr for the asserts
 # https://stackoverflow.com/a/17981937
@@ -691,10 +693,10 @@ def captured_output():
 
 
 class TestSedParser(unittest.TestCase):  # pylint: disable=unused-variable
-
     def _my_setup(self):
         # start from scratch to avoid module state leak between tests
         import sedparse  # pylint: disable=import-outside-toplevel
+
         self.sedparse = sedparse  # pylint: disable=attribute-defined-outside-init
         self.sedparse.the_program = []
 
@@ -769,14 +771,32 @@ class TestSedParser(unittest.TestCase):  # pylint: disable=unused-variable
                     [
                         parsed.addr_bang,
                         str(parsed.a1) if parsed.a1 else None,
-                        str(parsed.a2) if parsed.a2 else None
-                    ])
+                        str(parsed.a2) if parsed.a2 else None,
+                    ],
+                )
             self._my_tear_down()
 
     def test_commands_with_no_args(self):
         commands = (
-            'd', 'D', 'g', 'F', 'G', 'h', 'H', 'l', 'L',
-            'n', 'N', 'p', 'P', 'q', 'Q', 'x', 'z', '=')
+            'd',
+            'D',
+            'F',
+            'g',
+            'G',
+            'h',
+            'H',
+            'l',
+            'L',
+            'n',
+            'N',
+            'p',
+            'P',
+            'q',
+            'Q',
+            'x',
+            'z',
+            '=',
+        )
         for command in commands:
             for template in ('%s', '%s;', '{%s}', '%s#foo', '{ \t%s \t}'):
                 script = template % command
