@@ -1,6 +1,5 @@
-# Run all checks except those
-
 [MESSAGES CONTROL]
+# Run all checks except those
 enable=all
 disable=
     fixme,
@@ -9,21 +8,16 @@ disable=
     suppressed-message,
     missing-docstring,
 
-# Please complain about unused global variables
-
 [VARIABLES]
 allow-global-unused-variables=no
 
-# Wide screen monitors are nice
-
 [FORMAT]
-max-line-length=120
+max-line-length=120  # wide screen monitors are nice
+expected-line-ending-format=LF  # enforce Unix \n
 
 # No reports, please
-
 [MASTER]
 persistent=no
-
 [REPORTS]
 reports=no
 score=no
