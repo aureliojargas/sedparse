@@ -28,9 +28,13 @@
 import argparse
 import sys
 
-program_name = 'sed'
-EOF = '<EOF>'  # XXX read https://softwareengineering.stackexchange.com/a/197629
+# Adapt some C entities to Python
 NULL = None
+EOF = '<EOF>'  # XXX read https://softwareengineering.stackexchange.com/a/197629
+
+######################################## translated from sed.c
+
+program_name = 'sed'
 
 ######################################## translated from basicdefs.h
 
@@ -46,10 +50,6 @@ def ISDIGIT(ch):
 def ISSPACE(c):
     return c in (' ', '\t', '\n', '\v', '\f', '\r')
 
-
-######################################## translated from sed.c
-
-# Nothing. Not used.
 
 ######################################## translated from sed.h
 
