@@ -1,20 +1,17 @@
+# sedparse
+# GNU sed's parser translated from C to Python
+# https://github.com/aureliojargas/sedparse
+
 # TODO
 # - identify and document all sedparse additions
 # - document how it works
 # - descriptive header with a sed script and its object after parsing
-
-# Based on this GNU sed version:
-#   commit a9cb52bcf39f0ee307301ac73c11acb24372b9d8
-#   Author: Assaf Gordon <assafgordon@gmail.com>
-#   Date:   Sun Jun 2 01:14:00 2019 -0600
-
+#
 # WONTDO
-#
-# Check if command only accepts one address
-# if (cur_cmd->a2) bad_prog (_(ONE_ADDR));
-#
-# Check if command is a GNU extension
-# if (posixicity == POSIXLY_EXTENDED)
+# - Check if command only accepts one address
+#   if (cur_cmd->a2) bad_prog (_(ONE_ADDR))
+# - Check POSIX compatibility, all GNU sed extensions are supported
+#   if (posixicity == POSIXLY_BASIC)
 
 # Since sedparse is a literal translation, maintaining the same code, variables
 # and method names, I have to disable the following checks.
@@ -30,7 +27,7 @@ import sys
 
 # Adapt some C entities to Python
 NULL = None
-EOF = "<EOF>"  # XXX read https://softwareengineering.stackexchange.com/a/197629
+EOF = "<EOF>"
 
 ######################################## translated from sed.c
 
@@ -78,7 +75,7 @@ class struct_text_buf:
 class struct_regex:
     pattern = ""
     flags = ""  # sedparse: was 0 in the original
-    slash = ""  # sedparse
+    slash = ""  # sedparse extension
 
     # sedparse: not used
     # sz = 0
@@ -87,7 +84,7 @@ class struct_regex:
     # endline = False
     # re = ""
 
-    def escape(self):  # sedparse
+    def escape(self):  # sedparse extension
         return "\\" if self.slash != "/" else ""
 
     def __repr__(self):
@@ -169,7 +166,7 @@ class struct_addr:
 
 
 class struct_replacement:
-    text = ""  # sedparse
+    text = ""  # sedparse extension
 
     # sedparse: not used
     # prefix = ""
@@ -183,8 +180,8 @@ class struct_subst:
     regx = struct_regex()
     replacement = struct_replacement()
     outf = struct_output()  # "w" option given
-    flags = []  # sedparse
-    slash = ""  # sedparse
+    flags = []  # sedparse extension
+    slash = ""  # sedparse extension
 
     # sedparse: not used
     # numb = 0  # if >0, only substitute for match number "numb"
@@ -206,6 +203,7 @@ class struct_subst:
         )
 
 
+# sedparse: In the original this was a 'union' inside 'struct sed_cmd'
 class struct_sed_cmd_x:
     "auxiliary data for various commands"
     # This structure is used for a, i, and c commands.
@@ -227,7 +225,7 @@ class struct_sed_cmd_x:
     label_name = ""
 
     # This is used for the command comment.
-    comment = ""  # sedparse
+    comment = ""  # sedparse extension
 
     # sedparse: not used
     # # This is used for the {}, b, and t commands.
@@ -241,6 +239,7 @@ class struct_sed_cmd_x:
 
 
 class struct_sed_cmd:
+    # Command addresses
     a1 = struct_addr()
     a2 = struct_addr()
 
@@ -305,7 +304,7 @@ def compile_regex(pattern, flags):
 
 def IS_MB_CHAR(ch):
     return ch != EOF and ord(ch) > 127
-    # This exception is because I chose to store EOF as "<EOF>"
+    # sedparse: This exception is because I chose to store EOF as "<EOF>"
 
 
 ######################################## translated from utils.h
@@ -524,9 +523,10 @@ def in_nonblank():
     return ch
 
 
-# sedparse: Ignore multiple trailing blanks and ; until EOC/EOL/EOF
-# Skipping those chars avoids \n incorrectly being considered a new command and
-# producing a new undesired blank line in the output.
+# sedparse extension
+# Ignore multiple trailing blanks and ; until EOC/EOL/EOF. Skipping those chars
+# avoids \n incorrectly being considered a new command and producing a new
+# undesired blank line in the output.
 def ignore_trailing_fluff():
     while True:
         ch = in_nonblank()
@@ -571,7 +571,8 @@ def add_then_next(buffer, ch):
     return inchar()
 
 
-# sedparse: This is a copy of read_filename, but preserving blanks
+# sedparse extension
+# This is a copy of read_filename, but preserving blanks.
 def read_comment():
     b = init_buffer()
     ch = inchar()
@@ -597,7 +598,7 @@ def next_cmd_entry(vector):
     # cmd.range_state = RANGE_INACTIVE  # sedparse: not used
     cmd.addr_bang = False
     cmd.cmd = "\0"  # something invalid, to catch bugs early
-    # TODO fix this struct reset mess
+    # sedparse: Reset all the structs
     cmd.x = struct_sed_cmd_x()
     cmd.x.cmd_txt = struct_text_buf()
     cmd.x.cmd_subst = struct_subst()
@@ -1028,14 +1029,14 @@ def compile_program(vector):
             # if (cur_cmd->a1)
             #     bad_prog (_(NO_SHARP_ADDR));
 
-            ## I think I won't need this #n detection
+            # sedparse: no #n detection, it will be considered a normal comment
             # ch = inchar()
             # if ch == "n" and first_script and cur_input.line < 2:
             #     if (prog.base and prog.cur == 2 + prog.base):
             #     # or (prog.file and not prog.base and 2 == ftell(prog.file)):
             #       no_default_output = true
 
-            # GNU sed discards the comment contents, but I must save it
+            # sedparse: GNU sed discards the comment contents, but we must save it
             b = read_comment()
             cur_cmd.x.comment = "".join(b)
             debug("comment: %r" % cur_cmd.x.comment)
@@ -1215,7 +1216,7 @@ def compile_string(cur_program, string):  # pylint: disable=unused-variable
     prog.end = prog.cur + len(string)
     prog.text = "@" + string  # the leading @ is ignored, it's a 1-based index
 
-    cur_input.line = 1  # original was zero
+    cur_input.line = 1  # sedparse: original was zero
     cur_input.name = NULL
     # string_expr_count += 1
     cur_input.string_expr_count += 1
