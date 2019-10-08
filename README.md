@@ -39,16 +39,20 @@ http://git.savannah.gnu.org/cgit/sed.git/commit/?id=a9cb52bcf39f0ee307301ac73c11
 >>>
 >>> parsed = []
 >>> sedparse.compile_string(parsed, sedscript)
->>> pprint.pprint(parsed)
-[<sedparse.struct_sed_cmd object at 0x107a14780>,
- <sedparse.struct_sed_cmd object at 0x107972a90>,
- <sedparse.struct_sed_cmd object at 0x107972c18>,
- <sedparse.struct_sed_cmd object at 0x107972c50>]
 >>>
->>> # You can show or inspect the parsed sed commands.
+>>> pprint.pprint(parsed)  # doctest:+ELLIPSIS
+[<sedparse.struct_sed_cmd object at ...>,
+ <sedparse.struct_sed_cmd object at ...>,
+ <sedparse.struct_sed_cmd object at ...>,
+ <sedparse.struct_sed_cmd object at ...>]
+>>>
+>>> # You can print the commands.
 >>>
 >>> [str(x) for x in parsed]
 ['7,/foo/ {', '$ !N', 's/\\n/-/gi', '}']
+>>>
+>>> # You can inspect the parsed sed commands.
+>>>
 >>> [x.cmd for x in parsed]
 ['{', 'N', 's', '}']
 >>>
@@ -98,14 +102,18 @@ True
 As you can see, the information is split in lots of different places. Here are some of the most important ones:
 
 ```python
->>> dir(parsed[0])
-['...', 'a1', 'a2', 'addr_bang', 'cmd', 'line', 'x']
->>> dir(parsed[0].a1)
-['...', 'addr_number', 'addr_regex', 'addr_step', 'addr_type']
->>> dir(parsed[0].x)
-['...', 'cmd_subst', 'cmd_txt', 'comment', 'fname', 'int_arg', 'label_name', 'outf']
->>> dir(parsed[0].x.cmd_subst)
-['...', 'flags', 'outf', 'regx', 'replacement', 'slash']
+>>> dir(parsed[0])  # doctest:+ELLIPSIS
+[..., 'a1', 'a2', 'addr_bang', 'cmd', 'line', 'x']
+>>>
+>>> dir(parsed[0].a1)  # doctest:+ELLIPSIS
+[..., 'addr_number', 'addr_regex', 'addr_step', 'addr_type']
+>>>
+>>> dir(parsed[0].x)  # doctest:+ELLIPSIS
+[..., 'cmd_subst', 'cmd_txt', 'comment', 'fname', 'int_arg', 'label_name', 'outf']
+>>>
+>>> dir(parsed[0].x.cmd_subst)  # doctest:+ELLIPSIS
+[..., 'flags', 'outf', 'regx', 'replacement', 'slash']
+>>>
 ```
 
 ## Development environment

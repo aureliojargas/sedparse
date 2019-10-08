@@ -24,6 +24,9 @@ script:
     black --check sedparse.py tests/test_sedparse.py;
     fi
 
+  # doc tests
+  - python -m doctest README.md
+
   # unit tests
   - python tests/test_sedparse.py
 
