@@ -923,6 +923,37 @@ class TestSedParser(unittest.TestCase):  # pylint: disable=unused-variable
         after = sedparse.cur_input.string_expr_count
         self.assertEqual(before + 3, after)
 
+    def test_command_data_cleanup(self):
+        """
+        All data from the previous command must be cleared when reading
+        the next one. Those tests check that the last bare "p" command
+        should be using the default values for all the data fields.
+        """
+        # a1, a2, bang, slash, pattern, replacement, flags, outf
+        script = ["/a1/I, /a2/M ! s/foo/bar/igw file", "p"]
+        p_data = parse_string("\n".join(script))[-1]
+        self._assert_defaults(p_data)
+
+        # int_arg
+        script = ["q99", "p"]
+        p_data = parse_string("\n".join(script))[-1]
+        self._assert_defaults(p_data)
+
+        # fname
+        script = ["r file", "p"]
+        p_data = parse_string("\n".join(script))[-1]
+        self._assert_defaults(p_data)
+
+        # label_name
+        script = [":label", "p"]
+        p_data = parse_string("\n".join(script))[-1]
+        self._assert_defaults(p_data)
+
+        # cmd_txt
+        script = ["a", "text", "p"]
+        p_data = parse_string("\n".join(script))[-1]
+        self._assert_defaults(p_data)
+
 
 if __name__ == "__main__":
     unittest.main()
