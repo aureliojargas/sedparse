@@ -914,6 +914,15 @@ class TestSedParser(unittest.TestCase):  # pylint: disable=unused-variable
                         expected_commands, [x.cmd for x in parse_string(script)]
                     )
 
+    def test_string_expr_count(self):
+        """Calling compile_string() should increase by one the expression count."""
+        before = sedparse.cur_input.string_expr_count
+        _ = parse_string("p")
+        _ = parse_string("p")
+        _ = parse_string("p")
+        after = sedparse.cur_input.string_expr_count
+        self.assertEqual(before + 3, after)
+
 
 if __name__ == "__main__":
     unittest.main()
