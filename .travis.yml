@@ -7,33 +7,13 @@ python:
   - "3.6"
   - "3.7"
 
-# There's no need to run pylint/black in all Python versions, the code is the same
+# Only run pylint/black in newer Python versions
 install:
-  - if test $TRAVIS_PYTHON_VERSION = 3.6; then
-    pip install --quiet -r requirements-dev.txt;
-    fi
+  - case $TRAVIS_PYTHON_VERSION in 3.[6-9])
+    pip install --quiet -r requirements-dev.txt;;
+    esac
 
-script:
-  # pylint
-  - if test $TRAVIS_PYTHON_VERSION = 3.6; then
-    pylint sedparse.py tests/test_sedparse.py;
-    fi
-
-  # black
-  - if test $TRAVIS_PYTHON_VERSION = 3.6; then
-    black --check sedparse.py tests/test_sedparse.py;
-    fi
-
-  # doc tests
-  - python -m doctest README.md
-
-  # unit tests
-  - python tests/test_sedparse.py
-
-  # parse sample file
-  - python sedparse.py --verbose tests/sample.sed > tests/sample.out
-  - git diff --exit-code
-
+script: ./ci.sh
 
 ### Environment
 # Ubuntu 14.04.5 LTS
