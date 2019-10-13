@@ -53,20 +53,22 @@ def ISSPACE(c):
 # sedparse: The original code handles file open/read/write/close operations,
 # but here we only care about the filename.
 class struct_output:
-    name = ""
+    def __init__(self):
+        self.name = ""
 
-    # sedparse: not used
-    # missing_newline = False
-    # fp = None
-    # link = None
+        # sedparse: not used
+        # missing_newline = False
+        # fp = None
+        # link = None
 
     def __repr__(self):
         return "%s(name=%r)" % (self.__class__.__name__, self.name)
 
 
 class struct_text_buf:
-    text = []
-    # text_length = 0  # sedparse: not used
+    def __init__(self):
+        self.text = []
+        # text_length = 0  # sedparse: not used
 
     def __repr__(self):
         return "%s(text=%r)" % (self.__class__.__name__, self.text)
@@ -76,16 +78,17 @@ class struct_text_buf:
 
 
 class struct_regex:
-    pattern = ""
-    flags = ""  # sedparse: was 0 in the original
-    slash = ""  # sedparse extension
+    def __init__(self):
+        self.pattern = ""
+        self.flags = ""  # sedparse: was 0 in the original
+        self.slash = ""  # sedparse extension
 
-    # sedparse: not used
-    # sz = 0
-    # dfa = None  # struct_dfa()
-    # begline = False
-    # endline = False
-    # re = ""
+        # sedparse: not used
+        # sz = 0
+        # dfa = None  # struct_dfa()
+        # begline = False
+        # endline = False
+        # re = ""
 
     def __repr__(self):
         return "%s(slash=%r, pattern=%r, flags=%r)" % (
@@ -141,10 +144,11 @@ ADDR_IS_LAST = 7             # address is $
 
 
 class struct_addr:
-    addr_type = ADDR_IS_NULL  # enum addr_types
-    addr_number = 0
-    addr_step = 0
-    addr_regex = struct_regex()
+    def __init__(self):
+        self.addr_type = ADDR_IS_NULL  # enum addr_types
+        self.addr_number = 0
+        self.addr_step = 0
+        self.addr_regex = struct_regex()
 
     def __repr__(self):
         return "%s(addr_type=%r, addr_number=%r, addr_step=%r, addr_regex=%r)" % (
@@ -175,33 +179,35 @@ class struct_addr:
 
 
 class struct_replacement:
-    text = ""  # sedparse extension
+    def __init__(self):
+        self.text = ""  # sedparse extension
 
-    # sedparse: not used
-    # prefix = ""
-    # prefix_length = 0
-    # subst_id = 0
-    # repl_type = REPL_ASIS  # enum replacement_types
-    # next_ = None  # struct_replacement
+        # sedparse: not used
+        # prefix = ""
+        # prefix_length = 0
+        # subst_id = 0
+        # repl_type = REPL_ASIS  # enum replacement_types
+        # next_ = None  # struct_replacement
 
     def __repr__(self):
         return "%s(text=%r)" % (self.__class__.__name__, self.text)
 
 
 class struct_subst:
-    regx = struct_regex()
-    replacement = struct_replacement()
-    outf = struct_output()  # "w" option given
-    flags = []  # sedparse extension
-    slash = ""  # sedparse extension
+    def __init__(self):
+        self.regx = struct_regex()
+        self.replacement = struct_replacement()
+        self.outf = struct_output()  # "w" option given
+        self.flags = []  # sedparse extension
+        self.slash = ""  # sedparse extension
 
-    # sedparse: not used
-    # numb = 0  # if >0, only substitute for match number "numb"
-    # global_ = False  # "g" option given
-    # print_ = False  # "p" option given (before/after eval)
-    # eval_ = False  # "e" option given
-    # max_id = 0  # maximum backreference on the RHS
-    # replacement_buffer = ""  # ifdef lint
+        # sedparse: not used
+        # numb = 0  # if >0, only substitute for match number "numb"
+        # global_ = False  # "g" option given
+        # print_ = False  # "p" option given (before/after eval)
+        # eval_ = False  # "e" option given
+        # max_id = 0  # maximum backreference on the RHS
+        # replacement_buffer = ""  # ifdef lint
 
     def __repr__(self):
         return "%s(slash=%r, regx=%r, replacement=%r, flags=%r, outf=%r)" % (
@@ -228,35 +234,37 @@ class struct_subst:
 # sedparse: In the original this was a 'union' inside 'struct sed_cmd'
 class struct_sed_cmd_x:
     "auxiliary data for various commands"
-    # This structure is used for a, i, and c commands.
-    cmd_txt = struct_text_buf()
 
-    # This is used for the l, q and Q commands.
-    int_arg = -1
+    def __init__(self):
+        # This structure is used for a, i, and c commands.
+        self.cmd_txt = struct_text_buf()
 
-    # This is used for the r command. (sedparse: and R w W)
-    fname = ""
+        # This is used for the l, q and Q commands.
+        self.int_arg = -1
 
-    # This is used for the hairy s command. (sedparse: and y)
-    cmd_subst = struct_subst()
+        # This is used for the r command. (sedparse: and R w W)
+        self.fname = ""
 
-    # This is used for the ":" command.
-    label_name = ""
+        # This is used for the hairy s command. (sedparse: and y)
+        self.cmd_subst = struct_subst()
 
-    # This is used for the command comment.
-    comment = ""  # sedparse extension
+        # This is used for the ":" command.
+        self.label_name = ""
 
-    # sedparse: not used
-    # # This is used for the {}, b, and t commands.
-    # jump_index = 0
-    # # This is used for the w command.
-    # outf = struct_output()
-    # # This is used for the R command.
-    # # (despite the struct name, it is used for both in and out files).
-    # inf = struct_output()
-    # # This is used for the y command.
-    # translate = ""
-    # translatemb = ""
+        # This is used for the command comment.
+        self.comment = ""  # sedparse extension
+
+        # sedparse: not used
+        # # This is used for the {}, b, and t commands.
+        # jump_index = 0
+        # # This is used for the w command.
+        # outf = struct_output()
+        # # This is used for the R command.
+        # # (despite the struct name, it is used for both in and out files).
+        # inf = struct_output()
+        # # This is used for the y command.
+        # translate = ""
+        # translatemb = ""
 
     def __repr__(self):
         return (
@@ -275,24 +283,25 @@ class struct_sed_cmd_x:
 
 
 class struct_sed_cmd:
-    # Command addresses
-    a1 = struct_addr()
-    a2 = struct_addr()
+    def __init__(self):
+        # Command addresses
+        self.a1 = struct_addr()
+        self.a2 = struct_addr()
 
-    # Non-zero if command is to be applied to non-matches.
-    addr_bang = False  # sedparse: using bool
+        # Non-zero if command is to be applied to non-matches.
+        self.addr_bang = False  # sedparse: using bool
 
-    # The actual command character.
-    cmd = ""
+        # The actual command character.
+        self.cmd = ""
 
-    # auxiliary data for various commands
-    x = struct_sed_cmd_x()
+        # auxiliary data for various commands
+        self.x = struct_sed_cmd_x()
 
-    # The original line number where this command was found
-    line = 0  # sedparse extension
+        # The original line number where this command was found
+        self.line = 0  # sedparse extension
 
-    # sedparse: not used
-    # range_state = RANGE_INACTIVE  # See enum addr_state
+        # sedparse: not used
+        # range_state = RANGE_INACTIVE  # See enum addr_state
 
     def __repr__(self):
         return "%s(line=%r, cmd=%r, addr_bang=%r, a1=%r, a2=%r, x=%r)" % (
@@ -645,15 +654,6 @@ def next_cmd_entry(vector):
     # cmd.range_state = RANGE_INACTIVE  # sedparse: not used
     cmd.addr_bang = False
     cmd.cmd = "\0"  # something invalid, to catch bugs early
-    # sedparse: Reset all the structs
-    cmd.x = struct_sed_cmd_x()
-    cmd.x.cmd_txt = struct_text_buf()
-    cmd.x.cmd_subst = struct_subst()
-    cmd.x.cmd_subst.regx = struct_regex()
-    cmd.x.cmd_subst.replacement = struct_replacement()
-    cmd.x.cmd_subst.outf = struct_output()
-    # cmd.x.outf = struct_output()  # sedparse: not used
-    # cmd.x.inf = struct_output()  # sedparse: not used
     vector.append(cmd)
     return cmd
 
