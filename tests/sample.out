@@ -87,7 +87,7 @@ exp=0 line=3 cur=None end=None text=None ch='!'
 exp=0 line=3 cur=None end=None text=None ch='savchar(!)'
 exp=0 line=3 cur=None end=None text=None ch='!'
 exp=0 line=3 cur=None end=None text=None ch='savchar(!)'
------ Found address 1: [type=3 number=5 step=0 regex=None]
+----- Found address 1: struct_addr(addr_type=3, addr_number=5, addr_step=0, addr_regex=None)
 exp=0 line=3 cur=None end=None text=None ch='!'
 ----- Found negation: !
 exp=0 line=3 cur=None end=None text=None ch='H'
@@ -98,14 +98,14 @@ exp=0 line=4 cur=None end=None text=None ch=','
 exp=0 line=4 cur=None end=None text=None ch='savchar(,)'
 exp=0 line=4 cur=None end=None text=None ch=','
 exp=0 line=4 cur=None end=None text=None ch='savchar(,)'
------ Found address 1: [type=3 number=1 step=0 regex=None]
+----- Found address 1: struct_addr(addr_type=3, addr_number=1, addr_step=0, addr_regex=None)
 exp=0 line=4 cur=None end=None text=None ch=','
 exp=0 line=4 cur=None end=None text=None ch='5'
 exp=0 line=4 cur=None end=None text=None ch='g'
 exp=0 line=4 cur=None end=None text=None ch='savchar(g)'
 exp=0 line=4 cur=None end=None text=None ch='g'
 exp=0 line=4 cur=None end=None text=None ch='savchar(g)'
------ Found address 2: [type=3 number=5 step=0 regex=None]
+----- Found address 2: struct_addr(addr_type=3, addr_number=5, addr_step=0, addr_regex=None)
 exp=0 line=4 cur=None end=None text=None ch='g'
 ----- Found command: 'g'
 exp=0 line=5 cur=None end=None text=None ch='\n'
@@ -117,7 +117,7 @@ exp=0 line=5 cur=None end=None text=None ch='/'
 exp=0 line=5 cur=None end=None text=None ch='I'
 exp=0 line=5 cur=None end=None text=None ch='G'
 exp=0 line=5 cur=None end=None text=None ch='savchar(G)'
------ Found address 1: [type=2 number=0 step=0 regex=/xxx/I]
+----- Found address 1: struct_addr(addr_type=2, addr_number=0, addr_step=0, addr_regex=struct_regex(slash='/', pattern='xxx', flags='I'))
 exp=0 line=5 cur=None end=None text=None ch='G'
 ----- Found command: 'G'
 exp=0 line=6 cur=None end=None text=None ch='\n'
@@ -126,7 +126,7 @@ exp=0 line=6 cur=None end=None text=None ch=','
 exp=0 line=6 cur=None end=None text=None ch='savchar(,)'
 exp=0 line=6 cur=None end=None text=None ch=','
 exp=0 line=6 cur=None end=None text=None ch='savchar(,)'
------ Found address 1: [type=3 number=2 step=0 regex=None]
+----- Found address 1: struct_addr(addr_type=3, addr_number=2, addr_step=0, addr_regex=None)
 exp=0 line=6 cur=None end=None text=None ch=','
 exp=0 line=6 cur=None end=None text=None ch='/'
 exp=0 line=6 cur=None end=None text=None ch='x'
@@ -135,7 +135,7 @@ exp=0 line=6 cur=None end=None text=None ch='x'
 exp=0 line=6 cur=None end=None text=None ch='/'
 exp=0 line=6 cur=None end=None text=None ch='x'
 exp=0 line=6 cur=None end=None text=None ch='savchar(x)'
------ Found address 2: [type=2 number=0 step=0 regex=/xxx/]
+----- Found address 2: struct_addr(addr_type=2, addr_number=0, addr_step=0, addr_regex=struct_regex(slash='/', pattern='xxx', flags=''))
 exp=0 line=6 cur=None end=None text=None ch='x'
 ----- Found command: 'x'
 exp=0 line=7 cur=None end=None text=None ch='\n'
@@ -154,7 +154,7 @@ exp=0 line=7 cur=None end=None text=None ch='n'
 exp=0 line=7 cur=None end=None text=None ch='|'
 exp=0 line=7 cur=None end=None text=None ch=','
 exp=0 line=7 cur=None end=None text=None ch='savchar(,)'
------ Found address 1: [type=2 number=0 step=0 regex=\|pipe\n\|\n|]
+----- Found address 1: struct_addr(addr_type=2, addr_number=0, addr_step=0, addr_regex=struct_regex(slash='|', pattern='pipe\\n\\|\\n', flags=''))
 exp=0 line=7 cur=None end=None text=None ch=','
 exp=0 line=7 cur=None end=None text=None ch='\\'
 exp=0 line=7 cur=None end=None text=None ch=' '
@@ -166,12 +166,12 @@ exp=0 line=7 cur=None end=None text=None ch='e'
 exp=0 line=7 cur=None end=None text=None ch=' '
 exp=0 line=7 cur=None end=None text=None ch='x'
 exp=0 line=7 cur=None end=None text=None ch='savchar(x)'
------ Found address 2: [type=2 number=0 step=0 regex=\ space ]
+----- Found address 2: struct_addr(addr_type=2, addr_number=0, addr_step=0, addr_regex=struct_regex(slash=' ', pattern='space', flags=''))
 exp=0 line=7 cur=None end=None text=None ch='x'
 ----- Found command: 'x'
 exp=0 line=8 cur=None end=None text=None ch='\n'
 exp=0 line=8 cur=None end=None text=None ch='$'
------ Found address 1: [type=7 number=0 step=0 regex=None]
+----- Found address 1: struct_addr(addr_type=7, addr_number=0, addr_step=0, addr_regex=None)
 exp=0 line=8 cur=None end=None text=None ch='h'
 ----- Found command: 'h'
 exp=0 line=9 cur=None end=None text=None ch='\n'
@@ -182,10 +182,10 @@ exp=0 line=10 cur=None end=None text=None ch=','
 exp=0 line=10 cur=None end=None text=None ch='savchar(,)'
 exp=0 line=10 cur=None end=None text=None ch=','
 exp=0 line=10 cur=None end=None text=None ch='savchar(,)'
------ Found address 1: [type=3 number=1 step=0 regex=None]
+----- Found address 1: struct_addr(addr_type=3, addr_number=1, addr_step=0, addr_regex=None)
 exp=0 line=10 cur=None end=None text=None ch=','
 exp=0 line=10 cur=None end=None text=None ch='$'
------ Found address 2: [type=7 number=0 step=0 regex=None]
+----- Found address 2: struct_addr(addr_type=7, addr_number=0, addr_step=0, addr_regex=None)
 exp=0 line=10 cur=None end=None text=None ch=' '
 exp=0 line=10 cur=None end=None text=None ch='{'
 ----- Found command: '{'
@@ -197,7 +197,7 @@ exp=0 line=11 cur=None end=None text=None ch='/'
 exp=0 line=11 cur=None end=None text=None ch=' '
 exp=0 line=11 cur=None end=None text=None ch='{'
 exp=0 line=11 cur=None end=None text=None ch='savchar({)'
------ Found address 1: [type=2 number=0 step=0 regex=//]
+----- Found address 1: struct_addr(addr_type=2, addr_number=0, addr_step=0, addr_regex=struct_regex(slash='/', pattern='', flags=''))
 exp=0 line=11 cur=None end=None text=None ch='{'
 ----- Found command: '{'
 exp=0 line=12 cur=None end=None text=None ch='\n'
@@ -213,7 +213,7 @@ exp=0 line=13 cur=None end=None text=None ch=' '
 exp=0 line=13 cur=None end=None text=None ch=' '
 exp=0 line=13 cur=None end=None text=None ch=' '
 exp=0 line=13 cur=None end=None text=None ch='$'
------ Found address 1: [type=7 number=0 step=0 regex=None]
+----- Found address 1: struct_addr(addr_type=7, addr_number=0, addr_step=0, addr_regex=None)
 exp=0 line=13 cur=None end=None text=None ch='!'
 ----- Found negation: !
 exp=0 line=13 cur=None end=None text=None ch='{'
@@ -264,7 +264,7 @@ exp=0 line=20 cur=None end=None text=None ch='/'
 exp=0 line=20 cur=None end=None text=None ch=' '
 exp=0 line=20 cur=None end=None text=None ch='{'
 exp=0 line=20 cur=None end=None text=None ch='savchar({)'
------ Found address 1: [type=2 number=0 step=0 regex=/no arguments/]
+----- Found address 1: struct_addr(addr_type=2, addr_number=0, addr_step=0, addr_regex=struct_regex(slash='/', pattern='no arguments', flags=''))
 exp=0 line=20 cur=None end=None text=None ch='{'
 ----- Found command: '{'
 exp=0 line=21 cur=None end=None text=None ch='\n'
@@ -352,7 +352,7 @@ exp=0 line=31 cur=None end=None text=None ch='/'
 exp=0 line=31 cur=None end=None text=None ch=' '
 exp=0 line=31 cur=None end=None text=None ch='{'
 exp=0 line=31 cur=None end=None text=None ch='savchar({)'
------ Found address 1: [type=2 number=0 step=0 regex=/optional numeric argument/]
+----- Found address 1: struct_addr(addr_type=2, addr_number=0, addr_step=0, addr_regex=struct_regex(slash='/', pattern='optional numeric argument', flags=''))
 exp=0 line=31 cur=None end=None text=None ch='{'
 ----- Found command: '{'
 exp=0 line=32 cur=None end=None text=None ch='\n'
@@ -456,7 +456,7 @@ exp=0 line=39 cur=None end=None text=None ch='/'
 exp=0 line=39 cur=None end=None text=None ch=' '
 exp=0 line=39 cur=None end=None text=None ch='{'
 exp=0 line=39 cur=None end=None text=None ch='savchar({)'
------ Found address 1: [type=2 number=0 step=0 regex=/labels/]
+----- Found address 1: struct_addr(addr_type=2, addr_number=0, addr_step=0, addr_regex=struct_regex(slash='/', pattern='labels', flags=''))
 exp=0 line=39 cur=None end=None text=None ch='{'
 ----- Found command: '{'
 exp=0 line=40 cur=None end=None text=None ch='\n'
@@ -533,7 +533,7 @@ exp=0 line=50 cur=None end=None text=None ch='/'
 exp=0 line=50 cur=None end=None text=None ch=' '
 exp=0 line=50 cur=None end=None text=None ch='{'
 exp=0 line=50 cur=None end=None text=None ch='savchar({)'
------ Found address 1: [type=2 number=0 step=0 regex=/files/]
+----- Found address 1: struct_addr(addr_type=2, addr_number=0, addr_step=0, addr_regex=struct_regex(slash='/', pattern='files', flags=''))
 exp=0 line=50 cur=None end=None text=None ch='{'
 ----- Found command: '{'
 exp=0 line=51 cur=None end=None text=None ch='\n'
@@ -617,7 +617,7 @@ exp=0 line=58 cur=None end=None text=None ch='/'
 exp=0 line=58 cur=None end=None text=None ch=' '
 exp=0 line=58 cur=None end=None text=None ch='{'
 exp=0 line=58 cur=None end=None text=None ch='savchar({)'
------ Found address 1: [type=2 number=0 step=0 regex=/aic/]
+----- Found address 1: struct_addr(addr_type=2, addr_number=0, addr_step=0, addr_regex=struct_regex(slash='/', pattern='aic', flags=''))
 exp=0 line=58 cur=None end=None text=None ch='{'
 ----- Found command: '{'
 exp=0 line=59 cur=None end=None text=None ch='\n'
@@ -633,7 +633,7 @@ exp=0 line=60 cur=None end=None text=None ch='t'
 exp=0 line=60 cur=None end=None text=None ch='_'
 exp=0 line=60 cur=None end=None text=None ch='a'
 exp=0 line=61 cur=None end=None text=None ch='\n'
-text: 'text_a'
+text: struct_text_buf(text=['t', 'e', 'x', 't', '_', 'a', '\n'])
 exp=0 line=61 cur=None end=None text=None ch='i'
 ----- Found command: 'i'
 exp=0 line=61 cur=None end=None text=None ch='\\'
@@ -657,7 +657,7 @@ exp=0 line=63 cur=None end=None text=None ch='2'
 exp=0 line=63 cur=None end=None text=None ch='\\'
 exp=0 line=64 cur=None end=None text=None ch='\n'
 exp=0 line=65 cur=None end=None text=None ch='\n'
-text: 'text_i1\\\ntext_i2\\\n'
+text: struct_text_buf(text=['t', 'e', 'x', 't', '_', 'i', '1', '\\', '\n', 't', 'e', 'x', 't', '_', 'i', '2', '\\', '\n', '\n'])
 exp=0 line=65 cur=None end=None text=None ch='p'
 ----- Found command: 'p'
 exp=0 line=66 cur=None end=None text=None ch='\n'
@@ -694,7 +694,7 @@ exp=0 line=69 cur=None end=None text=None ch='3'
 exp=0 line=69 cur=None end=None text=None ch=' '
 exp=0 line=69 cur=None end=None text=None ch=' '
 exp=0 line=70 cur=None end=None text=None ch='\n'
-text: 'text_c1\\\ntext_c2 \\\ntext_c3  '
+text: struct_text_buf(text=['t', 'e', 'x', 't', '_', 'c', '1', '\\', '\n', 't', 'e', 'x', 't', '_', 'c', '2', ' ', '\\', '\n', 't', 'e', 'x', 't', '_', 'c', '3', ' ', ' ', '\n'])
 exp=0 line=70 cur=None end=None text=None ch='}'
 ----- Found command: '}'
 exp=0 line=71 cur=None end=None text=None ch='\n'
@@ -720,7 +720,7 @@ exp=0 line=72 cur=None end=None text=None ch='/'
 exp=0 line=72 cur=None end=None text=None ch=' '
 exp=0 line=72 cur=None end=None text=None ch='{'
 exp=0 line=72 cur=None end=None text=None ch='savchar({)'
------ Found address 1: [type=2 number=0 step=0 regex=/extra useless ;/]
+----- Found address 1: struct_addr(addr_type=2, addr_number=0, addr_step=0, addr_regex=struct_regex(slash='/', pattern='extra useless ;', flags=''))
 exp=0 line=72 cur=None end=None text=None ch='{'
 ----- Found command: '{'
 exp=0 line=72 cur=None end=None text=None ch=' '
@@ -1004,7 +1004,7 @@ exp=0 line=101 cur=None end=None text=None ch='a'
 exp=0 line=101 cur=None end=None text=None ch='t'
 exp=0 line=101 cur=None end=None text=None ch='e'
 exp=0 line=102 cur=None end=None text=None ch='\n'
-text: 'date'
+text: struct_text_buf(text=['d', 'a', 't', 'e', '\n'])
 exp=0 line=102 cur=None end=None text=None ch='s'
 ----- Found command: 's'
 exp=0 line=102 cur=None end=None text=None ch='/'

@@ -60,16 +60,19 @@ class struct_output:
     # fp = None
     # link = None
 
+    def __repr__(self):
+        return "%s(name=%r)" % (self.__class__.__name__, self.name)
+
 
 class struct_text_buf:
     text = []
     # text_length = 0  # sedparse: not used
 
+    def __repr__(self):
+        return "%s(text=%r)" % (self.__class__.__name__, self.text)
+
     def __str__(self):
         return "".join(self.text)[:-1]  # remove trailing \n
-
-    def __repr__(self):
-        return repr("".join(self.text)[:-1])
 
 
 class struct_regex:
@@ -84,14 +87,19 @@ class struct_regex:
     # endline = False
     # re = ""
 
-    def escape(self):  # sedparse extension
-        return "\\" if self.slash != "/" else ""
-
     def __repr__(self):
-        return "[pattern=%s flags=%s]" % (self.pattern, self.flags)
+        return "%s(slash=%r, pattern=%r, flags=%r)" % (
+            self.__class__.__name__,
+            self.slash,
+            self.pattern,
+            self.flags,
+        )
 
     def __str__(self):
         return self.escape() + self.slash + self.pattern + self.slash + self.flags
+
+    def escape(self):  # sedparse extension
+        return "\\" if self.slash != "/" else ""
 
 
 # sedparse: not used
@@ -139,7 +147,8 @@ class struct_addr:
     addr_regex = struct_regex()
 
     def __repr__(self):
-        return "[type=%s number=%s step=%s regex=%s]" % (
+        return "%s(addr_type=%r, addr_number=%r, addr_step=%r, addr_regex=%r)" % (
+            self.__class__.__name__,
             self.addr_type,
             self.addr_number,
             self.addr_step,
@@ -175,6 +184,9 @@ class struct_replacement:
     # repl_type = REPL_ASIS  # enum replacement_types
     # next_ = None  # struct_replacement
 
+    def __repr__(self):
+        return "%s(text=%r)" % (self.__class__.__name__, self.text)
+
 
 class struct_subst:
     regx = struct_regex()
@@ -190,6 +202,16 @@ class struct_subst:
     # eval_ = False  # "e" option given
     # max_id = 0  # maximum backreference on the RHS
     # replacement_buffer = ""  # ifdef lint
+
+    def __repr__(self):
+        return "%s(slash=%r, regx=%r, replacement=%r, flags=%r, outf=%r)" % (
+            self.__class__.__name__,
+            self.slash,
+            self.regx,
+            self.replacement,
+            self.flags,
+            self.outf,
+        )
 
     def __str__(self):
         return (
@@ -236,6 +258,21 @@ class struct_sed_cmd_x:
     # translate = ""
     # translatemb = ""
 
+    def __repr__(self):
+        return (
+            "%s(int_arg=%r, label_name=%r, fname=%r, comment=%r,"
+            " cmd_txt=%r, cmd_subst=%r)"
+            % (
+                self.__class__.__name__,
+                self.int_arg,
+                self.label_name,
+                self.fname,
+                self.comment,
+                self.cmd_txt,
+                self.cmd_subst,
+            )
+        )
+
 
 class struct_sed_cmd:
     # Command addresses
@@ -256,6 +293,17 @@ class struct_sed_cmd:
 
     # sedparse: not used
     # range_state = RANGE_INACTIVE  # See enum addr_state
+
+    def __repr__(self):
+        return "%s(line=%r, cmd=%r, addr_bang=%r, a1=%r, a2=%r, x=%r)" % (
+            self.__class__.__name__,
+            self.line,
+            self.cmd,
+            self.addr_bang,
+            self.a1,
+            self.a2,
+            self.x,
+        )
 
     def __str__(self):
         ret = []

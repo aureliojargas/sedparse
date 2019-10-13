@@ -41,10 +41,10 @@ http://git.savannah.gnu.org/cgit/sed.git/commit/?id=a9cb52bcf39f0ee307301ac73c11
 >>> sedparse.compile_string(parsed, sedscript)
 >>>
 >>> pprint.pprint(parsed)  # doctest:+ELLIPSIS
-[<sedparse.struct_sed_cmd object at ...>,
- <sedparse.struct_sed_cmd object at ...>,
- <sedparse.struct_sed_cmd object at ...>,
- <sedparse.struct_sed_cmd object at ...>]
+[struct_sed_cmd(line=1, cmd='{', ...),
+ struct_sed_cmd(line=1, cmd='N', ...),
+ struct_sed_cmd(line=1, cmd='s', ...),
+ struct_sed_cmd(line=1, cmd='}', ...)]
 >>>
 >>> # You can print the commands.
 >>>
@@ -64,8 +64,10 @@ http://git.savannah.gnu.org/cgit/sed.git/commit/?id=a9cb52bcf39f0ee307301ac73c11
 '7'
 >>> str(parsed[0].a2)
 '/foo/'
->>> parsed[0].cmd
-'{'
+>>> repr(parsed[0].a1)
+'struct_addr(addr_type=3, addr_number=7, addr_step=0, addr_regex=None)'
+>>> repr(parsed[0].a2)
+"struct_addr(addr_type=2, addr_number=0, addr_step=0, addr_regex=struct_regex(slash='/', pattern='foo', flags=''))"
 >>>
 >>> # The second command has only one (negated) address.
 >>>
