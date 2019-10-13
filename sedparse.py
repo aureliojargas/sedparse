@@ -23,6 +23,7 @@
 # pylint: disable=too-many-statements
 
 import argparse
+import json
 import sys
 
 # Adapt some C entities to Python
@@ -1349,7 +1350,12 @@ def debug(msg, stats=False):
             print(msg, file=sys.stderr)
 
 
-def print_program(compiled_program):
+def to_json(obj):
+    # Using "default=...__dict__" to convert structs instance members to JSON
+    return json.dumps(obj, default=lambda x: x.__dict__, indent=4, sort_keys=True)
+
+
+def print_program(compiled_program):  # pylint: disable=unused-variable
     indent_level = 0
     indent_prefix = " " * 4
     for x in compiled_program:
@@ -1377,4 +1383,4 @@ if __name__ == "__main__":
         debug("Will parse file: %s" % args.files[0])
         the_program = []
         compile_file(the_program, args.files[0])
-        print_program(the_program)
+        print(to_json(the_program))
