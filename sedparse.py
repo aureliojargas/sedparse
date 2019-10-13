@@ -1342,10 +1342,11 @@ def debug(msg, stats=False):
                     prog.end,
                     prog.text,
                     msg,
-                )
+                ),
+                file=sys.stderr,
             )
         else:
-            print(msg)
+            print(msg, file=sys.stderr)
 
 
 def print_program(compiled_program):
