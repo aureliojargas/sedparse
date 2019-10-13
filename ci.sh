@@ -18,17 +18,17 @@ is_python36() {
 if is_python36
 then
     echo pylint
-    pylint sedparse.py tests/test_*.py
+    pylint sedparse.py tests/*.py
 
     echo black
-    black --check --quiet sedparse.py tests/test_*.py
+    black --check --quiet sedparse.py tests/*.py
 fi
 
 echo doc tests
 py -m doctest README.md
 
 echo unit tests
-py tests/test_sedparse.py
+py -m unittest discover --quiet -s tests/
 
 echo parse sample file
 py sedparse.py --verbose tests/sample.sed > tests/sample.out
