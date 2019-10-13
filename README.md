@@ -109,7 +109,7 @@ As you can see, the information is split in lots of different places. Here are s
 [..., 'addr_number', 'addr_regex', 'addr_step', 'addr_type']
 >>>
 >>> dir(parsed[0].x)  # doctest:+ELLIPSIS
-[..., 'cmd_subst', 'cmd_txt', 'comment', 'fname', 'int_arg', 'label_name', 'outf']
+[..., 'cmd_subst', 'cmd_txt', 'comment', 'fname', 'int_arg', 'label_name']
 >>>
 >>> dir(parsed[0].x.cmd_subst)  # doctest:+ELLIPSIS
 [..., 'flags', 'outf', 'regx', 'replacement', 'slash']

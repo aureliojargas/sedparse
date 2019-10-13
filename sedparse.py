@@ -218,9 +218,6 @@ class struct_sed_cmd_x:
     # This is used for the hairy s command. (sedparse: and y)
     cmd_subst = struct_subst()
 
-    # This is used for the w command.
-    outf = struct_output()
-
     # This is used for the ":" command.
     label_name = ""
 
@@ -230,6 +227,8 @@ class struct_sed_cmd_x:
     # sedparse: not used
     # # This is used for the {}, b, and t commands.
     # jump_index = 0
+    # # This is used for the w command.
+    # outf = struct_output()
     # # This is used for the R command.
     # # (despite the struct name, it is used for both in and out files).
     # inf = struct_output()
@@ -605,7 +604,7 @@ def next_cmd_entry(vector):
     cmd.x.cmd_subst.regx = struct_regex()
     cmd.x.cmd_subst.replacement = struct_replacement()
     cmd.x.cmd_subst.outf = struct_output()
-    cmd.x.outf = struct_output()
+    # cmd.x.outf = struct_output()  # sedparse: not used
     # cmd.x.inf = struct_output()  # sedparse: not used
     vector.append(cmd)
     return cmd
