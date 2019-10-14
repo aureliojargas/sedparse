@@ -1350,6 +1350,7 @@ def debug(msg, stats=False):
 
 def to_json(obj):
     # Using "default=...__dict__" to convert structs instance members to JSON
+    # https://stackoverflow.com/q/10252010
     return json.dumps(obj, default=lambda x: x.__dict__, indent=4, sort_keys=True)
 
 

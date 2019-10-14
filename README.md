@@ -10,6 +10,9 @@ For now, I do not recommend investing any time on it.
 
 A translation from C to Python of GNU sed's parser for sed scripts.
 
+- Requires: Python 3.4
+- License: GPLv3
+
 To make it feasable to keep this code updated with future GNU sed code, this is a literal translation, trying to mimic as much as possible of the original code. That includes using the same API, same logic, same variable
 and method names and same data structures. Pythonic code? Sorry, not here.
 
@@ -25,6 +28,14 @@ and method names and same data structures. Pythonic code? Sorry, not here.
     Date:   Sun Jun 2 01:14:00 2019 -0600
 
 http://git.savannah.gnu.org/cgit/sed.git/commit/?id=a9cb52bcf39f0ee307301ac73c11acb24372b9d8
+
+
+## sedparse extensions
+
+- Preserves comments
+- Preserves blank lines between commands
+- Preserves original flags for the `s` command
+- Preserves original flags for regex addresses
 
 
 ## Example / Usage
