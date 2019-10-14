@@ -199,7 +199,7 @@ class struct_subst:
         self.regx = struct_regex()
         self.replacement = struct_replacement()
         self.outf = struct_output()  # "w" option given
-        self.flags = []  # sedparse extension
+        self.flags = ""  # sedparse extension
 
         # sedparse: not used
         # numb = 0  # if >0, only substitute for match number "numb"
@@ -225,7 +225,7 @@ class struct_subst:
             + self.regx.slash
             + str(self.replacement.text)
             + self.regx.slash
-            + "".join(self.flags)
+            + self.flags
             + (" " + self.outf.name if "w" in self.flags else "")
         )
 
@@ -1203,8 +1203,8 @@ def compile_program(vector):
             free_buffer(b2)
 
             flags = mark_subst_opts(cur_cmd.x.cmd_subst)
-            cur_cmd.x.cmd_subst.flags = flags
-            debug("s flags: %r" % "".join(flags))
+            cur_cmd.x.cmd_subst.flags = "".join(flags)
+            debug("s flags: %r" % cur_cmd.x.cmd_subst.flags)
             # cur_cmd.x.cmd_subst.regx = compile_regex(
             #     b, flags, cur_cmd.x.cmd_subst.max_id + 1
             # )

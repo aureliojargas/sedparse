@@ -97,7 +97,7 @@ True
 >>> parsed[2].x.cmd_subst.replacement.text
 '-'
 >>> parsed[2].x.cmd_subst.flags
-['g', 'i']
+'gi'
 >>>
 ```
 

@@ -7,7 +7,7 @@
         "line": 1,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -37,7 +37,7 @@
         "line": 2,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -72,7 +72,7 @@
         "line": 3,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -112,7 +112,7 @@
         "line": 4,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -151,7 +151,7 @@
         "line": 5,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -195,7 +195,7 @@
         "line": 6,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -243,7 +243,7 @@
         "line": 7,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -278,7 +278,7 @@
         "line": 8,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -308,7 +308,7 @@
         "line": 9,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -348,7 +348,7 @@
         "line": 10,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -387,7 +387,7 @@
         "line": 11,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -417,7 +417,7 @@
         "line": 12,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -452,7 +452,7 @@
         "line": 13,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -482,7 +482,7 @@
         "line": 14,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -512,7 +512,7 @@
         "line": 15,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -542,7 +542,7 @@
         "line": 16,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -572,7 +572,7 @@
         "line": 17,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -602,7 +602,7 @@
         "line": 18,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -632,7 +632,7 @@
         "line": 19,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -671,7 +671,7 @@
         "line": 20,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -701,7 +701,7 @@
         "line": 21,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -731,7 +731,7 @@
         "line": 22,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -761,7 +761,7 @@
         "line": 22,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -791,7 +791,7 @@
         "line": 23,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -821,7 +821,7 @@
         "line": 23,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -851,7 +851,7 @@
         "line": 24,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -881,7 +881,7 @@
         "line": 24,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -911,7 +911,7 @@
         "line": 25,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -941,7 +941,7 @@
         "line": 25,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -971,7 +971,7 @@
         "line": 26,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1001,7 +1001,7 @@
         "line": 26,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1031,7 +1031,7 @@
         "line": 27,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1061,7 +1061,7 @@
         "line": 28,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1091,7 +1091,7 @@
         "line": 29,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1121,7 +1121,7 @@
         "line": 30,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1160,7 +1160,7 @@
         "line": 31,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1190,7 +1190,7 @@
         "line": 32,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1220,7 +1220,7 @@
         "line": 32,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1250,7 +1250,7 @@
         "line": 33,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1280,7 +1280,7 @@
         "line": 33,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1310,7 +1310,7 @@
         "line": 34,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1340,7 +1340,7 @@
         "line": 34,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1370,7 +1370,7 @@
         "line": 35,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1400,7 +1400,7 @@
         "line": 35,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1430,7 +1430,7 @@
         "line": 36,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1460,7 +1460,7 @@
         "line": 36,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1490,7 +1490,7 @@
         "line": 37,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1520,7 +1520,7 @@
         "line": 38,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1559,7 +1559,7 @@
         "line": 39,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1589,7 +1589,7 @@
         "line": 40,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1619,7 +1619,7 @@
         "line": 41,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1649,7 +1649,7 @@
         "line": 42,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1679,7 +1679,7 @@
         "line": 43,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1709,7 +1709,7 @@
         "line": 44,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1739,7 +1739,7 @@
         "line": 45,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1769,7 +1769,7 @@
         "line": 46,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1799,7 +1799,7 @@
         "line": 47,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1829,7 +1829,7 @@
         "line": 48,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1859,7 +1859,7 @@
         "line": 49,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1898,7 +1898,7 @@
         "line": 50,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1928,7 +1928,7 @@
         "line": 51,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1958,7 +1958,7 @@
         "line": 52,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -1988,7 +1988,7 @@
         "line": 53,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2018,7 +2018,7 @@
         "line": 54,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2048,10 +2048,7 @@
         "line": 55,
         "x": {
             "cmd_subst": {
-                "flags": [
-                    "g",
-                    "w"
-                ],
+                "flags": "gw",
                 "outf": {
                     "name": "filesw"
                 },
@@ -2081,7 +2078,7 @@
         "line": 56,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2111,7 +2108,7 @@
         "line": 57,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2150,7 +2147,7 @@
         "line": 58,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2180,7 +2177,7 @@
         "line": 59,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2218,7 +2215,7 @@
         "line": 61,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2268,7 +2265,7 @@
         "line": 65,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2298,7 +2295,7 @@
         "line": 66,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2358,7 +2355,7 @@
         "line": 70,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2388,7 +2385,7 @@
         "line": 71,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2427,7 +2424,7 @@
         "line": 72,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2457,7 +2454,7 @@
         "line": 73,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2487,7 +2484,7 @@
         "line": 74,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2517,7 +2514,7 @@
         "line": 75,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2547,7 +2544,7 @@
         "line": 76,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2577,7 +2574,7 @@
         "line": 77,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2607,7 +2604,7 @@
         "line": 78,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2637,9 +2634,7 @@
         "line": 79,
         "x": {
             "cmd_subst": {
-                "flags": [
-                    "g"
-                ],
+                "flags": "g",
                 "outf": {
                     "name": ""
                 },
@@ -2669,9 +2664,7 @@
         "line": 80,
         "x": {
             "cmd_subst": {
-                "flags": [
-                    "g"
-                ],
+                "flags": "g",
                 "outf": {
                     "name": ""
                 },
@@ -2701,9 +2694,7 @@
         "line": 81,
         "x": {
             "cmd_subst": {
-                "flags": [
-                    "g"
-                ],
+                "flags": "g",
                 "outf": {
                     "name": ""
                 },
@@ -2733,9 +2724,7 @@
         "line": 82,
         "x": {
             "cmd_subst": {
-                "flags": [
-                    "g"
-                ],
+                "flags": "g",
                 "outf": {
                     "name": ""
                 },
@@ -2765,7 +2754,7 @@
         "line": 83,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2795,9 +2784,7 @@
         "line": 84,
         "x": {
             "cmd_subst": {
-                "flags": [
-                    "w"
-                ],
+                "flags": "w",
                 "outf": {
                     "name": "filesw;"
                 },
@@ -2827,7 +2814,7 @@
         "line": 85,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2857,7 +2844,7 @@
         "line": 86,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2887,7 +2874,7 @@
         "line": 87,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2917,7 +2904,7 @@
         "line": 88,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2947,7 +2934,7 @@
         "line": 89,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -2977,7 +2964,7 @@
         "line": 90,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -3007,7 +2994,7 @@
         "line": 91,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -3037,7 +3024,7 @@
         "line": 92,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -3067,7 +3054,7 @@
         "line": 93,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -3097,7 +3084,7 @@
         "line": 94,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -3127,7 +3114,7 @@
         "line": 95,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -3157,7 +3144,7 @@
         "line": 96,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -3187,7 +3174,7 @@
         "line": 97,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -3217,7 +3204,7 @@
         "line": 98,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -3247,7 +3234,7 @@
         "line": 99,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -3277,7 +3264,7 @@
         "line": 100,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -3307,7 +3294,7 @@
         "line": 101,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -3343,11 +3330,7 @@
         "line": 102,
         "x": {
             "cmd_subst": {
-                "flags": [
-                    "g",
-                    "p",
-                    "w"
-                ],
+                "flags": "gpw",
                 "outf": {
                     "name": "filesw"
                 },
@@ -3377,9 +3360,7 @@
         "line": 103,
         "x": {
             "cmd_subst": {
-                "flags": [
-                    "3"
-                ],
+                "flags": "3",
                 "outf": {
                     "name": ""
                 },
@@ -3409,7 +3390,7 @@
         "line": 104,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -3439,7 +3420,7 @@
         "line": 105,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -3469,7 +3450,7 @@
         "line": 106,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
@@ -3499,7 +3480,7 @@
         "line": 107,
         "x": {
             "cmd_subst": {
-                "flags": [],
+                "flags": "",
                 "outf": {
                     "name": ""
                 },
