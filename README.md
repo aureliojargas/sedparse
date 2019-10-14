@@ -107,7 +107,7 @@ True
 '\\n'
 >>> parsed[2].x.cmd_subst.replacement.text
 '-'
->>> parsed[2].x.cmd_subst.flags
+>>> parsed[2].x.cmd_subst.regx.flags
 'gi'
 >>>
 ```
@@ -125,7 +125,7 @@ As you can see, the information is split in lots of different places. Here are s
 [..., 'cmd_subst', 'cmd_txt', 'comment', 'fname', 'int_arg', 'label_name']
 >>>
 >>> dir(parsed[0].x.cmd_subst)  # doctest:+ELLIPSIS
-[..., 'flags', 'outf', 'regx', 'replacement']
+[..., 'outf', 'regx', 'replacement']
 >>>
 ```
 

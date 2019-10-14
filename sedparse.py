@@ -81,7 +81,15 @@ class struct_text_buf:
 class struct_regex:
     def __init__(self):
         self.pattern = ""
+
+        # In the original this was an integer, a bitwise OR for address flags.
+        # In sedparse it is a string with all the found flags, in their
+        # original order, and even repetition is preserved. It is also used
+        # to save both regex address flags and "s" command flags.
         self.flags = ""  # sedparse: was 0 in the original
+
+        # This is used to save the slash char used as delimiter in: regex
+        # addresses (/foo/p) and in "s" and "y" commands (s///).
         self.slash = ""  # sedparse extension
 
         # sedparse: not used
@@ -199,9 +207,11 @@ class struct_subst:
         self.regx = struct_regex()
         self.replacement = struct_replacement()
         self.outf = struct_output()  # "w" option given
-        self.flags = ""  # sedparse extension
 
         # sedparse: not used
+        # Note that instead of using those attributes to save the found flags,
+        # sedparse saves them to self.regx.flags as a single string, preserving
+        # the original order and possible repetition.
         # numb = 0  # if >0, only substitute for match number "numb"
         # global_ = False  # "g" option given
         # print_ = False  # "p" option given (before/after eval)
@@ -210,11 +220,10 @@ class struct_subst:
         # replacement_buffer = ""  # ifdef lint
 
     def __repr__(self):
-        return "%s(regx=%r, replacement=%r, flags=%r, outf=%r)" % (
+        return "%s(regx=%r, replacement=%r, outf=%r)" % (
             self.__class__.__name__,
             self.regx,
             self.replacement,
-            self.flags,
             self.outf,
         )
 
@@ -225,8 +234,8 @@ class struct_subst:
             + self.regx.slash
             + str(self.replacement.text)
             + self.regx.slash
-            + self.flags
-            + (" " + self.outf.name if "w" in self.flags else "")
+            + self.regx.flags
+            + (" " + self.outf.name if "w" in self.regx.flags else "")
         )
 
 
@@ -1202,9 +1211,9 @@ def compile_program(vector):
             # setup_replacement(cur_cmd.x.cmd_subst, b2)
             free_buffer(b2)
 
-            flags = mark_subst_opts(cur_cmd.x.cmd_subst)
-            cur_cmd.x.cmd_subst.flags = "".join(flags)
-            debug("s flags: %r" % cur_cmd.x.cmd_subst.flags)
+            flags = "".join(mark_subst_opts(cur_cmd.x.cmd_subst))
+            cur_cmd.x.cmd_subst.regx.flags = flags
+            debug("s flags: %r" % flags)
             # cur_cmd.x.cmd_subst.regx = compile_regex(
             #     b, flags, cur_cmd.x.cmd_subst.max_id + 1
             # )

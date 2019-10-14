@@ -73,7 +73,7 @@ class TestSedparseRepr(unittest.TestCase):  # pylint: disable=unused-variable
         with self.subTest(script=script):
             parsed = parse_string(script)
             self.assertEqual(
-                "struct_regex(slash='/', pattern='foo', flags='')",
+                "struct_regex(slash='/', pattern='foo', flags='igw')",
                 repr(parsed[0].x.cmd_subst.regx),
             )
             self.assertEqual(
