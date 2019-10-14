@@ -654,7 +654,7 @@ class TestSedparseParser(unittest.TestCase):  # pylint: disable=unused-variable
         if "comment" not in skip:
             self.assertEqual("", data.x.comment)
         if "slash" not in skip:
-            self.assertEqual("", data.x.cmd_subst.slash)
+            self.assertEqual("", data.x.cmd_subst.regx.slash)
         if "pattern" not in skip:
             self.assertEqual("", data.x.cmd_subst.regx.pattern)
         if "replacement" not in skip:
@@ -767,7 +767,7 @@ class TestSedparseParser(unittest.TestCase):  # pylint: disable=unused-variable
                 parsed = parse_string(script)[0]
                 with self.subTest(script=script):
                     self.assertEqual(command, parsed.cmd)
-                    self.assertEqual(delimiter, parsed.x.cmd_subst.slash)
+                    self.assertEqual(delimiter, parsed.x.cmd_subst.regx.slash)
                     self.assertEqual(arg1, parsed.x.cmd_subst.regx.pattern)
                     self.assertEqual(arg2, parsed.x.cmd_subst.replacement.text)
                     self._assert_defaults(
@@ -782,7 +782,7 @@ class TestSedparseParser(unittest.TestCase):  # pylint: disable=unused-variable
             parsed = parse_string(script)[0]
             with self.subTest(script=script):
                 self.assertEqual(command, parsed.cmd)
-                self.assertEqual(delimiter, parsed.x.cmd_subst.slash)
+                self.assertEqual(delimiter, parsed.x.cmd_subst.regx.slash)
                 self.assertEqual(pattern, parsed.x.cmd_subst.regx.pattern)
                 self.assertEqual(replacement, parsed.x.cmd_subst.replacement.text)
                 self.assertEqual(flags, "".join(parsed.x.cmd_subst.flags))

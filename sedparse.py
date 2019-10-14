@@ -200,7 +200,6 @@ class struct_subst:
         self.replacement = struct_replacement()
         self.outf = struct_output()  # "w" option given
         self.flags = []  # sedparse extension
-        self.slash = ""  # sedparse extension
 
         # sedparse: not used
         # numb = 0  # if >0, only substitute for match number "numb"
@@ -211,9 +210,8 @@ class struct_subst:
         # replacement_buffer = ""  # ifdef lint
 
     def __repr__(self):
-        return "%s(slash=%r, regx=%r, replacement=%r, flags=%r, outf=%r)" % (
+        return "%s(regx=%r, replacement=%r, flags=%r, outf=%r)" % (
             self.__class__.__name__,
-            self.slash,
             self.regx,
             self.replacement,
             self.flags,
@@ -222,11 +220,11 @@ class struct_subst:
 
     def __str__(self):
         return (
-            self.slash
+            self.regx.slash
             + str(self.regx.pattern)
-            + self.slash
+            + self.regx.slash
             + str(self.replacement.text)
-            + self.slash
+            + self.regx.slash
             + "".join(self.flags)
             + (" " + self.outf.name if "w" in self.flags else "")
         )
@@ -1188,10 +1186,10 @@ def compile_program(vector):
 
         elif ch == "s":
             slash = inchar()
-            cur_cmd.x.cmd_subst.slash = slash
             b = match_slash(slash, True)
             if b == NULL:
                 bad_prog(UNTERM_S_CMD)
+            cur_cmd.x.cmd_subst.regx.slash = slash
             cur_cmd.x.cmd_subst.regx.pattern = "".join(b)
             debug("s pattern: %r" % cur_cmd.x.cmd_subst.regx.pattern)
 
@@ -1217,10 +1215,10 @@ def compile_program(vector):
 
         elif ch == "y":
             slash = inchar()
-            cur_cmd.x.cmd_subst.slash = slash
             b = match_slash(slash, False)
             if b == NULL:
                 bad_prog(UNTERM_Y_CMD)
+            cur_cmd.x.cmd_subst.regx.slash = slash
             cur_cmd.x.cmd_subst.regx.pattern = "".join(b)
             debug("y pattern: %r" % cur_cmd.x.cmd_subst.regx.pattern)
 

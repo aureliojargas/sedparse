@@ -90,7 +90,7 @@ True
 True
 >>> parsed[2].cmd
 's'
->>> parsed[2].x.cmd_subst.slash
+>>> parsed[2].x.cmd_subst.regx.slash
 '/'
 >>> parsed[2].x.cmd_subst.regx.pattern
 '\\n'
@@ -114,7 +114,7 @@ As you can see, the information is split in lots of different places. Here are s
 [..., 'cmd_subst', 'cmd_txt', 'comment', 'fname', 'int_arg', 'label_name']
 >>>
 >>> dir(parsed[0].x.cmd_subst)  # doctest:+ELLIPSIS
-[..., 'flags', 'outf', 'regx', 'replacement', 'slash']
+[..., 'flags', 'outf', 'regx', 'replacement']
 >>>
 ```
 
