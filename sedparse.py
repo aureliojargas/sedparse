@@ -1421,13 +1421,12 @@ if __name__ == "__main__":
     argparser.add_argument(
         "--full", action="store_true", help="Show full JSON (has empty values)"
     )
-    argparser.add_argument("files", metavar="FILE", nargs="*", help="input files")
+    argparser.add_argument("sed_file", nargs="?", default="-")
     args = argparser.parse_args()
 
     PARSER_DEBUG = args.verbose
 
-    if args.files:
-        debug("Will parse file: %s" % args.files[0])
-        the_program = []
-        compile_file(the_program, args.files[0])
-        print(to_json(the_program, not args.full))
+    debug("Will parse file: %s" % args.sed_file)
+    the_program = []
+    compile_file(the_program, args.sed_file)
+    print(to_json(the_program, not args.full))
