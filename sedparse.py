@@ -30,6 +30,44 @@ import sys
 NULL = None
 EOF = "<EOF>"
 
+# Default options when dumping JSON
+JSON_OPTS = {"indent": 4, "sort_keys": True}
+
+
+# Base class to handle translated C structs
+class struct:
+    def to_dict(self, remove_empty=True):
+        """
+        Return the struct data as a dict.
+
+        Using plain self.__dict__ works only for a single level. This function
+        is recursive and converts all the nested structs.
+
+        When using remove_empty, keys that have empty or default values are removed.
+
+        Note that the structs use no dictionaries to store their data, so we
+        don't need to check for it in this code.
+        """
+        d = {}
+        for key, val in self.__dict__.items():
+            if isinstance(val, struct):
+                val = val.to_dict(remove_empty)
+            if remove_empty:
+                if val is None or val in ("", (), [], {}):
+                    continue
+                if key == "int_arg" and val == -1:
+                    continue
+                if key == "addr_bang" and not val:
+                    continue
+                if key == "addr_step" and val == 0:
+                    continue
+            d[key] = val
+        return d
+
+    def to_json(self, remove_empty=True):
+        return json.dumps(self, default=lambda x: x.to_dict(remove_empty), **JSON_OPTS)
+
+
 ######################################## translated from sed.c
 
 program_name = "sed"
@@ -53,7 +91,7 @@ def ISSPACE(c):
 
 # sedparse: The original code handles file open/read/write/close operations,
 # but here we only care about the filename.
-class struct_output:
+class struct_output(struct):
     def __init__(self):
         self.name = ""
 
@@ -66,7 +104,7 @@ class struct_output:
         return "%s(name=%r)" % (self.__class__.__name__, self.name)
 
 
-class struct_text_buf:
+class struct_text_buf(struct):
     def __init__(self):
         self.text = []
         # text_length = 0  # sedparse: not used
@@ -78,7 +116,7 @@ class struct_text_buf:
         return "".join(self.text)[:-1]  # remove trailing \n
 
 
-class struct_regex:
+class struct_regex(struct):
     def __init__(self):
         self.pattern = ""
 
@@ -152,7 +190,7 @@ ADDR_IS_LAST = 7             # address is $
 # fmt: on
 
 
-class struct_addr:
+class struct_addr(struct):
     def __init__(self):
         self.addr_type = ADDR_IS_NULL  # enum addr_types
         self.addr_number = 0
@@ -187,7 +225,7 @@ class struct_addr:
         return ret
 
 
-class struct_replacement:
+class struct_replacement(struct):
     def __init__(self):
         self.text = ""  # sedparse extension
 
@@ -202,7 +240,7 @@ class struct_replacement:
         return "%s(text=%r)" % (self.__class__.__name__, self.text)
 
 
-class struct_subst:
+class struct_subst(struct):
     def __init__(self):
         self.regx = struct_regex()
         self.replacement = struct_replacement()
@@ -240,7 +278,7 @@ class struct_subst:
 
 
 # sedparse: In the original this was a 'union' inside 'struct sed_cmd'
-class struct_sed_cmd_x:
+class struct_sed_cmd_x(struct):
     "auxiliary data for various commands"
 
     def __init__(self):
@@ -290,7 +328,7 @@ class struct_sed_cmd_x:
         )
 
 
-class struct_sed_cmd:
+class struct_sed_cmd(struct):
     def __init__(self):
         # Command addresses
         self.a1 = struct_addr()
@@ -1357,10 +1395,8 @@ def debug(msg, stats=False):
             print(msg, file=sys.stderr)
 
 
-def to_json(obj):
-    # Using "default=...__dict__" to convert structs instance members to JSON
-    # https://stackoverflow.com/q/10252010
-    return json.dumps(obj, default=lambda x: x.__dict__, indent=4, sort_keys=True)
+def to_json(obj, remove_empty=True):
+    return json.dumps(obj, default=lambda x: x.to_dict(remove_empty), **JSON_OPTS)
 
 
 def print_program(compiled_program):  # pylint: disable=unused-variable
@@ -1382,6 +1418,9 @@ def print_program(compiled_program):  # pylint: disable=unused-variable
 if __name__ == "__main__":
     argparser = argparse.ArgumentParser()
     argparser.add_argument("-v", "--verbose", action="store_true", help="verbose mode")
+    argparser.add_argument(
+        "--full", action="store_true", help="Show full JSON (has empty values)"
+    )
     argparser.add_argument("files", metavar="FILE", nargs="*", help="input files")
     args = argparser.parse_args()
 
@@ -1391,4 +1430,4 @@ if __name__ == "__main__":
         debug("Will parse file: %s" % args.files[0])
         the_program = []
         compile_file(the_program, args.files[0])
-        print(to_json(the_program))
+        print(to_json(the_program, not args.full))

@@ -31,5 +31,6 @@ echo unit tests
 py -m unittest discover --quiet -s tests/
 
 echo parse sample file
-py sedparse.py --verbose tests/sample.sed > tests/sample.json 2> tests/sample.verbose
+py sedparse.py tests/sample.sed > tests/sample.json
+py sedparse.py --verbose --full tests/sample.sed > tests/sample.full.json 2> tests/sample.verbose
 git diff --exit-code tests/sample.*
