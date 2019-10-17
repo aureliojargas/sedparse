@@ -1416,10 +1416,12 @@ def print_program(compiled_program):  # pylint: disable=unused-variable
 
 
 if __name__ == "__main__":
-    argparser = argparse.ArgumentParser()
+    argparser = argparse.ArgumentParser(
+        description="Parse a sed script file and dump the results as JSON in STDOUT."
+    )
     argparser.add_argument("-v", "--verbose", action="store_true", help="verbose mode")
     argparser.add_argument(
-        "--full", action="store_true", help="Show full JSON (has empty values)"
+        "--full", action="store_true", help="show full JSON (has empty values)"
     )
     argparser.add_argument("sed_file", nargs="?", default="-")
     args = argparser.parse_args()
