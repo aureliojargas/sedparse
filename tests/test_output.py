@@ -46,7 +46,6 @@ class TestSedparseOutput(unittest.TestCase):  # pylint: disable=unused-variable
                 {
                     "a1": {
                         "addr_type": 2,
-                        "addr_number": 0,
                         "addr_regex": {"pattern": "x", "slash": "/"},
                     },
                     "cmd": "p",
@@ -66,7 +65,7 @@ class TestSedparseOutput(unittest.TestCase):  # pylint: disable=unused-variable
                     "line": 1,
                 },
             ),
-            ("$p", {"a1": {"addr_type": 7, "addr_number": 0}, "cmd": "p", "line": 1}),
+            ("$p", {"a1": {"addr_type": 7}, "cmd": "p", "line": 1}),
             ("q0", {"cmd": "q", "x": {"int_arg": 0}, "line": 1}),
             ("!p", {"addr_bang": True, "cmd": "p", "line": 1}),
             ("p", {"cmd": "p", "line": 1}),

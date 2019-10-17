@@ -36,7 +36,6 @@
     },
     {
         "a1": {
-            "addr_number": 0,
             "addr_regex": {
                 "flags": "I",
                 "pattern": "xxx",
@@ -53,7 +52,6 @@
             "addr_type": 3
         },
         "a2": {
-            "addr_number": 0,
             "addr_regex": {
                 "pattern": "xxx",
                 "slash": "/"
@@ -65,7 +63,6 @@
     },
     {
         "a1": {
-            "addr_number": 0,
             "addr_regex": {
                 "pattern": "pipe\\n\\|\\n",
                 "slash": "|"
@@ -73,7 +70,6 @@
             "addr_type": 2
         },
         "a2": {
-            "addr_number": 0,
             "addr_regex": {
                 "pattern": "space",
                 "slash": " "
@@ -85,7 +81,6 @@
     },
     {
         "a1": {
-            "addr_number": 0,
             "addr_type": 7
         },
         "cmd": "h",
@@ -101,7 +96,6 @@
             "addr_type": 3
         },
         "a2": {
-            "addr_number": 0,
             "addr_type": 7
         },
         "cmd": "{",
@@ -109,7 +103,6 @@
     },
     {
         "a1": {
-            "addr_number": 0,
             "addr_regex": {
                 "slash": "/"
             },
@@ -124,7 +117,6 @@
     },
     {
         "a1": {
-            "addr_number": 0,
             "addr_type": 7
         },
         "addr_bang": true,
@@ -157,7 +149,6 @@
     },
     {
         "a1": {
-            "addr_number": 0,
             "addr_regex": {
                 "pattern": "no arguments",
                 "slash": "/"
@@ -229,7 +220,6 @@
     },
     {
         "a1": {
-            "addr_number": 0,
             "addr_regex": {
                 "pattern": "optional numeric argument",
                 "slash": "/"
@@ -304,7 +294,6 @@
     },
     {
         "a1": {
-            "addr_number": 0,
             "addr_regex": {
                 "pattern": "labels",
                 "slash": "/"
@@ -371,7 +360,6 @@
     },
     {
         "a1": {
-            "addr_number": 0,
             "addr_regex": {
                 "pattern": "files",
                 "slash": "/"
@@ -438,7 +426,6 @@
     },
     {
         "a1": {
-            "addr_number": 0,
             "addr_regex": {
                 "pattern": "aic",
                 "slash": "/"
@@ -547,7 +534,6 @@
     },
     {
         "a1": {
-            "addr_number": 0,
             "addr_regex": {
                 "pattern": "extra useless ;",
                 "slash": "/"

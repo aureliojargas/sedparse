@@ -74,7 +74,6 @@ This is the generated JSON:
             "addr_type": 3
         },
         "a2": {
-            "addr_number": 0,
             "addr_regex": {
                 "pattern": "foo",
                 "slash": "/"
@@ -86,7 +85,6 @@ This is the generated JSON:
     },
     {
         "a1": {
-            "addr_number": 0,
             "addr_type": 7
         },
         "addr_bang": true,
@@ -151,9 +149,7 @@ This is the generated JSON:
 >>>
 >>> pprint.pprint(parsed[0].to_dict())
 {'a1': {'addr_number': 7, 'addr_type': 3},
- 'a2': {'addr_number': 0,
-        'addr_regex': {'pattern': 'foo', 'slash': '/'},
-        'addr_type': 2},
+ 'a2': {'addr_regex': {'pattern': 'foo', 'slash': '/'}, 'addr_type': 2},
  'cmd': '{',
  'line': 1}
 >>>
@@ -166,7 +162,6 @@ This is the generated JSON:
         "addr_type": 3
     },
     "a2": {
-        "addr_number": 0,
         "addr_regex": {
             "pattern": "foo",
             "slash": "/"

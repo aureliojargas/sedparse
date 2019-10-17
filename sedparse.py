@@ -61,6 +61,12 @@ class struct:
                     continue
                 if key == "addr_step" and val == 0:
                     continue
+                if (
+                    key == "addr_number"
+                    and val == 0
+                    and self.__dict__["addr_type"] in (ADDR_IS_REGEX, ADDR_IS_LAST)
+                ):
+                    continue
             d[key] = val
         return d
 
