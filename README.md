@@ -8,20 +8,28 @@ For now, I do not recommend investing any time on it.
 
 ----
 
-A translation from C to Python of GNU sed's parser for sed scripts.
-
+- Author: Aurelio Jargas
 - Requires: Python 3.4
 - License: GPLv3
 
-To make it feasable to keep this code updated with future GNU sed code, this is a literal translation, trying to mimic as much as possible of the original code. That includes using the same API, same logic, same variable
-and method names and same data structures. Pythonic code? Sorry, not here.
+A translation from C to Python of GNU sed's parser for sed scripts.
+
+After running sedparse in your sed script, the resulting "[AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree)" is available in different formats:
+
+- List of objects (translated C structs)
+- List of dictionaries
+- JSON
 
 > Note that this is not a full GNU sed implementation.
 > Only the parser for sed scripts was translated.
 > Check https://github.com/GillesArcas/PythonSed for a working sed in Python.
 
 
-## Translated from this GNU sed version
+## About the translation
+
+To make it feasable to keep this code updated with future GNU sed code, this is a literal translation, trying to mimic as much as possible of the original code. That includes using the same API, same logic, same variable and method names and same data structures. Pythonic code? Sorry, not here.
+
+Sedparse was translated from this GNU sed version:
 
     commit a9cb52bcf39f0ee307301ac73c11acb24372b9d8
     Author: Assaf Gordon <assafgordon@gmail.com>
@@ -30,7 +38,7 @@ and method names and same data structures. Pythonic code? Sorry, not here.
 http://git.savannah.gnu.org/cgit/sed.git/commit/?id=a9cb52bcf39f0ee307301ac73c11acb24372b9d8
 
 
-## sedparse extensions
+## Sedparse extensions to the original parser
 
 - Preserves comments
 - Preserves blank lines between commands
@@ -38,7 +46,89 @@ http://git.savannah.gnu.org/cgit/sed.git/commit/?id=a9cb52bcf39f0ee307301ac73c11
 - Preserves original flags for regex addresses
 
 
-## Example / Usage
+## Usage from the command line
+
+```console
+$ python sedparse.py script.sed > script.json
+$
+```
+
+Given the following `script.sed` file:
+
+```sed
+7,/foo/ {
+  $!N
+  s/\n/-/gi
+}
+
+# Comments and blank lines are preserved
+```
+
+This is the generated JSON:
+
+```json
+[
+    {
+        "a1": {
+            "addr_number": 7,
+            "addr_type": 3
+        },
+        "a2": {
+            "addr_number": 0,
+            "addr_regex": {
+                "pattern": "foo",
+                "slash": "/"
+            },
+            "addr_type": 2
+        },
+        "cmd": "{",
+        "line": 1
+    },
+    {
+        "a1": {
+            "addr_number": 0,
+            "addr_type": 7
+        },
+        "addr_bang": true,
+        "cmd": "N",
+        "line": 2
+    },
+    {
+        "cmd": "s",
+        "line": 3,
+        "x": {
+            "cmd_subst": {
+                "regx": {
+                    "flags": "gi",
+                    "pattern": "\\n",
+                    "slash": "/"
+                },
+                "replacement": {
+                    "text": "-"
+                }
+            }
+        }
+    },
+    {
+        "cmd": "}",
+        "line": 4
+    },
+    {
+        "cmd": "\n",
+        "line": 5
+    },
+    {
+        "cmd": "#",
+        "line": 6,
+        "x": {
+            "comment": " Comments and blank lines are preserved"
+        }
+    }
+]
+```
+
+
+## Usage as a Python module
 
 ```python
 >>> import pprint
@@ -56,6 +146,44 @@ http://git.savannah.gnu.org/cgit/sed.git/commit/?id=a9cb52bcf39f0ee307301ac73c11
  struct_sed_cmd(line=1, cmd='N', ...),
  struct_sed_cmd(line=1, cmd='s', ...),
  struct_sed_cmd(line=1, cmd='}', ...)]
+>>>
+>>> # Use .to_dict() to convert each command to a Python dict.
+>>>
+>>> pprint.pprint(parsed[0].to_dict())
+{'a1': {'addr_number': 7, 'addr_type': 3},
+ 'a2': {'addr_number': 0,
+        'addr_regex': {'pattern': 'foo', 'slash': '/'},
+        'addr_type': 2},
+ 'cmd': '{',
+ 'line': 1}
+>>>
+>>> # Use .to_json() to convert each command to JSON.
+>>>
+>>> print(parsed[0].to_json())
+{
+    "a1": {
+        "addr_number": 7,
+        "addr_type": 3
+    },
+    "a2": {
+        "addr_number": 0,
+        "addr_regex": {
+            "pattern": "foo",
+            "slash": "/"
+        },
+        "addr_type": 2
+    },
+    "cmd": "{",
+    "line": 1
+}
+>>>
+>>> # Or use the global sedparse.to_json() to convert
+>>> # the whole parsed script to JSON.
+>>>
+>>> print(sedparse.to_json(parsed))  # doctest:+ELLIPSIS
+[
+    {
+        "a1": {...
 >>>
 >>> # You can print the commands.
 >>>
