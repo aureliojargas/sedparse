@@ -1,8 +1,5 @@
 # Test all error messages.
 
-import contextlib
-import io
-import sys
 import unittest
 
 from context import sedparse
@@ -54,18 +51,6 @@ TEST_DATA = [
     ("s/a/b/0",   7, "ZERO_N_OPT", "number option to `s' command may not be zero"),
 ]
 
-# Capture stdout and stderr for the asserts
-# https://stackoverflow.com/a/17981937
-@contextlib.contextmanager
-def captured_output():
-    new_out, new_err = io.StringIO(), io.StringIO()
-    old_out, old_err = sys.stdout, sys.stderr
-    try:
-        sys.stdout, sys.stderr = new_out, new_err
-        yield sys.stdout, sys.stderr
-    finally:
-        sys.stdout, sys.stderr = old_out, old_err
-
 
 class TestSedparseErrors(unittest.TestCase):  # pylint: disable=unused-variable
     def test_errors(self):
@@ -76,15 +61,14 @@ class TestSedparseErrors(unittest.TestCase):  # pylint: disable=unused-variable
                 message,
             )
 
-            with captured_output() as (_, err):
+            with self.subTest(script=script):
                 try:
                     parsed = []
                     sedparse.compile_string(parsed, script)
                     sedparse.check_final_program()
-                except SystemExit:
-                    pass
-                with self.subTest(script=script):
-                    self.assertEqual(expected, err.getvalue().rstrip())
+                except sedparse.ParseError as err:
+                    self.assertEqual(expected, err.message)
+                    self.assertEqual(sedparse.EXIT_BAD_USAGE, err.exitcode)
 
 
 if __name__ == "__main__":

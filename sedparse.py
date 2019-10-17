@@ -68,6 +68,19 @@ class struct:
         return json.dumps(self, default=lambda x: x.to_dict(remove_empty), **JSON_OPTS)
 
 
+class ParseError(Exception):
+    # pylint: disable=too-many-arguments
+    def __init__(self, message="", file="", line=0, column=0, expression=0, exitcode=1):
+        # https://stackoverflow.com/a/38857736
+        super(ParseError, self).__init__(message)
+        self.message = message
+        self.file = file
+        self.line = line
+        self.column = column
+        self.expression = expression
+        self.exitcode = exitcode
+
+
 ######################################## translated from sed.c
 
 program_name = "sedparse"
@@ -422,8 +435,7 @@ EXIT_PANIC = 4  # PANIC during program execution
 
 # Print an error message and exit
 def panic(msg):
-    print("%s: %s" % (program_name, msg), file=sys.stderr)
-    sys.exit(EXIT_PANIC)
+    raise ParseError(exitcode=EXIT_PANIC, message="%s: %s" % (program_name, msg))
 
 
 def init_buffer():
@@ -568,8 +580,14 @@ def bad_prog(why):
             prog.cur - prog.base,
             why,
         )
-    print(msg, file=sys.stderr)
-    sys.exit(EXIT_BAD_USAGE)
+    raise ParseError(
+        message=msg,
+        file=cur_input.name,
+        expression=cur_input.string_expr_count,
+        line=cur_input.line,
+        column=(prog.cur - prog.base) if prog.cur else 0,
+        exitcode=EXIT_BAD_USAGE,
+    )
 
 
 # /* Read the next character from the program.  Return EOF if there isn't
@@ -1430,5 +1448,9 @@ if __name__ == "__main__":
 
     debug("Will parse file: %s" % args.sed_file)
     the_program = []
-    compile_file(the_program, args.sed_file)
+    try:
+        compile_file(the_program, args.sed_file)
+    except ParseError as err:
+        print(err.message, file=sys.stderr)
+        sys.exit(err.exitcode)
     print(to_json(the_program, not args.full))
