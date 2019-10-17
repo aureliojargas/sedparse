@@ -70,7 +70,7 @@ class struct:
 
 ######################################## translated from sed.c
 
-program_name = "sed"
+program_name = "sedparse"
 
 ######################################## translated from basicdefs.h
 

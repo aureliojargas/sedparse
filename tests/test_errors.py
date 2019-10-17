@@ -70,7 +70,7 @@ def captured_output():
 class TestSedparseErrors(unittest.TestCase):  # pylint: disable=unused-variable
     def test_errors(self):
         for script, char_nr, _, message in TEST_DATA:
-            expected = "sed: -e expression #%d, char %d: %s" % (
+            expected = "sedparse: -e expression #%d, char %d: %s" % (
                 sedparse.cur_input.string_expr_count + 1,
                 char_nr,
                 message,
