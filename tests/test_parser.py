@@ -7,19 +7,19 @@ from context import sedparse
 # The global holder for all the test data
 TEST_DATA = {}
 
-# Aligning test cases makes them way more readable, so no pylint/black here
+# Aligning test cases makes them way more readable
 # pylint: disable=bad-whitespace
-# fmt: off
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # Test data for ADDRESSES
 
 TEST_DATA["address"] = [
     # Test cases for addresses: numeric, $, /regex/
     # Source: compile_address(), match_slash()
+    # fmt: off
 
     # sed script       !       addr1         addr2
-    #---------------------------------------------
+    # --------------------------------------------
 
     # no address
     ("p",              False,  None,         None),
@@ -160,7 +160,7 @@ TEST_DATA["address"] = [
 ]
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # Test data for FILENAME commands
 
 TEST_DATA["r"] = [
@@ -169,6 +169,7 @@ TEST_DATA["r"] = [
     # Note: all scripts end in EOF. At run time the \n ending is also tested.
     # Source: read_filename()
     # Format: (sed script, expected filename)
+    # fmt: off
 
     ("rname", "name"),
 
@@ -200,7 +201,7 @@ TEST_DATA["w"].append(("ww", "w"))
 TEST_DATA["W"].append(("WW", "W"))
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # Test data for LABEL commands
 
 TEST_DATA[":"] = [
@@ -208,6 +209,7 @@ TEST_DATA[":"] = [
     # Note: all scripts end in EOF. At run time the \n ending is also tested.
     # Source: read_label()
     # Format: (sed script, expected label name)
+    # fmt: off
 
     (":name", "name"),
 
@@ -261,13 +263,14 @@ TEST_DATA["b"].append(("b}", ""))
 TEST_DATA["b"].append(("b#", ""))
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # Test data for TEXT commands
 
 TEST_DATA["a"] = [
     # Test cases for commands: a, i, c, e
     # Source: read_text()
     # Format: (sed script, expected text)
+    # fmt: off
 
     # Traditional sed requires a line break after \
     ("a\\\ntext", "text"),
@@ -346,13 +349,14 @@ TEST_DATA["e"] = [("e" + script[1:], text) for script, text in TEST_DATA["a"]]
 TEST_DATA["e"].append(("e", ""))
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # Test data for "y" and "s" commands
 
 TEST_DATA["y"] = [
     # Test cases for commands: y, s
     # Source: match_slash()
     # Format: (sed script, delimiter, source, dest)
+    # fmt: off
 
     # Simple usage
     ("y/a/A/", "/", "a", "A"),
@@ -392,11 +396,11 @@ TEST_DATA["y"] = [
     # Literal \ is not allowed when \ is the delimiter
     #("y\\\\\\a\\\\\\A\\", "\\", "\\\\a", "\\\\A"),
 
-    # Non-ASCII chars are allowed as source and dest
-    ("y/★/★/", "/", "★", "★"),
-
     # Non-ASCII chars are NOT allowed as delimiter
     #("y★a★A★", "★", "a", "A"),
+
+    # Non-ASCII chars are allowed as source and dest
+    ("y/★/★/", "/", "★", "★"),
 ]
 
 # Copy all "y" tests to: s
@@ -418,12 +422,13 @@ TEST_DATA["s"].append(("ssasAs", "s", "a", "A"))
 TEST_DATA["s"].append(("s/[/]//", "/", "[/]", ""))
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # Test data for using flags in the "s" command
 
 TEST_DATA["s-flags"] = [
     # Source: match_slash(), mark_subst_opts()
     # Format: (sed script, delimiter, pattern, replacement, flags, flag_arg)
+    # fmt: off
 
     # Flags: traditional sed
     ("s/a/A/g",     "/", "a", "A", "g",   ""),
@@ -467,7 +472,7 @@ TEST_DATA["s-flags"] = [
 ]
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 TEST_DATA["#"] = [
     # Test cases for comments
@@ -476,6 +481,7 @@ TEST_DATA["#"] = [
     # Note: result_index identifies # command index in the parsing results list.
     # Source: read_comment()
     # Format: (result_index, sed script, comment)
+    # fmt: off
 
     # Empty comment
     (0, "#", ""),
@@ -528,13 +534,14 @@ TEST_DATA["#"] = [
 ]
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 TEST_DATA["\n"] = [
     # Test cases for blank lines
     # Preserving blank lines is a sedparse extension. GNU sed discards them.
     # Source: ignore_trailing_fluff() and also search for "sedparse" comments.
     # Format: (sed script, *expected_parsed_commands)
+    # fmt: off
 
     # 100% blank lines script
     ("\n", "\n"),
@@ -582,12 +589,13 @@ TEST_DATA["\n"] = [
 ]
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 TEST_DATA["block"] = [
     # Test cases for blocks
     # Note: all scripts end in EOF. At run time the \n ending is also tested.
     # Format: (sed script, *expected_parsed_commands)
+    # fmt: off
 
     # Empty blocks are allowed
     ("{}", "{", "}"),
@@ -604,12 +612,13 @@ TEST_DATA["block"] = [
 ]
 
 
-#------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 TEST_DATA["trailing_fluff"] = [
     # Test cases for ignore_trailing_fluff()
     # Note: all scripts end in EOF. At run time the \n ending is also tested.
     # Format: (sed script, *expected_parsed_commands)
+    # fmt: off
 
     # Ignore trailing spaces and tabs
     ("p      ", "p"),
@@ -625,11 +634,6 @@ TEST_DATA["trailing_fluff"] = [
     ("p ;\t; ", "p"),
     ("p ;;\tx", "p", "x"),
 ]
-
-
-# End of test cases, white space can get back to normal
-# pylint: enable=bad-whitespace
-# fmt: on
 
 
 def parse_string(script):
