@@ -407,7 +407,7 @@ class struct_sed_cmd(struct):
             ret.append(" " + self.x.fname)
         elif self.x.int_arg and self.x.int_arg > -1:
             ret.append(" %s" % self.x.int_arg)
-        elif self.x.cmd_txt.text:  # aic
+        elif self.x.cmd_txt.text:  # a i c
             ret.append("\\\n%s" % self.x.cmd_txt)
 
         return "".join(ret)
@@ -634,7 +634,7 @@ def savchar(ch):
     else:
         try:
             # Go back one position in prog.file file descriptor pointer
-            prog.file.seek(prog.file.tell() - 1)  # ungetc (ch, prog.file)
+            prog.file.seek(prog.file.tell() - 1)  # ungetc(ch, prog.file)
         except ValueError:  # negative seek position -1
             pass
 
@@ -831,7 +831,7 @@ def match_slash(slash, regex):  # char, bool
                 # elif ch == "n" and regex:
                 #     ch = "\n"
                 # # Those exceptions remove the leading \ from known situations
-                # # For example, s/a\/b/.../ becames "a/b" not "a\/b"
+                # # For example, s/a\/b/.../ becomes "a/b" not "a\/b"
                 # # Since I want to keep the original user text, this is disabled
                 # elif (ch != "\n" and (ch != slash or (not regex and ch == "&"))):
                 else:
@@ -1205,7 +1205,7 @@ def compile_program(vector):
 
             read_text(cur_cmd.x.cmd_txt, ch)
             debug("text: %r" % cur_cmd.x.cmd_txt)
-        # ENDGOTO
+        # END GOTO
 
         elif ch in (":", "T", "b", "t"):
             # if (cur_cmd->a1)
