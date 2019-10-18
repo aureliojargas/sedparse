@@ -5,7 +5,6 @@
 # TODO
 # - identify and document all sedparse additions
 # - document how it works
-# - descriptive header with a sed script and its object after parsing
 #
 # WONTDO
 # - Check if command only accepts one address

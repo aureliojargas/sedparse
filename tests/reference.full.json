@@ -22,17 +22,22 @@
             "cmd_txt": {
                 "text": []
             },
-            "comment": "n",
+            "comment": " Addresses",
             "fname": "",
             "int_arg": -1,
             "label_name": ""
         }
     },
     {
-        "a1": null,
+        "a1": {
+            "addr_number": 11,
+            "addr_regex": null,
+            "addr_step": 0,
+            "addr_type": 3
+        },
         "a2": null,
         "addr_bang": false,
-        "cmd": "#",
+        "cmd": "p",
         "line": 2,
         "x": {
             "cmd_subst": {
@@ -51,7 +56,7 @@
             "cmd_txt": {
                 "text": []
             },
-            "comment": " IMPORTANT: This file has significant trailing spaces, do not remove them!",
+            "comment": "",
             "fname": "",
             "int_arg": -1,
             "label_name": ""
@@ -59,14 +64,19 @@
     },
     {
         "a1": {
-            "addr_number": 5,
+            "addr_number": 11,
             "addr_regex": null,
             "addr_step": 0,
             "addr_type": 3
         },
-        "a2": null,
-        "addr_bang": true,
-        "cmd": "H",
+        "a2": {
+            "addr_number": 12,
+            "addr_regex": null,
+            "addr_step": 0,
+            "addr_type": 3
+        },
+        "addr_bang": false,
+        "cmd": "p",
         "line": 3,
         "x": {
             "cmd_subst": {
@@ -93,19 +103,14 @@
     },
     {
         "a1": {
-            "addr_number": 1,
+            "addr_number": 0,
             "addr_regex": null,
             "addr_step": 0,
-            "addr_type": 3
+            "addr_type": 7
         },
-        "a2": {
-            "addr_number": 5,
-            "addr_regex": null,
-            "addr_step": 0,
-            "addr_type": 3
-        },
+        "a2": null,
         "addr_bang": false,
-        "cmd": "g",
+        "cmd": "p",
         "line": 4,
         "x": {
             "cmd_subst": {
@@ -134,8 +139,8 @@
         "a1": {
             "addr_number": 0,
             "addr_regex": {
-                "flags": "I",
-                "pattern": "xxx",
+                "flags": "",
+                "pattern": "regex-without-flags",
                 "slash": "/"
             },
             "addr_step": 0,
@@ -143,7 +148,7 @@
         },
         "a2": null,
         "addr_bang": false,
-        "cmd": "G",
+        "cmd": "p",
         "line": 5,
         "x": {
             "cmd_subst": {
@@ -170,173 +175,19 @@
     },
     {
         "a1": {
-            "addr_number": 2,
-            "addr_regex": null,
-            "addr_step": 0,
-            "addr_type": 3
-        },
-        "a2": {
             "addr_number": 0,
             "addr_regex": {
-                "flags": "",
-                "pattern": "xxx",
+                "flags": "IM",
+                "pattern": "regex-with-flags",
                 "slash": "/"
             },
             "addr_step": 0,
             "addr_type": 2
         },
+        "a2": null,
         "addr_bang": false,
-        "cmd": "x",
+        "cmd": "p",
         "line": 6,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": {
-            "addr_number": 0,
-            "addr_regex": {
-                "flags": "",
-                "pattern": "pipe\\n\\|\\n",
-                "slash": "|"
-            },
-            "addr_step": 0,
-            "addr_type": 2
-        },
-        "a2": {
-            "addr_number": 0,
-            "addr_regex": {
-                "flags": "",
-                "pattern": "space",
-                "slash": " "
-            },
-            "addr_step": 0,
-            "addr_type": 2
-        },
-        "addr_bang": false,
-        "cmd": "x",
-        "line": 7,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": {
-            "addr_number": 0,
-            "addr_regex": null,
-            "addr_step": 0,
-            "addr_type": 7
-        },
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "h",
-        "line": 8,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "\n",
-        "line": 9,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": {
-            "addr_number": 1,
-            "addr_regex": null,
-            "addr_step": 0,
-            "addr_type": 3
-        },
-        "a2": {
-            "addr_number": 0,
-            "addr_regex": null,
-            "addr_step": 0,
-            "addr_type": 7
-        },
-        "addr_bang": false,
-        "cmd": "{",
-        "line": 10,
         "x": {
             "cmd_subst": {
                 "outf": {
@@ -373,7 +224,128 @@
         },
         "a2": null,
         "addr_bang": false,
-        "cmd": "{",
+        "cmd": "p",
+        "line": 7,
+        "x": {
+            "cmd_subst": {
+                "outf": {
+                    "name": ""
+                },
+                "regx": {
+                    "flags": "",
+                    "pattern": "",
+                    "slash": ""
+                },
+                "replacement": {
+                    "text": ""
+                }
+            },
+            "cmd_txt": {
+                "text": []
+            },
+            "comment": "",
+            "fname": "",
+            "int_arg": -1,
+            "label_name": ""
+        }
+    },
+    {
+        "a1": null,
+        "a2": null,
+        "addr_bang": false,
+        "cmd": "\n",
+        "line": 8,
+        "x": {
+            "cmd_subst": {
+                "outf": {
+                    "name": ""
+                },
+                "regx": {
+                    "flags": "",
+                    "pattern": "",
+                    "slash": ""
+                },
+                "replacement": {
+                    "text": ""
+                }
+            },
+            "cmd_txt": {
+                "text": []
+            },
+            "comment": "",
+            "fname": "",
+            "int_arg": -1,
+            "label_name": ""
+        }
+    },
+    {
+        "a1": null,
+        "a2": null,
+        "addr_bang": false,
+        "cmd": "#",
+        "line": 9,
+        "x": {
+            "cmd_subst": {
+                "outf": {
+                    "name": ""
+                },
+                "regx": {
+                    "flags": "",
+                    "pattern": "",
+                    "slash": ""
+                },
+                "replacement": {
+                    "text": ""
+                }
+            },
+            "cmd_txt": {
+                "text": []
+            },
+            "comment": " Bang to invert addresses",
+            "fname": "",
+            "int_arg": -1,
+            "label_name": ""
+        }
+    },
+    {
+        "a1": {
+            "addr_number": 0,
+            "addr_regex": null,
+            "addr_step": 0,
+            "addr_type": 7
+        },
+        "a2": null,
+        "addr_bang": true,
+        "cmd": "p",
+        "line": 10,
+        "x": {
+            "cmd_subst": {
+                "outf": {
+                    "name": ""
+                },
+                "regx": {
+                    "flags": "",
+                    "pattern": "",
+                    "slash": ""
+                },
+                "replacement": {
+                    "text": ""
+                }
+            },
+            "cmd_txt": {
+                "text": []
+            },
+            "comment": "",
+            "fname": "",
+            "int_arg": -1,
+            "label_name": ""
+        }
+    },
+    {
+        "a1": null,
+        "a2": null,
+        "addr_bang": false,
+        "cmd": "\n",
         "line": 11,
         "x": {
             "cmd_subst": {
@@ -402,7 +374,7 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "x",
+        "cmd": "#",
         "line": 12,
         "x": {
             "cmd_subst": {
@@ -421,22 +393,17 @@
             "cmd_txt": {
                 "text": []
             },
-            "comment": "",
+            "comment": " Commands with no arguments",
             "fname": "",
             "int_arg": -1,
             "label_name": ""
         }
     },
     {
-        "a1": {
-            "addr_number": 0,
-            "addr_regex": null,
-            "addr_step": 0,
-            "addr_type": 7
-        },
+        "a1": null,
         "a2": null,
-        "addr_bang": true,
-        "cmd": "{",
+        "addr_bang": false,
+        "cmd": "=",
         "line": 13,
         "x": {
             "cmd_subst": {
@@ -465,7 +432,7 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "d",
+        "cmd": "b",
         "line": 14,
         "x": {
             "cmd_subst": {
@@ -494,7 +461,7 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "}",
+        "cmd": "d",
         "line": 15,
         "x": {
             "cmd_subst": {
@@ -523,7 +490,7 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "}",
+        "cmd": "D",
         "line": 16,
         "x": {
             "cmd_subst": {
@@ -552,7 +519,7 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "}",
+        "cmd": "F",
         "line": 17,
         "x": {
             "cmd_subst": {
@@ -581,7 +548,7 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "\n",
+        "cmd": "g",
         "line": 18,
         "x": {
             "cmd_subst": {
@@ -610,191 +577,8 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "\n",
-        "line": 19,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": {
-            "addr_number": 0,
-            "addr_regex": {
-                "flags": "",
-                "pattern": "no arguments",
-                "slash": "/"
-            },
-            "addr_step": 0,
-            "addr_type": 2
-        },
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "{",
-        "line": 20,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "=",
-        "line": 21,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "d",
-        "line": 22,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "D",
-        "line": 22,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "g",
-        "line": 23,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
         "cmd": "G",
-        "line": 23,
+        "line": 19,
         "x": {
             "cmd_subst": {
                 "outf": {
@@ -823,7 +607,7 @@
         "a2": null,
         "addr_bang": false,
         "cmd": "h",
-        "line": 24,
+        "line": 20,
         "x": {
             "cmd_subst": {
                 "outf": {
@@ -852,7 +636,65 @@
         "a2": null,
         "addr_bang": false,
         "cmd": "H",
-        "line": 24,
+        "line": 21,
+        "x": {
+            "cmd_subst": {
+                "outf": {
+                    "name": ""
+                },
+                "regx": {
+                    "flags": "",
+                    "pattern": "",
+                    "slash": ""
+                },
+                "replacement": {
+                    "text": ""
+                }
+            },
+            "cmd_txt": {
+                "text": []
+            },
+            "comment": "",
+            "fname": "",
+            "int_arg": -1,
+            "label_name": ""
+        }
+    },
+    {
+        "a1": null,
+        "a2": null,
+        "addr_bang": false,
+        "cmd": "l",
+        "line": 22,
+        "x": {
+            "cmd_subst": {
+                "outf": {
+                    "name": ""
+                },
+                "regx": {
+                    "flags": "",
+                    "pattern": "",
+                    "slash": ""
+                },
+                "replacement": {
+                    "text": ""
+                }
+            },
+            "cmd_txt": {
+                "text": []
+            },
+            "comment": "",
+            "fname": "",
+            "int_arg": -1,
+            "label_name": ""
+        }
+    },
+    {
+        "a1": null,
+        "a2": null,
+        "addr_bang": false,
+        "cmd": "L",
+        "line": 23,
         "x": {
             "cmd_subst": {
                 "outf": {
@@ -881,7 +723,7 @@
         "a2": null,
         "addr_bang": false,
         "cmd": "n",
-        "line": 25,
+        "line": 24,
         "x": {
             "cmd_subst": {
                 "outf": {
@@ -968,35 +810,6 @@
         "a2": null,
         "addr_bang": false,
         "cmd": "P",
-        "line": 26,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "z",
         "line": 27,
         "x": {
             "cmd_subst": {
@@ -1025,7 +838,7 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "x",
+        "cmd": "q",
         "line": 28,
         "x": {
             "cmd_subst": {
@@ -1054,7 +867,7 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "}",
+        "cmd": "Q",
         "line": 29,
         "x": {
             "cmd_subst": {
@@ -1083,7 +896,7 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "\n",
+        "cmd": "t",
         "line": 30,
         "x": {
             "cmd_subst": {
@@ -1109,19 +922,10 @@
         }
     },
     {
-        "a1": {
-            "addr_number": 0,
-            "addr_regex": {
-                "flags": "",
-                "pattern": "optional numeric argument",
-                "slash": "/"
-            },
-            "addr_step": 0,
-            "addr_type": 2
-        },
+        "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "{",
+        "cmd": "T",
         "line": 31,
         "x": {
             "cmd_subst": {
@@ -1150,7 +954,7 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "q",
+        "cmd": "x",
         "line": 32,
         "x": {
             "cmd_subst": {
@@ -1179,269 +983,8 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "q",
-        "line": 32,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": 1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "Q",
+        "cmd": "z",
         "line": 33,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "Q",
-        "line": 33,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": 2,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "l",
-        "line": 34,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "l",
-        "line": 34,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": 3,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "L",
-        "line": 35,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "L",
-        "line": 35,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": 4,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "v",
-        "line": 36,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "v",
-        "line": 36,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": "4.2"
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "}",
-        "line": 37,
         "x": {
             "cmd_subst": {
                 "outf": {
@@ -1470,45 +1013,7 @@
         "a2": null,
         "addr_bang": false,
         "cmd": "\n",
-        "line": 38,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": {
-            "addr_number": 0,
-            "addr_regex": {
-                "flags": "",
-                "pattern": "labels",
-                "slash": "/"
-            },
-            "addr_step": 0,
-            "addr_type": 2
-        },
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "{",
-        "line": 39,
+        "line": 34,
         "x": {
             "cmd_subst": {
                 "outf": {
@@ -1536,7 +1041,152 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": ":",
+        "cmd": "#",
+        "line": 35,
+        "x": {
+            "cmd_subst": {
+                "outf": {
+                    "name": ""
+                },
+                "regx": {
+                    "flags": "",
+                    "pattern": "",
+                    "slash": ""
+                },
+                "replacement": {
+                    "text": ""
+                }
+            },
+            "cmd_txt": {
+                "text": []
+            },
+            "comment": " Commands with numeric argument",
+            "fname": "",
+            "int_arg": -1,
+            "label_name": ""
+        }
+    },
+    {
+        "a1": null,
+        "a2": null,
+        "addr_bang": false,
+        "cmd": "q",
+        "line": 36,
+        "x": {
+            "cmd_subst": {
+                "outf": {
+                    "name": ""
+                },
+                "regx": {
+                    "flags": "",
+                    "pattern": "",
+                    "slash": ""
+                },
+                "replacement": {
+                    "text": ""
+                }
+            },
+            "cmd_txt": {
+                "text": []
+            },
+            "comment": "",
+            "fname": "",
+            "int_arg": 1,
+            "label_name": ""
+        }
+    },
+    {
+        "a1": null,
+        "a2": null,
+        "addr_bang": false,
+        "cmd": "Q",
+        "line": 37,
+        "x": {
+            "cmd_subst": {
+                "outf": {
+                    "name": ""
+                },
+                "regx": {
+                    "flags": "",
+                    "pattern": "",
+                    "slash": ""
+                },
+                "replacement": {
+                    "text": ""
+                }
+            },
+            "cmd_txt": {
+                "text": []
+            },
+            "comment": "",
+            "fname": "",
+            "int_arg": 2,
+            "label_name": ""
+        }
+    },
+    {
+        "a1": null,
+        "a2": null,
+        "addr_bang": false,
+        "cmd": "l",
+        "line": 38,
+        "x": {
+            "cmd_subst": {
+                "outf": {
+                    "name": ""
+                },
+                "regx": {
+                    "flags": "",
+                    "pattern": "",
+                    "slash": ""
+                },
+                "replacement": {
+                    "text": ""
+                }
+            },
+            "cmd_txt": {
+                "text": []
+            },
+            "comment": "",
+            "fname": "",
+            "int_arg": 3,
+            "label_name": ""
+        }
+    },
+    {
+        "a1": null,
+        "a2": null,
+        "addr_bang": false,
+        "cmd": "L",
+        "line": 39,
+        "x": {
+            "cmd_subst": {
+                "outf": {
+                    "name": ""
+                },
+                "regx": {
+                    "flags": "",
+                    "pattern": "",
+                    "slash": ""
+                },
+                "replacement": {
+                    "text": ""
+                }
+            },
+            "cmd_txt": {
+                "text": []
+            },
+            "comment": "",
+            "fname": "",
+            "int_arg": 4,
+            "label_name": ""
+        }
+    },
+    {
+        "a1": null,
+        "a2": null,
+        "addr_bang": false,
+        "cmd": "\n",
         "line": 40,
         "x": {
             "cmd_subst": {
@@ -1558,14 +1208,14 @@
             "comment": "",
             "fname": "",
             "int_arg": -1,
-            "label_name": "abc1"
+            "label_name": ""
         }
     },
     {
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": ":",
+        "cmd": "#",
         "line": 41,
         "x": {
             "cmd_subst": {
@@ -1584,17 +1234,17 @@
             "cmd_txt": {
                 "text": []
             },
-            "comment": "",
+            "comment": " Commands with labels",
             "fname": "",
             "int_arg": -1,
-            "label_name": "ABC2"
+            "label_name": ""
         }
     },
     {
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "b",
+        "cmd": ":",
         "line": 42,
         "x": {
             "cmd_subst": {
@@ -1616,14 +1266,14 @@
             "comment": "",
             "fname": "",
             "int_arg": -1,
-            "label_name": "abc1"
+            "label_name": "label"
         }
     },
     {
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "t",
+        "cmd": "b",
         "line": 43,
         "x": {
             "cmd_subst": {
@@ -1645,14 +1295,14 @@
             "comment": "",
             "fname": "",
             "int_arg": -1,
-            "label_name": "ABC2"
+            "label_name": "label_b"
         }
     },
     {
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "T",
+        "cmd": "t",
         "line": 44,
         "x": {
             "cmd_subst": {
@@ -1674,14 +1324,14 @@
             "comment": "",
             "fname": "",
             "int_arg": -1,
-            "label_name": "abc1"
+            "label_name": "label_t"
         }
     },
     {
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "b",
+        "cmd": "T",
         "line": 45,
         "x": {
             "cmd_subst": {
@@ -1703,14 +1353,14 @@
             "comment": "",
             "fname": "",
             "int_arg": -1,
-            "label_name": ""
+            "label_name": "label_T"
         }
     },
     {
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "t",
+        "cmd": "\n",
         "line": 46,
         "x": {
             "cmd_subst": {
@@ -1739,7 +1389,7 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "T",
+        "cmd": "#",
         "line": 47,
         "x": {
             "cmd_subst": {
@@ -1758,7 +1408,7 @@
             "cmd_txt": {
                 "text": []
             },
-            "comment": "",
+            "comment": " Command v (label-like)",
             "fname": "",
             "int_arg": -1,
             "label_name": ""
@@ -1768,7 +1418,7 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "}",
+        "cmd": "v",
         "line": 48,
         "x": {
             "cmd_subst": {
@@ -1790,7 +1440,7 @@
             "comment": "",
             "fname": "",
             "int_arg": -1,
-            "label_name": ""
+            "label_name": "4.2"
         }
     },
     {
@@ -1823,19 +1473,10 @@
         }
     },
     {
-        "a1": {
-            "addr_number": 0,
-            "addr_regex": {
-                "flags": "",
-                "pattern": "files",
-                "slash": "/"
-            },
-            "addr_step": 0,
-            "addr_type": 2
-        },
+        "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "{",
+        "cmd": "#",
         "line": 50,
         "x": {
             "cmd_subst": {
@@ -1854,7 +1495,7 @@
             "cmd_txt": {
                 "text": []
             },
-            "comment": "",
+            "comment": " Commands with files",
             "fname": "",
             "int_arg": -1,
             "label_name": ""
@@ -1884,7 +1525,7 @@
                 "text": []
             },
             "comment": "",
-            "fname": "filer",
+            "fname": "file_r",
             "int_arg": -1,
             "label_name": ""
         }
@@ -1913,7 +1554,7 @@
                 "text": []
             },
             "comment": "",
-            "fname": "fileR",
+            "fname": "file_R",
             "int_arg": -1,
             "label_name": ""
         }
@@ -1942,7 +1583,7 @@
                 "text": []
             },
             "comment": "",
-            "fname": "filew",
+            "fname": "file_w",
             "int_arg": -1,
             "label_name": ""
         }
@@ -1971,7 +1612,7 @@
                 "text": []
             },
             "comment": "",
-            "fname": "fileW",
+            "fname": "file_W",
             "int_arg": -1,
             "label_name": ""
         }
@@ -1980,20 +1621,20 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "s",
+        "cmd": "\n",
         "line": 55,
         "x": {
             "cmd_subst": {
                 "outf": {
-                    "name": "filesw"
+                    "name": ""
                 },
                 "regx": {
-                    "flags": "gw",
-                    "pattern": "foo",
-                    "slash": "/"
+                    "flags": "",
+                    "pattern": "",
+                    "slash": ""
                 },
                 "replacement": {
-                    "text": "bar"
+                    "text": ""
                 }
             },
             "cmd_txt": {
@@ -2009,7 +1650,7 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "}",
+        "cmd": "#",
         "line": 56,
         "x": {
             "cmd_subst": {
@@ -2028,74 +1669,7 @@
             "cmd_txt": {
                 "text": []
             },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "\n",
-        "line": 57,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": {
-            "addr_number": 0,
-            "addr_regex": {
-                "flags": "",
-                "pattern": "aic",
-                "slash": "/"
-            },
-            "addr_step": 0,
-            "addr_type": 2
-        },
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "{",
-        "line": 58,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
+            "comment": " Commands with text",
             "fname": "",
             "int_arg": -1,
             "label_name": ""
@@ -2106,7 +1680,7 @@
         "a2": null,
         "addr_bang": false,
         "cmd": "a",
-        "line": 59,
+        "line": 57,
         "x": {
             "cmd_subst": {
                 "outf": {
@@ -2143,7 +1717,7 @@
         "a2": null,
         "addr_bang": false,
         "cmd": "i",
-        "line": 61,
+        "line": 58,
         "x": {
             "cmd_subst": {
                 "outf": {
@@ -2166,18 +1740,6 @@
                     "t",
                     "_",
                     "i",
-                    "1",
-                    "\\",
-                    "\n",
-                    "t",
-                    "e",
-                    "x",
-                    "t",
-                    "_",
-                    "i",
-                    "2",
-                    "\\",
-                    "\n",
                     "\n"
                 ]
             },
@@ -2191,8 +1753,56 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "p",
-        "line": 65,
+        "cmd": "c",
+        "line": 60,
+        "x": {
+            "cmd_subst": {
+                "outf": {
+                    "name": ""
+                },
+                "regx": {
+                    "flags": "",
+                    "pattern": "",
+                    "slash": ""
+                },
+                "replacement": {
+                    "text": ""
+                }
+            },
+            "cmd_txt": {
+                "text": [
+                    "t",
+                    "e",
+                    "x",
+                    "t",
+                    "_",
+                    "c",
+                    "1",
+                    " ",
+                    "\\",
+                    "\n",
+                    "t",
+                    "e",
+                    "x",
+                    "t",
+                    "_",
+                    "c",
+                    "2",
+                    "\n"
+                ]
+            },
+            "comment": "",
+            "fname": "",
+            "int_arg": -1,
+            "label_name": ""
+        }
+    },
+    {
+        "a1": null,
+        "a2": null,
+        "addr_bang": false,
+        "cmd": "\n",
+        "line": 63,
         "x": {
             "cmd_subst": {
                 "outf": {
@@ -2220,8 +1830,37 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "c",
-        "line": 66,
+        "cmd": "#",
+        "line": 64,
+        "x": {
+            "cmd_subst": {
+                "outf": {
+                    "name": ""
+                },
+                "regx": {
+                    "flags": "",
+                    "pattern": "",
+                    "slash": ""
+                },
+                "replacement": {
+                    "text": ""
+                }
+            },
+            "cmd_txt": {
+                "text": []
+            },
+            "comment": " Command e (text-like)",
+            "fname": "",
+            "int_arg": -1,
+            "label_name": ""
+        }
+    },
+    {
+        "a1": null,
+        "a2": null,
+        "addr_bang": false,
+        "cmd": "e",
+        "line": 65,
         "x": {
             "cmd_subst": {
                 "outf": {
@@ -2238,34 +1877,10 @@
             },
             "cmd_txt": {
                 "text": [
+                    "d",
+                    "a",
                     "t",
                     "e",
-                    "x",
-                    "t",
-                    "_",
-                    "c",
-                    "1",
-                    "\\",
-                    "\n",
-                    "t",
-                    "e",
-                    "x",
-                    "t",
-                    "_",
-                    "c",
-                    "2",
-                    " ",
-                    "\\",
-                    "\n",
-                    "t",
-                    "e",
-                    "x",
-                    "t",
-                    "_",
-                    "c",
-                    "3",
-                    " ",
-                    " ",
                     "\n"
                 ]
             },
@@ -2279,7 +1894,123 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "}",
+        "cmd": "\n",
+        "line": 66,
+        "x": {
+            "cmd_subst": {
+                "outf": {
+                    "name": ""
+                },
+                "regx": {
+                    "flags": "",
+                    "pattern": "",
+                    "slash": ""
+                },
+                "replacement": {
+                    "text": ""
+                }
+            },
+            "cmd_txt": {
+                "text": []
+            },
+            "comment": "",
+            "fname": "",
+            "int_arg": -1,
+            "label_name": ""
+        }
+    },
+    {
+        "a1": null,
+        "a2": null,
+        "addr_bang": false,
+        "cmd": "#",
+        "line": 67,
+        "x": {
+            "cmd_subst": {
+                "outf": {
+                    "name": ""
+                },
+                "regx": {
+                    "flags": "",
+                    "pattern": "",
+                    "slash": ""
+                },
+                "replacement": {
+                    "text": ""
+                }
+            },
+            "cmd_txt": {
+                "text": []
+            },
+            "comment": " Command y",
+            "fname": "",
+            "int_arg": -1,
+            "label_name": ""
+        }
+    },
+    {
+        "a1": null,
+        "a2": null,
+        "addr_bang": false,
+        "cmd": "y",
+        "line": 68,
+        "x": {
+            "cmd_subst": {
+                "outf": {
+                    "name": ""
+                },
+                "regx": {
+                    "flags": "",
+                    "pattern": "abc",
+                    "slash": "/"
+                },
+                "replacement": {
+                    "text": "123"
+                }
+            },
+            "cmd_txt": {
+                "text": []
+            },
+            "comment": "",
+            "fname": "",
+            "int_arg": -1,
+            "label_name": ""
+        }
+    },
+    {
+        "a1": null,
+        "a2": null,
+        "addr_bang": false,
+        "cmd": "y",
+        "line": 69,
+        "x": {
+            "cmd_subst": {
+                "outf": {
+                    "name": ""
+                },
+                "regx": {
+                    "flags": "",
+                    "pattern": "abc",
+                    "slash": "@"
+                },
+                "replacement": {
+                    "text": "123"
+                }
+            },
+            "cmd_txt": {
+                "text": []
+            },
+            "comment": "",
+            "fname": "",
+            "int_arg": -1,
+            "label_name": ""
+        }
+    },
+    {
+        "a1": null,
+        "a2": null,
+        "addr_bang": false,
+        "cmd": "\n",
         "line": 70,
         "x": {
             "cmd_subst": {
@@ -2308,7 +2039,7 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "\n",
+        "cmd": "#",
         "line": 71,
         "x": {
             "cmd_subst": {
@@ -2327,26 +2058,17 @@
             "cmd_txt": {
                 "text": []
             },
-            "comment": "",
+            "comment": " Command s",
             "fname": "",
             "int_arg": -1,
             "label_name": ""
         }
     },
     {
-        "a1": {
-            "addr_number": 0,
-            "addr_regex": {
-                "flags": "",
-                "pattern": "extra useless ;",
-                "slash": "/"
-            },
-            "addr_step": 0,
-            "addr_type": 2
-        },
+        "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "{",
+        "cmd": "s",
         "line": 72,
         "x": {
             "cmd_subst": {
@@ -2356,7 +2078,7 @@
                 "regx": {
                     "flags": "",
                     "pattern": "",
-                    "slash": ""
+                    "slash": "/"
                 },
                 "replacement": {
                     "text": ""
@@ -2375,7 +2097,7 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "p",
+        "cmd": "s",
         "line": 73,
         "x": {
             "cmd_subst": {
@@ -2383,9 +2105,9 @@
                     "name": ""
                 },
                 "regx": {
-                    "flags": "",
+                    "flags": "3",
                     "pattern": "",
-                    "slash": ""
+                    "slash": "|"
                 },
                 "replacement": {
                     "text": ""
@@ -2404,20 +2126,20 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "p",
+        "cmd": "s",
         "line": 74,
         "x": {
             "cmd_subst": {
                 "outf": {
-                    "name": ""
+                    "name": "filew"
                 },
                 "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
+                    "flags": "gipw",
+                    "pattern": "patt",
+                    "slash": "/"
                 },
                 "replacement": {
-                    "text": ""
+                    "text": "repl"
                 }
             },
             "cmd_txt": {
@@ -2433,7 +2155,7 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "p",
+        "cmd": "\n",
         "line": 75,
         "x": {
             "cmd_subst": {
@@ -2462,7 +2184,7 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "p",
+        "cmd": "#",
         "line": 76,
         "x": {
             "cmd_subst": {
@@ -2481,17 +2203,22 @@
             "cmd_txt": {
                 "text": []
             },
-            "comment": "",
+            "comment": " Blocks",
             "fname": "",
             "int_arg": -1,
             "label_name": ""
         }
     },
     {
-        "a1": null,
+        "a1": {
+            "addr_number": 0,
+            "addr_regex": null,
+            "addr_step": 0,
+            "addr_type": 7
+        },
         "a2": null,
         "addr_bang": false,
-        "cmd": "p",
+        "cmd": "{",
         "line": 77,
         "x": {
             "cmd_subst": {
@@ -2549,7 +2276,7 @@
         "a1": null,
         "a2": null,
         "addr_bang": false,
-        "cmd": "s",
+        "cmd": "}",
         "line": 79,
         "x": {
             "cmd_subst": {
@@ -2557,122 +2284,6 @@
                     "name": ""
                 },
                 "regx": {
-                    "flags": "g",
-                    "pattern": "a",
-                    "slash": "/"
-                },
-                "replacement": {
-                    "text": "b"
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "s",
-        "line": 80,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "g",
-                    "pattern": "a",
-                    "slash": "/"
-                },
-                "replacement": {
-                    "text": "b"
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "s",
-        "line": 81,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "g",
-                    "pattern": "a",
-                    "slash": "/"
-                },
-                "replacement": {
-                    "text": "b"
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "s",
-        "line": 82,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "g",
-                    "pattern": "a",
-                    "slash": "/"
-                },
-                "replacement": {
-                    "text": "b"
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "r",
-        "line": 83,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
                     "flags": "",
                     "pattern": "",
                     "slash": ""
@@ -2685,708 +2296,6 @@
                 "text": []
             },
             "comment": "",
-            "fname": "foo;",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "s",
-        "line": 84,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": "filesw;"
-                },
-                "regx": {
-                    "flags": "w",
-                    "pattern": "a",
-                    "slash": "/"
-                },
-                "replacement": {
-                    "text": "b"
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": ":",
-        "line": 85,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": "foo"
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": ":",
-        "line": 86,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": "foo"
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": ":",
-        "line": 87,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": "foo"
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "b",
-        "line": 88,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": "foo"
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "b",
-        "line": 89,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": "foo"
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "b",
-        "line": 90,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": "foo"
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "b",
-        "line": 91,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "b",
-        "line": 92,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "b",
-        "line": 93,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "b",
-        "line": 94,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "q",
-        "line": 95,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": 1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "q",
-        "line": 96,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": 1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "q",
-        "line": 97,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": 1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "q",
-        "line": 98,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": 1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "}",
-        "line": 99,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "\n",
-        "line": 100,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "e",
-        "line": 101,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": [
-                    "d",
-                    "a",
-                    "t",
-                    "e",
-                    "\n"
-                ]
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "s",
-        "line": 102,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": "filesw"
-                },
-                "regx": {
-                    "flags": "gpw",
-                    "pattern": "foo",
-                    "slash": "/"
-                },
-                "replacement": {
-                    "text": "bar"
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "s",
-        "line": 103,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "3",
-                    "pattern": "\\n\\;\\n",
-                    "slash": ";"
-                },
-                "replacement": {
-                    "text": "\\n"
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "y",
-        "line": 104,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "A",
-                    "slash": "/"
-                },
-                "replacement": {
-                    "text": "B"
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "y",
-        "line": 105,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "a",
-                    "slash": "."
-                },
-                "replacement": {
-                    "text": "b"
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "#",
-        "line": 106,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "comment",
-            "fname": "",
-            "int_arg": -1,
-            "label_name": ""
-        }
-    },
-    {
-        "a1": null,
-        "a2": null,
-        "addr_bang": false,
-        "cmd": "#",
-        "line": 107,
-        "x": {
-            "cmd_subst": {
-                "outf": {
-                    "name": ""
-                },
-                "regx": {
-                    "flags": "",
-                    "pattern": "",
-                    "slash": ""
-                },
-                "replacement": {
-                    "text": ""
-                }
-            },
-            "cmd_txt": {
-                "text": []
-            },
-            "comment": "    indented",
             "fname": "",
             "int_arg": -1,
             "label_name": ""

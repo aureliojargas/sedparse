@@ -1,0 +1,537 @@
+[
+    {
+        "cmd": "#",
+        "line": 1,
+        "x": {
+            "comment": " Addresses"
+        }
+    },
+    {
+        "a1": {
+            "addr_number": 11,
+            "addr_type": 3
+        },
+        "cmd": "p",
+        "line": 2
+    },
+    {
+        "a1": {
+            "addr_number": 11,
+            "addr_type": 3
+        },
+        "a2": {
+            "addr_number": 12,
+            "addr_type": 3
+        },
+        "cmd": "p",
+        "line": 3
+    },
+    {
+        "a1": {
+            "addr_type": 7
+        },
+        "cmd": "p",
+        "line": 4
+    },
+    {
+        "a1": {
+            "addr_regex": {
+                "pattern": "regex-without-flags",
+                "slash": "/"
+            },
+            "addr_type": 2
+        },
+        "cmd": "p",
+        "line": 5
+    },
+    {
+        "a1": {
+            "addr_regex": {
+                "flags": "IM",
+                "pattern": "regex-with-flags",
+                "slash": "/"
+            },
+            "addr_type": 2
+        },
+        "cmd": "p",
+        "line": 6
+    },
+    {
+        "a1": {
+            "addr_regex": {
+                "slash": "/"
+            },
+            "addr_type": 2
+        },
+        "cmd": "p",
+        "line": 7
+    },
+    {
+        "cmd": "\n",
+        "line": 8
+    },
+    {
+        "cmd": "#",
+        "line": 9,
+        "x": {
+            "comment": " Bang to invert addresses"
+        }
+    },
+    {
+        "a1": {
+            "addr_type": 7
+        },
+        "addr_bang": true,
+        "cmd": "p",
+        "line": 10
+    },
+    {
+        "cmd": "\n",
+        "line": 11
+    },
+    {
+        "cmd": "#",
+        "line": 12,
+        "x": {
+            "comment": " Commands with no arguments"
+        }
+    },
+    {
+        "cmd": "=",
+        "line": 13
+    },
+    {
+        "cmd": "b",
+        "line": 14
+    },
+    {
+        "cmd": "d",
+        "line": 15
+    },
+    {
+        "cmd": "D",
+        "line": 16
+    },
+    {
+        "cmd": "F",
+        "line": 17
+    },
+    {
+        "cmd": "g",
+        "line": 18
+    },
+    {
+        "cmd": "G",
+        "line": 19
+    },
+    {
+        "cmd": "h",
+        "line": 20
+    },
+    {
+        "cmd": "H",
+        "line": 21
+    },
+    {
+        "cmd": "l",
+        "line": 22
+    },
+    {
+        "cmd": "L",
+        "line": 23
+    },
+    {
+        "cmd": "n",
+        "line": 24
+    },
+    {
+        "cmd": "N",
+        "line": 25
+    },
+    {
+        "cmd": "p",
+        "line": 26
+    },
+    {
+        "cmd": "P",
+        "line": 27
+    },
+    {
+        "cmd": "q",
+        "line": 28
+    },
+    {
+        "cmd": "Q",
+        "line": 29
+    },
+    {
+        "cmd": "t",
+        "line": 30
+    },
+    {
+        "cmd": "T",
+        "line": 31
+    },
+    {
+        "cmd": "x",
+        "line": 32
+    },
+    {
+        "cmd": "z",
+        "line": 33
+    },
+    {
+        "cmd": "\n",
+        "line": 34
+    },
+    {
+        "cmd": "#",
+        "line": 35,
+        "x": {
+            "comment": " Commands with numeric argument"
+        }
+    },
+    {
+        "cmd": "q",
+        "line": 36,
+        "x": {
+            "int_arg": 1
+        }
+    },
+    {
+        "cmd": "Q",
+        "line": 37,
+        "x": {
+            "int_arg": 2
+        }
+    },
+    {
+        "cmd": "l",
+        "line": 38,
+        "x": {
+            "int_arg": 3
+        }
+    },
+    {
+        "cmd": "L",
+        "line": 39,
+        "x": {
+            "int_arg": 4
+        }
+    },
+    {
+        "cmd": "\n",
+        "line": 40
+    },
+    {
+        "cmd": "#",
+        "line": 41,
+        "x": {
+            "comment": " Commands with labels"
+        }
+    },
+    {
+        "cmd": ":",
+        "line": 42,
+        "x": {
+            "label_name": "label"
+        }
+    },
+    {
+        "cmd": "b",
+        "line": 43,
+        "x": {
+            "label_name": "label_b"
+        }
+    },
+    {
+        "cmd": "t",
+        "line": 44,
+        "x": {
+            "label_name": "label_t"
+        }
+    },
+    {
+        "cmd": "T",
+        "line": 45,
+        "x": {
+            "label_name": "label_T"
+        }
+    },
+    {
+        "cmd": "\n",
+        "line": 46
+    },
+    {
+        "cmd": "#",
+        "line": 47,
+        "x": {
+            "comment": " Command v (label-like)"
+        }
+    },
+    {
+        "cmd": "v",
+        "line": 48,
+        "x": {
+            "label_name": "4.2"
+        }
+    },
+    {
+        "cmd": "\n",
+        "line": 49
+    },
+    {
+        "cmd": "#",
+        "line": 50,
+        "x": {
+            "comment": " Commands with files"
+        }
+    },
+    {
+        "cmd": "r",
+        "line": 51,
+        "x": {
+            "fname": "file_r"
+        }
+    },
+    {
+        "cmd": "R",
+        "line": 52,
+        "x": {
+            "fname": "file_R"
+        }
+    },
+    {
+        "cmd": "w",
+        "line": 53,
+        "x": {
+            "fname": "file_w"
+        }
+    },
+    {
+        "cmd": "W",
+        "line": 54,
+        "x": {
+            "fname": "file_W"
+        }
+    },
+    {
+        "cmd": "\n",
+        "line": 55
+    },
+    {
+        "cmd": "#",
+        "line": 56,
+        "x": {
+            "comment": " Commands with text"
+        }
+    },
+    {
+        "cmd": "a",
+        "line": 57,
+        "x": {
+            "cmd_txt": {
+                "text": [
+                    "t",
+                    "e",
+                    "x",
+                    "t",
+                    "_",
+                    "a",
+                    "\n"
+                ]
+            }
+        }
+    },
+    {
+        "cmd": "i",
+        "line": 58,
+        "x": {
+            "cmd_txt": {
+                "text": [
+                    "t",
+                    "e",
+                    "x",
+                    "t",
+                    "_",
+                    "i",
+                    "\n"
+                ]
+            }
+        }
+    },
+    {
+        "cmd": "c",
+        "line": 60,
+        "x": {
+            "cmd_txt": {
+                "text": [
+                    "t",
+                    "e",
+                    "x",
+                    "t",
+                    "_",
+                    "c",
+                    "1",
+                    " ",
+                    "\\",
+                    "\n",
+                    "t",
+                    "e",
+                    "x",
+                    "t",
+                    "_",
+                    "c",
+                    "2",
+                    "\n"
+                ]
+            }
+        }
+    },
+    {
+        "cmd": "\n",
+        "line": 63
+    },
+    {
+        "cmd": "#",
+        "line": 64,
+        "x": {
+            "comment": " Command e (text-like)"
+        }
+    },
+    {
+        "cmd": "e",
+        "line": 65,
+        "x": {
+            "cmd_txt": {
+                "text": [
+                    "d",
+                    "a",
+                    "t",
+                    "e",
+                    "\n"
+                ]
+            }
+        }
+    },
+    {
+        "cmd": "\n",
+        "line": 66
+    },
+    {
+        "cmd": "#",
+        "line": 67,
+        "x": {
+            "comment": " Command y"
+        }
+    },
+    {
+        "cmd": "y",
+        "line": 68,
+        "x": {
+            "cmd_subst": {
+                "regx": {
+                    "pattern": "abc",
+                    "slash": "/"
+                },
+                "replacement": {
+                    "text": "123"
+                }
+            }
+        }
+    },
+    {
+        "cmd": "y",
+        "line": 69,
+        "x": {
+            "cmd_subst": {
+                "regx": {
+                    "pattern": "abc",
+                    "slash": "@"
+                },
+                "replacement": {
+                    "text": "123"
+                }
+            }
+        }
+    },
+    {
+        "cmd": "\n",
+        "line": 70
+    },
+    {
+        "cmd": "#",
+        "line": 71,
+        "x": {
+            "comment": " Command s"
+        }
+    },
+    {
+        "cmd": "s",
+        "line": 72,
+        "x": {
+            "cmd_subst": {
+                "regx": {
+                    "slash": "/"
+                }
+            }
+        }
+    },
+    {
+        "cmd": "s",
+        "line": 73,
+        "x": {
+            "cmd_subst": {
+                "regx": {
+                    "flags": "3",
+                    "slash": "|"
+                }
+            }
+        }
+    },
+    {
+        "cmd": "s",
+        "line": 74,
+        "x": {
+            "cmd_subst": {
+                "outf": {
+                    "name": "filew"
+                },
+                "regx": {
+                    "flags": "gipw",
+                    "pattern": "patt",
+                    "slash": "/"
+                },
+                "replacement": {
+                    "text": "repl"
+                }
+            }
+        }
+    },
+    {
+        "cmd": "\n",
+        "line": 75
+    },
+    {
+        "cmd": "#",
+        "line": 76,
+        "x": {
+            "comment": " Blocks"
+        }
+    },
+    {
+        "a1": {
+            "addr_type": 7
+        },
+        "cmd": "{",
+        "line": 77
+    },
+    {
+        "cmd": "p",
+        "line": 78
+    },
+    {
+        "cmd": "}",
+        "line": 79
+    }
+]
