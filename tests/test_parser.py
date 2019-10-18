@@ -238,6 +238,13 @@ TEST_DATA["t"] = [("t" + script[1:], label) for script, label in TEST_DATA[":"]]
 TEST_DATA["T"] = [("T" + script[1:], label) for script, label in TEST_DATA[":"]]
 TEST_DATA["v"] = [("v" + script[1:], label) for script, label in TEST_DATA[":"]]
 
+# Label name is the command name
+TEST_DATA[":"].append(("::", ":"))
+TEST_DATA["b"].append(("bb", "b"))
+TEST_DATA["t"].append(("tt", "t"))
+TEST_DATA["T"].append(("TT", "T"))
+TEST_DATA["v"].append(("vv", "v"))
+
 # Empty labels are allowed when jumping
 TEST_DATA["b"].append(("b", ""))
 TEST_DATA["t"].append(("t", ""))
@@ -246,12 +253,12 @@ TEST_DATA["T"].append(("T", ""))
 # The v command can also be empty
 TEST_DATA["v"].append(("v", ""))
 
-# Label name is the command name
-TEST_DATA[":"].append(("::", ":"))
-TEST_DATA["b"].append(("bb", "b"))
-TEST_DATA["t"].append(("tt", "t"))
-TEST_DATA["T"].append(("TT", "T"))
-TEST_DATA["v"].append(("vv", "v"))
+# Those chars end an empty label: tab space ; } #
+TEST_DATA["b"].append(("b\t", ""))
+TEST_DATA["b"].append(("b ", ""))
+TEST_DATA["b"].append(("b;", ""))
+TEST_DATA["b"].append(("b}", ""))
+TEST_DATA["b"].append(("b#", ""))
 
 
 #------------------------------------------------------------------------------
@@ -593,6 +600,7 @@ TEST_DATA["block"] = [
     ("{p;}",  "{", "p", "}"),
     ("{;p}",  "{", "p", "}"),
     ("{;p;}", "{", "p", "}"),
+    ("{p;};", "{", "p", "}"),
 ]
 
 
