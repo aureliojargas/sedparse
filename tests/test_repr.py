@@ -50,10 +50,9 @@ class TestSedparseRepr(unittest.TestCase):  # pylint: disable=unused-variable
         ]
         for address, repr_a1, repr_a2 in data:
             script = address + "p"
-            with self.subTest(script=script):
-                parsed = parse_string(script)
-                self.assertEqual(repr_a1, repr(parsed[0].a1))
-                self.assertEqual(repr_a2, repr(parsed[0].a2))
+            parsed = parse_string(script)
+            self.assertEqual(repr_a1, repr(parsed[0].a1), msg=script)
+            self.assertEqual(repr_a2, repr(parsed[0].a2), msg=script)
 
     def test_repr_struct_text_buf(self):
         script = "a L1\\\nL2"
@@ -70,19 +69,15 @@ class TestSedparseRepr(unittest.TestCase):  # pylint: disable=unused-variable
     def test_repr_struct_misc(self):
         """Check repr for struct_{regex,replacement,output}"""
         script = "s/foo/bar/igw file"
-        with self.subTest(script=script):
-            parsed = parse_string(script)
-            self.assertEqual(
-                "struct_regex(slash='/', pattern='foo', flags='igw')",
-                repr(parsed[0].x.cmd_subst.regx),
-            )
-            self.assertEqual(
-                "struct_replacement(text='bar')",
-                repr(parsed[0].x.cmd_subst.replacement),
-            )
-            self.assertEqual(
-                "struct_output(name='file')", repr(parsed[0].x.cmd_subst.outf)
-            )
+        parsed = parse_string(script)
+        self.assertEqual(
+            "struct_regex(slash='/', pattern='foo', flags='igw')",
+            repr(parsed[0].x.cmd_subst.regx),
+        )
+        self.assertEqual(
+            "struct_replacement(text='bar')", repr(parsed[0].x.cmd_subst.replacement)
+        )
+        self.assertEqual("struct_output(name='file')", repr(parsed[0].x.cmd_subst.outf))
 
 
 if __name__ == "__main__":

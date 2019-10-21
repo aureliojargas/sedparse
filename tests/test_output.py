@@ -71,43 +71,36 @@ class TestSedparseOutput(unittest.TestCase):  # pylint: disable=unused-variable
             ("p", {"cmd": "p", "line": 1}),
         ]
         for script, output in data:
-            with self.subTest(script=script):
-                parsed = parse_string(script)
-                self.assertEqual(output, parsed[0].to_dict())
-                self.assertEqual(output, json.loads(parsed[0].to_json()))
+            parsed = parse_string(script)
+            self.assertEqual(output, parsed[0].to_dict(), msg=script)
+            self.assertEqual(output, json.loads(parsed[0].to_json()), msg=script)
 
     def test_full(self):
-        data = [
-            (
-                "p",
-                {
-                    "a1": None,
-                    "a2": None,
-                    "addr_bang": False,
-                    "cmd": "p",
-                    "x": {
-                        "cmd_txt": {"text": []},
-                        "int_arg": -1,
-                        "fname": "",
-                        "cmd_subst": {
-                            "regx": {"pattern": "", "flags": "", "slash": ""},
-                            "replacement": {"text": ""},
-                            "outf": {"name": ""},
-                        },
-                        "label_name": "",
-                        "comment": "",
-                    },
-                    "line": 1,
+        script = "p"
+        output = {
+            "a1": None,
+            "a2": None,
+            "addr_bang": False,
+            "cmd": "p",
+            "x": {
+                "cmd_txt": {"text": []},
+                "int_arg": -1,
+                "fname": "",
+                "cmd_subst": {
+                    "regx": {"pattern": "", "flags": "", "slash": ""},
+                    "replacement": {"text": ""},
+                    "outf": {"name": ""},
                 },
-            )
-        ]
-        for script, output in data:
-            with self.subTest(script=script):
-                parsed = parse_string(script)
-                self.assertEqual(output, parsed[0].to_dict(remove_empty=False))
-                self.assertEqual(
-                    output, json.loads(parsed[0].to_json(remove_empty=False))
-                )
+                "label_name": "",
+                "comment": "",
+            },
+            "line": 1,
+        }
+        parsed = parse_string(script)
+        self.assertEqual(output, parsed[0].to_dict(remove_empty=False), msg=script)
+        self.assertEqual(
+            output, json.loads(parsed[0].to_json(remove_empty=False)), msg=script
+        )
 
 
 if __name__ == "__main__":

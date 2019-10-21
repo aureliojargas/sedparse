@@ -1,4 +1,5 @@
 # Test all error messages.
+# coding: utf-8
 
 import unittest
 
@@ -61,14 +62,13 @@ class TestSedparseErrors(unittest.TestCase):  # pylint: disable=unused-variable
                 message,
             )
 
-            with self.subTest(script=script):
-                try:
-                    parsed = []
-                    sedparse.compile_string(parsed, script)
-                    sedparse.check_final_program()
-                except sedparse.ParseError as err:
-                    self.assertEqual(expected, err.message)
-                    self.assertEqual(sedparse.EXIT_BAD_USAGE, err.exitcode)
+            try:
+                parsed = []
+                sedparse.compile_string(parsed, script)
+                sedparse.check_final_program()
+            except sedparse.ParseError as err:
+                self.assertEqual(expected, err.message, msg=script)
+                self.assertEqual(sedparse.EXIT_BAD_USAGE, err.exitcode, msg=script)
 
 
 if __name__ == "__main__":

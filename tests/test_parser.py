@@ -1,4 +1,5 @@
 # Test the parser, feeding it with tricky sed scripts.
+# coding: utf-8
 
 import unittest
 
@@ -643,38 +644,39 @@ def parse_string(script):
 
 
 class TestSedparseParser(unittest.TestCase):  # pylint: disable=unused-variable
-    def _assert_defaults(self, data, skip=None):  # pylint: disable=too-many-branches
+    def _assert_defaults(self, data, skip=None, msg=""):
         """Assert that all command attributes are set to their default values.
         Use `skip=["foo"]` to skip checking the `foo` attribute.
         """
+        # pylint: disable=too-many-branches
         if skip is None:
             skip = []
         if "a1" not in skip:
-            self.assertEqual(None, data.a1)
+            self.assertEqual(None, data.a1, msg=msg)
         if "a2" not in skip:
-            self.assertEqual(None, data.a2)
+            self.assertEqual(None, data.a2, msg=msg)
         if "addr_bang" not in skip:
-            self.assertEqual(False, data.addr_bang)
+            self.assertEqual(False, data.addr_bang, msg=msg)
         if "int_arg" not in skip:
-            self.assertEqual(-1, data.x.int_arg)
+            self.assertEqual(-1, data.x.int_arg, msg=msg)
         if "fname" not in skip:
-            self.assertEqual("", data.x.fname)
+            self.assertEqual("", data.x.fname, msg=msg)
         if "label_name" not in skip:
-            self.assertEqual("", data.x.label_name)
+            self.assertEqual("", data.x.label_name, msg=msg)
         if "cmd_txt" not in skip:
-            self.assertEqual("", str(data.x.cmd_txt))
+            self.assertEqual("", str(data.x.cmd_txt), msg=msg)
         if "comment" not in skip:
-            self.assertEqual("", data.x.comment)
+            self.assertEqual("", data.x.comment, msg=msg)
         if "slash" not in skip:
-            self.assertEqual("", data.x.cmd_subst.regx.slash)
+            self.assertEqual("", data.x.cmd_subst.regx.slash, msg=msg)
         if "pattern" not in skip:
-            self.assertEqual("", data.x.cmd_subst.regx.pattern)
+            self.assertEqual("", data.x.cmd_subst.regx.pattern, msg=msg)
         if "replacement" not in skip:
-            self.assertEqual("", data.x.cmd_subst.replacement.text)
+            self.assertEqual("", data.x.cmd_subst.replacement.text, msg=msg)
         if "flags" not in skip:
-            self.assertEqual("", data.x.cmd_subst.regx.flags)
+            self.assertEqual("", data.x.cmd_subst.regx.flags, msg=msg)
         if "outf" not in skip:
-            self.assertEqual("", data.x.cmd_subst.outf.name)
+            self.assertEqual("", data.x.cmd_subst.outf.name, msg=msg)
 
     def test_address(self):
         for script, bang, addr1, addr2 in TEST_DATA["address"]:
@@ -682,15 +684,15 @@ class TestSedparseParser(unittest.TestCase):  # pylint: disable=unused-variable
 
             # only the first command matters, i.e., { when {}
             parsed = parse_string(script)[0]
-            with self.subTest(script=script):
-                self.assertListEqual(
-                    expected,
-                    [
-                        parsed.addr_bang,
-                        str(parsed.a1) if parsed.a1 else None,
-                        str(parsed.a2) if parsed.a2 else None,
-                    ],
-                )
+            self.assertListEqual(
+                expected,
+                [
+                    parsed.addr_bang,
+                    str(parsed.a1) if parsed.a1 else None,
+                    str(parsed.a2) if parsed.a2 else None,
+                ],
+                msg=script,
+            )
 
     def test_commands_with_no_args(self):
         commands = (
@@ -718,9 +720,8 @@ class TestSedparseParser(unittest.TestCase):  # pylint: disable=unused-variable
                 script = template % command
                 parsed = parse_string(script)
                 parsed = parsed[1] if "{" in script else parsed[0]
-                with self.subTest(script=script):
-                    self.assertEqual(command, parsed.cmd)
-                    self._assert_defaults(parsed, skip=[])
+                self.assertEqual(command, parsed.cmd, msg=script)
+                self._assert_defaults(parsed, skip=None, msg=script)
 
     def test_commands_with_numeric_arg(self):
         # Note that those commands "solo", with no numeric arguments,
@@ -737,10 +738,9 @@ class TestSedparseParser(unittest.TestCase):  # pylint: disable=unused-variable
                     script = template % (command, arg)
                     parsed = parse_string(script)
                     parsed = parsed[1] if "{" in script else parsed[0]
-                    with self.subTest(script=script):
-                        self.assertEqual(command, parsed.cmd)
-                        self.assertEqual(arg, parsed.x.int_arg)
-                        self._assert_defaults(parsed, skip=["int_arg"])
+                    self.assertEqual(command, parsed.cmd, msg=script)
+                    self.assertEqual(arg, parsed.x.int_arg, msg=script)
+                    self._assert_defaults(parsed, skip=["int_arg"], msg=script)
 
     def test_commands_with_filename(self):
         for command in ("r", "R", "w", "W"):
@@ -748,10 +748,9 @@ class TestSedparseParser(unittest.TestCase):  # pylint: disable=unused-variable
                 for script, filename in TEST_DATA[command]:
                     script = script + script_end
                     parsed = parse_string(script)[0]
-                    with self.subTest(script=script):
-                        self.assertEqual(command, parsed.cmd)
-                        self.assertEqual(filename, parsed.x.fname)
-                        self._assert_defaults(parsed, skip=["fname"])
+                    self.assertEqual(command, parsed.cmd, msg=script)
+                    self.assertEqual(filename, parsed.x.fname, msg=script)
+                    self._assert_defaults(parsed, skip=["fname"], msg=script)
 
     def test_commands_with_label(self):
         for command in (":", "b", "t", "T", "v"):
@@ -759,32 +758,29 @@ class TestSedparseParser(unittest.TestCase):  # pylint: disable=unused-variable
                 for script, label in TEST_DATA[command]:
                     script = script + script_end
                     parsed = parse_string(script)[0]
-                    with self.subTest(script=script):
-                        self.assertEqual(command, parsed.cmd)
-                        self.assertEqual(label, parsed.x.label_name)
-                        self._assert_defaults(parsed, skip=["label_name"])
+                    self.assertEqual(command, parsed.cmd, msg=script)
+                    self.assertEqual(label, parsed.x.label_name, msg=script)
+                    self._assert_defaults(parsed, skip=["label_name"], msg=script)
 
     def test_commands_with_text(self):
         for command in ("a", "i", "c", "e"):
             for script, text in TEST_DATA[command]:
                 parsed = parse_string(script)[0]
-                with self.subTest(script=script):
-                    self.assertEqual(command, parsed.cmd)
-                    self.assertEqual(text, str(parsed.x.cmd_txt))
-                    self._assert_defaults(parsed, skip=["cmd_txt"])
+                self.assertEqual(command, parsed.cmd, msg=script)
+                self.assertEqual(text, str(parsed.x.cmd_txt), msg=script)
+                self._assert_defaults(parsed, skip=["cmd_txt"], msg=script)
 
     def test_commands_y_and_s(self):
         for command in ("y", "s"):
             for script, delimiter, arg1, arg2 in TEST_DATA[command]:
                 parsed = parse_string(script)[0]
-                with self.subTest(script=script):
-                    self.assertEqual(command, parsed.cmd)
-                    self.assertEqual(delimiter, parsed.x.cmd_subst.regx.slash)
-                    self.assertEqual(arg1, parsed.x.cmd_subst.regx.pattern)
-                    self.assertEqual(arg2, parsed.x.cmd_subst.replacement.text)
-                    self._assert_defaults(
-                        parsed, skip=["slash", "pattern", "replacement"]
-                    )
+                self.assertEqual(command, parsed.cmd, msg=script)
+                self.assertEqual(delimiter, parsed.x.cmd_subst.regx.slash, msg=script)
+                self.assertEqual(arg1, parsed.x.cmd_subst.regx.pattern, msg=script)
+                self.assertEqual(arg2, parsed.x.cmd_subst.replacement.text, msg=script)
+                self._assert_defaults(
+                    parsed, skip=["slash", "pattern", "replacement"], msg=script
+                )
 
     def test_command_s_flags(self):
         command = "s"
@@ -792,16 +788,19 @@ class TestSedparseParser(unittest.TestCase):  # pylint: disable=unused-variable
             "s-flags"
         ]:
             parsed = parse_string(script)[0]
-            with self.subTest(script=script):
-                self.assertEqual(command, parsed.cmd)
-                self.assertEqual(delimiter, parsed.x.cmd_subst.regx.slash)
-                self.assertEqual(pattern, parsed.x.cmd_subst.regx.pattern)
-                self.assertEqual(replacement, parsed.x.cmd_subst.replacement.text)
-                self.assertEqual(flags, parsed.x.cmd_subst.regx.flags)
-                self.assertEqual(flag_arg, parsed.x.cmd_subst.outf.name)
-                self._assert_defaults(
-                    parsed, skip=["slash", "pattern", "replacement", "flags", "outf"]
-                )
+            self.assertEqual(command, parsed.cmd, msg=script)
+            self.assertEqual(delimiter, parsed.x.cmd_subst.regx.slash, msg=script)
+            self.assertEqual(pattern, parsed.x.cmd_subst.regx.pattern, msg=script)
+            self.assertEqual(
+                replacement, parsed.x.cmd_subst.replacement.text, msg=script
+            )
+            self.assertEqual(flags, parsed.x.cmd_subst.regx.flags, msg=script)
+            self.assertEqual(flag_arg, parsed.x.cmd_subst.outf.name, msg=script)
+            self._assert_defaults(
+                parsed,
+                skip=["slash", "pattern", "replacement", "flags", "outf"],
+                msg=script,
+            )
 
     def test_comments(self):  # sedparse extension
         command = "#"
@@ -809,35 +808,35 @@ class TestSedparseParser(unittest.TestCase):  # pylint: disable=unused-variable
             for index, script, comment in TEST_DATA[command]:
                 script = script + script_end
                 parsed = parse_string(script)[index]
-                with self.subTest(script=script):
-                    self.assertEqual(command, parsed.cmd)
-                    self.assertEqual(comment, parsed.x.comment)
-                    self._assert_defaults(parsed, skip=["comment"])
+                self.assertEqual(command, parsed.cmd, msg=script)
+                self.assertEqual(comment, parsed.x.comment, msg=script)
+                self._assert_defaults(parsed, skip=["comment"], msg=script)
 
     def test_blank_lines(self):  # sedparse extension
-        for script, *expected_commands in TEST_DATA["\n"]:
-            with self.subTest(script=script):
-                self.assertEqual(
-                    expected_commands, [x.cmd for x in parse_string(script)]
-                )
+        for data in TEST_DATA["\n"]:
+            script = data[0]
+            expected_commands = list(data[1:])
+            self.assertEqual(
+                expected_commands, [x.cmd for x in parse_string(script)], msg=script
+            )
 
     def test_blocks(self):
         for script_end in ("", "\n"):  # empty=EOF
-            for script, *expected_commands in TEST_DATA["block"]:
-                script = script + script_end
-                with self.subTest(script=script):
-                    self.assertEqual(
-                        expected_commands, [x.cmd for x in parse_string(script)]
-                    )
+            for data in TEST_DATA["block"]:
+                script = data[0] + script_end
+                expected_commands = list(data[1:])
+                self.assertEqual(
+                    expected_commands, [x.cmd for x in parse_string(script)], msg=script
+                )
 
     def test_ignore_trailing_fluff(self):
         for script_end in ("", "\n"):  # empty=EOF
-            for script, *expected_commands in TEST_DATA["trailing_fluff"]:
-                script = script + script_end
-                with self.subTest(script=script):
-                    self.assertEqual(
-                        expected_commands, [x.cmd for x in parse_string(script)]
-                    )
+            for data in TEST_DATA["trailing_fluff"]:
+                script = data[0] + script_end
+                expected_commands = list(data[1:])
+                self.assertEqual(
+                    expected_commands, [x.cmd for x in parse_string(script)], msg=script
+                )
 
     def test_string_expr_count(self):
         """Calling compile_string() should increase by one the expression count."""
@@ -857,27 +856,27 @@ class TestSedparseParser(unittest.TestCase):  # pylint: disable=unused-variable
         # a1, a2, bang, slash, pattern, replacement, flags, outf
         script = ["/a1/I, /a2/M ! s/foo/bar/igw file", "p"]
         p_data = parse_string("\n".join(script))[-1]
-        self._assert_defaults(p_data)
+        self._assert_defaults(p_data, skip=None, msg=script)
 
         # int_arg
         script = ["q99", "p"]
         p_data = parse_string("\n".join(script))[-1]
-        self._assert_defaults(p_data)
+        self._assert_defaults(p_data, skip=None, msg=script)
 
         # fname
         script = ["r file", "p"]
         p_data = parse_string("\n".join(script))[-1]
-        self._assert_defaults(p_data)
+        self._assert_defaults(p_data, skip=None, msg=script)
 
         # label_name
         script = [":label", "p"]
         p_data = parse_string("\n".join(script))[-1]
-        self._assert_defaults(p_data)
+        self._assert_defaults(p_data, skip=None, msg=script)
 
         # cmd_txt
         script = ["a", "text", "p"]
         p_data = parse_string("\n".join(script))[-1]
-        self._assert_defaults(p_data)
+        self._assert_defaults(p_data, skip=None, msg=script)
 
 
 if __name__ == "__main__":

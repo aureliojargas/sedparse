@@ -2,17 +2,8 @@
 
 set -euo pipefail
 
-py() {
-    if command -v python3 > /dev/null
-    then
-        python3 "$@"
-    else
-        python "$@"
-    fi
-}
-
 is_python36() {
-    py --version | grep '^Python 3.[6-9]' > /dev/null
+    python --version 2>&1 | grep '^Python 3\.[6-9]' > /dev/null
 }
 
 if is_python36
@@ -22,15 +13,18 @@ then
 
     echo black
     black --check --quiet sedparse.py tests/*.py
+else
+    echo pylint - SKIPPED
+    echo black - SKIPPED
 fi
 
 echo doc tests
-py -m doctest README.md
+python -m doctest README.md
 
 echo unit tests
-py -m unittest discover --quiet -s tests/
+python -m unittest discover -s tests/
 
 echo parse reference file
-py sedparse.py tests/reference.sed > tests/reference.json
-py sedparse.py --verbose --full tests/reference.sed > tests/reference.full.json 2> tests/reference.verbose
+python sedparse.py tests/reference.sed > tests/reference.json
+python sedparse.py --verbose --full tests/reference.sed > tests/reference.full.json 2> tests/reference.verbose
 git diff --exit-code tests/reference.*

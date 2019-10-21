@@ -10,7 +10,7 @@ For now, I do not recommend investing any time on it.
 
 - Author: Aurelio Jargas
 - License: GPLv3
-- Tested with Python 3.4, 3.5, 3.6 and 3.7 (see [.travis.yml](.travis.yml))
+- Tested with Python 2.7, 3.4, 3.5, 3.6 and 3.7 (see [.travis.yml](.travis.yml))
 
 A translation from C to Python of GNU sed's parser for sed scripts.
 
@@ -60,7 +60,7 @@ http://git.savannah.gnu.org/cgit/sed.git/commit/?id=a9cb52bcf39f0ee307301ac73c11
 Everything is in a single file ([sedparse.py](sedparse.py)), with no external dependencies. Just download it and run.
 
     curl -sOL https://raw.githubusercontent.com/aureliojargas/sedparse/master/sedparse.py
-    python3 sedparse.py --help
+    python sedparse.py --help
 
 
 ## Usage from the command line
@@ -68,13 +68,13 @@ Everything is in a single file ([sedparse.py](sedparse.py)), with no external de
 You can inform the sed script as a file argument:
 
 ```console
-$ python3 sedparse.py script.sed
+$ python sedparse.py script.sed
 ```
 
 or as text coming from STDIN:
 
 ```console
-$ echo 's/foo/bar/g' | python3 sedparse.py
+$ echo 's/foo/bar/g' | python sedparse.py
 ```
 
 The sed script will be parsed and checked for syntax errors. If everything is fine, a JSON representation of the script is sent to STDOUT.

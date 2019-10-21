@@ -21,6 +21,7 @@
 # pylint: disable=too-many-lines
 # pylint: disable=too-many-statements
 
+from __future__ import print_function  # pylint: disable=unused-variable
 import argparse
 import json
 import sys
@@ -30,7 +31,8 @@ NULL = None
 EOF = "<EOF>"
 
 # Default options when dumping JSON
-JSON_OPTS = {"indent": 4, "sort_keys": True}
+# The separators argument is required in python2 https://bugs.python.org/issue16333
+JSON_OPTS = {"indent": 4, "sort_keys": True, "separators": (",", ": ")}
 
 
 # Base class to handle translated C structs
