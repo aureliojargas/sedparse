@@ -16,6 +16,8 @@
 # and method names, I have to disable the following checks.
 # pylint: disable=global-statement
 # pylint: disable=invalid-name
+# pylint: disable=no-else-break
+# pylint: disable=no-else-return
 # pylint: disable=too-few-public-methods
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-lines
@@ -830,9 +832,9 @@ def match_slash(slash, regex):  # char, bool
             if ch == slash:
                 return b
 
-            if ch == "\\":
+            elif ch == "\\":
                 ch = inchar()
-                if ch == EOF:  # pylint: disable=no-else-break
+                if ch == EOF:
                     break
                 # sedparse
                 # # GNU sed interprets \n here, we don't
