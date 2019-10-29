@@ -123,6 +123,9 @@ class struct_output(struct):
     def __repr__(self):
         return "%s(name=%r)" % (self.__class__.__name__, self.name)
 
+    def __str__(self):
+        return self.name
+
 
 class struct_text_buf(struct):
     def __init__(self):
@@ -258,6 +261,9 @@ class struct_replacement(struct):
 
     def __repr__(self):
         return "%s(text=%r)" % (self.__class__.__name__, self.text)
+
+    def __str__(self):
+        return self.text
 
 
 class struct_subst(struct):
