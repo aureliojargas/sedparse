@@ -446,6 +446,9 @@ TEST_DATA["s-flags"] = [
     ("s/a/A/M", "/", "a", "A", "M", ""),
     ("s/a/A/I", "/", "a", "A", "I", ""),
 
+    # Flags: trailing \r\n is allowed
+    ("s/a/A/g\r\n", "/", "a", "A", "g", ""),
+
     # Flags mixed (note that the order is preserved)
     ("s/a/A/gpemiMIwfile", "/", "a", "A", "gpemiMIw", "file"),
 
