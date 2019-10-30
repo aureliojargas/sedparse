@@ -219,11 +219,11 @@ TEST_DATA[":"] = [
     (":\ttab", "tab"),
     (": \t \t mixed", "mixed"),
 
-    # Those chars end a label: tab space ; } #
+    # Those chars end a label: tab space ; #
+    # Note that } also ends a label, but it will be tested later
     (":label\t", "label"),
     (":label ", "label"),
     (":label;", "label"),
-    (":label}", "label"),
     (":label#", "label"),
 
     # All other chars are valid as labels
@@ -248,6 +248,13 @@ TEST_DATA["t"].append(("tt", "t"))
 TEST_DATA["T"].append(("TT", "T"))
 TEST_DATA["v"].append(("vv", "v"))
 
+# Labels are ended by the } command
+TEST_DATA[":"].append(("{:label}", "label"))
+TEST_DATA["b"].append(("{blabel}", "label"))
+TEST_DATA["t"].append(("{tlabel}", "label"))
+TEST_DATA["T"].append(("{Tlabel}", "label"))
+TEST_DATA["v"].append(("{vlabel}", "label"))
+
 # Empty labels are allowed when jumping
 TEST_DATA["b"].append(("b", ""))
 TEST_DATA["t"].append(("t", ""))
@@ -260,7 +267,7 @@ TEST_DATA["v"].append(("v", ""))
 TEST_DATA["b"].append(("b\t", ""))
 TEST_DATA["b"].append(("b ", ""))
 TEST_DATA["b"].append(("b;", ""))
-TEST_DATA["b"].append(("b}", ""))
+TEST_DATA["b"].append(("{b}", ""))
 TEST_DATA["b"].append(("b#", ""))
 
 
@@ -760,7 +767,11 @@ class TestSedparseParser(unittest.TestCase):  # pylint: disable=unused-variable
             for script_end in ("", "\n"):  # empty=EOF
                 for script, label in TEST_DATA[command]:
                     script = script + script_end
-                    parsed = parse_string(script)[0]
+                    parsed = parse_string(script)
+                    if parsed[0].cmd == "{":
+                        parsed = parsed[1]
+                    else:
+                        parsed = parsed[0]
                     self.assertEqual(command, parsed.cmd, msg=script)
                     self.assertEqual(label, parsed.x.label_name, msg=script)
                     self._assert_defaults(parsed, skip=["label_name"], msg=script)

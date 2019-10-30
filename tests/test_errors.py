@@ -23,6 +23,8 @@ TEST_DATA = [
     (":",         1, "COLON_LACKS_LABEL", '":" lacks a label'),
     #                 DISALLOWED_CMD  e/r/w commands disabled in sandbox mode
     ("}",         1, "EXCESS_CLOSE_BRACE", "unexpected `}'"),
+    ("b}",        2, "EXCESS_CLOSE_BRACE", "unexpected `}'"),
+    ("bx}",       3, "EXCESS_CLOSE_BRACE", "unexpected `}'"),
     ("s/a/b/gg",  8, "EXCESS_G_OPT", "multiple `g' options to `s' command"),
     ("dp",        2, "EXCESS_JUNK", "extra characters after command"),
     ("xx",        2, "EXCESS_JUNK", "extra characters after command"),

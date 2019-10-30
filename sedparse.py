@@ -939,13 +939,10 @@ def read_label():
     while ch not in (EOF, "\n", ";", CLOSE_BRACE, "#") and not ISBLANK(ch):
         ch = add_then_next(b, ch)
 
-    # sedparse: Save comment identifier for later detection (i.e.: b#foo)
-    if ch == "#":
-        savchar(ch)
+    savchar(ch)
 
-    # sedparse: Ignore multiple trailing blanks and ; until EOC/EOL/EOF
-    elif ch == ";" or ISBLANK(ch):
-        ignore_trailing_fluff()
+    # sedparse extension: Ignore trailing blanks and ; until EOC/EOL/EOF
+    ignore_trailing_fluff()
 
     # add1_buffer(b, "\0")  # not necessary in Python
     ret = "".join(b)
