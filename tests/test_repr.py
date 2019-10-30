@@ -1,4 +1,5 @@
 # Test the repr() output from the structs.
+# Note: test_str.py uses the same tests, keep both in sync.
 
 import unittest
 
