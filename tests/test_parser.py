@@ -179,7 +179,7 @@ TEST_DATA["r"] = [
     ("r\ttab", "tab"),
     ("r \t \t mixed", "mixed"),
 
-    # Every char is valid (it reads until \n), so ;{# are not special
+    # Every char is valid (it reads until \n), so ;}# are not special
     ("r;", ";"),
     ("r}", "}"),
     ("r#", "#"),
@@ -331,7 +331,7 @@ TEST_DATA["a"] = [
     # ("a\\\n1" + "\\"*4 + "\n2", "1" + "\\"*4 + "\n2"),
     ("a\\\n1" + "\\"*5 + "\n2", "1" + "\\"*5 + "\n2"),
 
-    # Every char is valid (it reads until \n), so ;{# are not special
+    # Every char is valid (it reads until \n), so ;}# are not special
     ("a;", ";"),
     ("a}", "}"),
     ("a#", "#"),
@@ -464,7 +464,7 @@ TEST_DATA["s-flags"] = [
     ("s/a/A/w\ttab",        "/", "a", "A", "w", "tab"),
     ("s/a/A/w \t \t mixed", "/", "a", "A", "w", "mixed"),
 
-    # Flag w: every char is valid (it reads until \n), so ;{# are not special
+    # Flag w: every char is valid (it reads until \n), so ;}# are not special
     ("s/a/A/w;",  "/", "a", "A", "w", ";"),
     ("s/a/A/w}",  "/", "a", "A", "w", "}"),
     ("s/a/A/w#",  "/", "a", "A", "w", "#"),
