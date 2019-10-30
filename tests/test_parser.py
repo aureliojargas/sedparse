@@ -625,6 +625,32 @@ TEST_DATA["block"] = [
 
 # -----------------------------------------------------------------------------
 
+TEST_DATA["gotcha"] = [
+    # Test cases for some gotchas
+    # Note: all scripts end in EOF. At run time the \n ending is also tested.
+    # Format: (sed script, *expected_parsed_commands)
+    # fmt: off
+
+    # Test read_label() detection for the next command
+    ("blabel\t", "b"),
+    ("blabel ", "b"),
+    ("blabel;", "b"),
+    ("{blabel}", "{", "b", "}"),
+    ("blabel#", "b", "#"),
+    ("blabel;;; #", "b", "#"),
+
+    # Same tests repeated, now with an empty label
+    ("b\t", "b"),
+    ("b ", "b"),
+    ("b;", "b"),
+    ("{b}", "{", "b", "}"),
+    ("b#", "b", "#"),
+    ("b;;; #", "b", "#"),
+]
+
+
+# -----------------------------------------------------------------------------
+
 TEST_DATA["trailing_fluff"] = [
     # Test cases for ignore_trailing_fluff()
     # Note: all scripts end in EOF. At run time the \n ending is also tested.
@@ -837,6 +863,15 @@ class TestSedparseParser(unittest.TestCase):  # pylint: disable=unused-variable
     def test_blocks(self):
         for script_end in ("", "\n"):  # empty=EOF
             for data in TEST_DATA["block"]:
+                script = data[0] + script_end
+                expected_commands = list(data[1:])
+                self.assertEqual(
+                    expected_commands, [x.cmd for x in parse_string(script)], msg=script
+                )
+
+    def test_gotchas(self):
+        for script_end in ("", "\n"):  # empty=EOF
+            for data in TEST_DATA["gotcha"]:
                 script = data[0] + script_end
                 expected_commands = list(data[1:])
                 self.assertEqual(
