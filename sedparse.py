@@ -439,11 +439,10 @@ def IS_MB_CHAR(ch):
 
 ######################################## translated from utils.h
 
-# sedparse: 0 and 2 are not used
-# enum exit_codes {
-# EXIT_SUCCESS = 0  # is already defined as 0
+# enum exit_codes
+EXIT_SUCCESS = 0
 EXIT_BAD_USAGE = 1  # bad program syntax, invalid command-line options
-# EXIT_BAD_INPUT = 2  # failed to open some of the input files
+# EXIT_BAD_INPUT = 2  # failed to open some of the input files (sedparse: not used)
 EXIT_PANIC = 4  # PANIC during program execution
 
 ######################################## translated from utils.c
@@ -1466,3 +1465,4 @@ if __name__ == "__main__":
         print(err.message, file=sys.stderr)
         sys.exit(err.exitcode)
     print(to_json(the_program, not args.full))
+    sys.exit(EXIT_SUCCESS)
