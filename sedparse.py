@@ -1385,6 +1385,7 @@ def compile_file(cur_program, cmdfile):
 #   Any cleanup which can be done after these checks is done here also.
 def check_final_program():  # program):  # pylint: disable=unused-variable
     global pending_text
+    global old_text_buf
 
     # do all "{"s have a corresponding "}"?
     if blocks:
