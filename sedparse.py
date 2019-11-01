@@ -986,7 +986,7 @@ def read_text(buf, leadin_ch):
         buf = old_text_buf
     # buf.text_length = normalize_text(get_buffer (pending_text),
     #                                  size_buffer (pending_text), TEXT_BUFFER)
-    buf.text = pending_text
+    buf.text = pending_text[:]
     free_buffer(pending_text)
     pending_text = NULL
 
@@ -1394,7 +1394,7 @@ def check_final_program():  # program):  # pylint: disable=unused-variable
     # was the final command an unterminated a/c/i command?
     if pending_text:
         debug("pending_text: %r" % pending_text)
-        old_text_buf.text = pending_text
+        old_text_buf.text = pending_text[:]  # pylint: disable=unsubscriptable-object
         free_buffer(pending_text)
         pending_text = NULL
 
