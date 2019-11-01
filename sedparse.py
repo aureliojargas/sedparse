@@ -3,13 +3,12 @@
 # https://github.com/aureliojargas/sedparse
 
 # TODO
-# - identify and document all sedparse additions
 # - document how it works
 #
-# WONTDO
+# NOT TRANSLATED
 # - Check if command only accepts one address
 #   if (cur_cmd->a2) bad_prog (_(ONE_ADDR))
-# - Check POSIX compatibility, all GNU sed extensions are supported
+# - Check POSIX compatibility (all GNU sed extensions are supported here)
 #   if (posixicity == POSIXLY_BASIC)
 
 # Since sedparse is a literal translation, maintaining the same code, variables
@@ -106,10 +105,18 @@ def ISDIGIT(ch):
 
 
 def ISSPACE(c):
+    # https://github.com/gcc-mirror/gcc/blob/master/include/safe-ctype.h
     return c in (" ", "\t", "\n", "\v", "\f", "\r")
 
 
 ######################################## translated from sed.h
+
+# The translation of the following was not necessary:
+# - struct vector
+# - enum replacement_types
+# - enum text_types
+# - enum posixicity_types
+# - enum addr_state
 
 # sedparse: The original code handles file open/read/write/close operations,
 # but here we only care about the filename.
@@ -177,33 +184,7 @@ class struct_regex(struct):
         return "\\" if self.slash != "/" else ""
 
 
-# sedparse: not used
-# # enum replacement_types {
-# REPL_ASIS = 0
-# REPL_UPPERCASE = 1
-# REPL_LOWERCASE = 2
-# REPL_UPPERCASE_FIRST = 4
-# REPL_LOWERCASE_FIRST = 8
-# REPL_MODIFIERS = REPL_UPPERCASE_FIRST | REPL_LOWERCASE_FIRST
-# # These are given to aid in debugging
-# REPL_UPPERCASE_UPPERCASE = REPL_UPPERCASE_FIRST | REPL_UPPERCASE
-# REPL_UPPERCASE_LOWERCASE = REPL_UPPERCASE_FIRST | REPL_LOWERCASE
-# REPL_LOWERCASE_UPPERCASE = REPL_LOWERCASE_FIRST | REPL_UPPERCASE
-# REPL_LOWERCASE_LOWERCASE = REPL_LOWERCASE_FIRST | REPL_LOWERCASE
-
-# sedparse: not used
-# # enum text_types {
-# TEXT_BUFFER = 1
-# TEXT_REPLACEMENT = 2
-# TEXT_REGEX = 3
-
-# sedparse: not used
-# # enum addr_state {
-# RANGE_INACTIVE = 1           # never been active
-# RANGE_ACTIVE = 2             # between first and second address
-# RANGE_CLOSED = 3             # like RANGE_INACTIVE, but range has ended once
-
-# enum addr_types {
+# enum addr_types
 # fmt: off
 ADDR_IS_NULL = 1             # null address
 ADDR_IS_REGEX = 2            # a.addr_regex is valid
@@ -434,8 +415,9 @@ def IS_MB_CHAR(ch):
     return ch != EOF and ord(ch) > 127
 
 
-# sedparse: This is probably from regex.c, but I'll fake it here
-# just saving the collected strings
+######################################## translated from regexp.c
+
+# sedparse: no need to compile the regex, just save the collected strings
 def compile_regex(pattern, flags):
     r = struct_regex()
     r.pattern = "".join(pattern)
@@ -458,6 +440,11 @@ def panic(msg):
     raise ParseError(exitcode=EXIT_PANIC, message="%s: %s" % (program_name, msg))
 
 
+# In Python we have lists, so all the buffer-related C code is not necessary.
+# Only the very minimal set of buffer functions were translated, to avoid having
+# to change the logic in the caller code.
+
+
 def init_buffer():
     return []
 
@@ -476,47 +463,37 @@ def free_buffer(b):
 
 OPEN_BRACKET = "["
 CLOSE_BRACKET = "]"
-# OPEN_BRACE = "{"
 CLOSE_BRACE = "}"
 
-# struct prog_info {
-#   /* When we're reading a script command from a string, `prog.base'
-#      points to the first character in the string, 'prog.cur' points
-#      to the current character in the string, and 'prog.end' points
-#      to the end of the string.  This allows us to compile script
-#      strings that contain nulls. */
-#   const unsigned char *base;
-#   const unsigned char *cur;
-#   const unsigned char *end;
 
-#   /* This is the current script file.  If it is NULL, we are reading
-#      from a string stored at `prog.cur' instead.  If both `prog.file'
-#      and `prog.cur' are NULL, we're in trouble! */
-#   FILE *file;
-# };
 class prog_info:
+    # When we're reading a script command from a string, `prog.base' points to
+    # the first character in the string, 'prog.cur' points to the current
+    # character in the string, and 'prog.end' points to the end of the string.
+    # This allows us to compile script strings that contain nulls.
     base = None  # int
     cur = None  # int
     end = None  # int
+
+    # This is the current script file.  If it is NULL, we are reading from a
+    # string stored at `prog.cur' instead.  If both `prog.file' and `prog.cur'
+    # are NULL, we're in trouble!
     file = None  # file descriptor
-    text = None  # str
+
     # Using None because some code checks for "is not None" to detect unset state
+    text = None  # sedparse extension
 
 
-# Information used to give out useful and informative error messages.
-# struct error_info {
-#   /* This is the name of the current script file. */
-#   const char *name;
-
-#   /* This is the number of the current script line that we're compiling. */
-#   countT line;
-
-#   /* This is the index of the "-e" expressions on the command line. */
-#   countT string_expr_count;
-# };
 class error_info:
+    """Information used to give out useful and informative error messages."""
+
+    # This is the name of the current script file.
     name = ""
+
+    # This is the number of the current script line that we're compiling.
     line = 0
+
+    # This is the index of the "-e" expressions on the command line.
     string_expr_count = 0
 
 
@@ -529,21 +506,12 @@ class cur_input(error_info):
     pass
 
 
-# sedparse: not used
-# /* We wish to detect #n magic only in the first input argument;
-#   this flag tracks when we have consumed the first file of input. */
-# static bool first_script = true;
-# first_script = True
-
-# Allow for scripts like "sed -e 'i\' -e foo":
-# static struct buffer *pending_text = NULL;
-# static struct text_buf *old_text_buf = NULL;
+# Allow for scripts like "sed -e 'i\' -e foo"
 pending_text = NULL
 old_text_buf = NULL
 
-# /* Information about block start positions.  This is used to backpatch
-#   block end positions. */
-# static struct sed_label *blocks = NULL;
+# sedparse: this is a sed_label struct in the original code. Here it is just an
+# integer, because we only care about the indenting levels.
 blocks = 0
 
 # Various error messages we may want to print
@@ -600,6 +568,11 @@ def bad_prog(why):
             prog.cur - prog.base,
             why,
         )
+
+    # sedparse extension
+    # In this point, the original code shows the error message and exits. Doing
+    # it here would break the usage of sedparse as a Python module. So we raise
+    # an exception instead, and the calling code decides what to do.
     raise ParseError(
         message=msg,
         file=cur_input.name,
@@ -610,16 +583,17 @@ def bad_prog(why):
     )
 
 
-# /* Read the next character from the program.  Return EOF if there isn't
-#   anything to read.  Keep cur_input.line up to date, so error messages
-#   can be meaningful. */
+# Read the next character from the program.  Return EOF if there isn't anything
+# to read.  Keep cur_input.line up to date, so error messages can be meaningful.
 def inchar():
     ch = EOF
     if prog.cur is not None:
         if prog.cur < prog.end:
+            # Original: ch = *prog.cur++;
             prog.cur += 1
             ch = prog.text[prog.cur]
     elif prog.file:
+        # Original: if (!feof (prog.file)) ch = getc (prog.file);
         # https://stackoverflow.com/a/15599780
         ch = prog.file.read(1)
         if not ch:
@@ -638,18 +612,19 @@ def savchar(ch):
     if ch == "\n" and cur_input.line > 0:
         cur_input.line -= 1
     if prog.cur:
+        # Original: if (prog.cur <= prog.base || *--prog.cur != ch)
         prog.cur -= 1
-        # XXX not sure about cur+1
-        if prog.cur <= prog.base or prog.text[prog.cur + 1] != ch:
-            # panic("Called savchar with unexpected pushback (%s)" % ch)
+        if prog.cur <= prog.base or prog.text[prog.cur + 1] != ch:  # XXX is it cur+1?
             panic(
+                # sedparse: original code only shows `ch` in this error message
                 "Called savchar with unexpected pushback (curr=%s %s!=%s)"
                 % (prog.cur, prog.text[prog.cur], ch)
             )
     else:
+        # Original: ungetc(ch, prog.file)
         try:
             # Go back one position in prog.file file descriptor pointer
-            prog.file.seek(prog.file.tell() - 1)  # ungetc(ch, prog.file)
+            prog.file.seek(prog.file.tell() - 1)  # XXX len(ch) instead of 1?
         except ValueError:  # negative seek position -1
             pass
 
@@ -679,11 +654,9 @@ def ignore_trailing_fluff():
             return
 
 
-# /* Consume script input until a valid end of command marker is found:
-#      comment, closing brace, newline, semicolon or EOF.
-#   If any other character is found, die with 'extra characters after command'
-#   error.
-# */
+# Consume script input until a valid end of command marker is found: comment,
+# closing brace, newline, semicolon or EOF. If any other character is found, die
+# with 'extra characters after command' error.
 def read_end_of_cmd():
     ch = in_nonblank()
     if ch in (CLOSE_BRACE, "#"):
@@ -691,12 +664,13 @@ def read_end_of_cmd():
     elif ch not in (EOF, "\n", ";"):
         bad_prog(EXCESS_JUNK)
 
-    # sedparse: Ignore multiple trailing blanks and ; until EOC/EOL/EOF
+    # sedparse extension: Ignore trailing blanks and ; until EOC/EOL/EOF
     elif ch == ";":
         ignore_trailing_fluff()
 
 
 # Read an integer value from the program.
+# sedparse: original code uses math, we use list append.
 def in_integer(ch):
     num = []
     while ISDIGIT(ch):
@@ -710,6 +684,8 @@ def add_then_next(buffer, ch):
     add1_buffer(buffer, ch)
     return inchar()
 
+
+# convert_number() - Translation not needed
 
 # sedparse extension
 # This is a copy of read_filename, but preserving blanks.
@@ -731,7 +707,12 @@ def read_filename():
     return b
 
 
+# get_openfile() - Translation not needed
+
+
 def next_cmd_entry(vector):
+    # sedparse: in the original there's some of vector handling code. Here the
+    # equivalent is the next line and `vector.append()` at the end.
     cmd = struct_sed_cmd()
     cmd.a1 = NULL
     cmd.a2 = NULL
@@ -742,7 +723,7 @@ def next_cmd_entry(vector):
     return cmd
 
 
-def snarf_char_class(b):  # , cur_stat):
+def snarf_char_class(b):  # sedparse: cur_stat argument not necessary
     state = 0
     delim = None  # delim IF_LINT( = 0)
 
@@ -758,14 +739,14 @@ def snarf_char_class(b):  # , cur_stat):
     #   2 after the opening ./:/=
     #   3 after the closing ./:/=
 
-    # for (;; ch = add_then_next(b, ch)) {
+    # Original: for (;; ch = add_then_next(b, ch)) {
     first_loop_run = True
     while True:
         if not first_loop_run:
             ch = add_then_next(b, ch)
         first_loop_run = False
 
-        mb_char = IS_MB_CHAR(ch)  # , cur_stat)
+        mb_char = IS_MB_CHAR(ch)
 
         if ch in (EOF, "\n"):
             return ch
@@ -780,7 +761,7 @@ def snarf_char_class(b):  # , cur_stat):
             elif state == 2 and ch == delim:
                 state = 3
             # else:
-            #     break  # break from C-switch
+            #     break  # break from C-switch not necessary in Python
 
             continue
 
@@ -805,33 +786,29 @@ def snarf_char_class(b):  # , cur_stat):
         # Getting a character different from .=: whilst in state 1
         # goes back to state 0, getting a character different from ]
         # whilst in state 3 goes back to state 2.
+        #
+        # Original: state &= ~1
+        # sedparse: Instead of following the original (tricky &= right after a
+        # switch inside a loop), I've opted to implement literally what the
+        # comment says.
         if ch not in (".", ":", "=") and state == 1:
             state = 0
         elif ch != CLOSE_BRACKET and state == 3:
             state = 2
 
-        # state &= ~1  # please, no magic
-
 
 def match_slash(slash, regex):  # char, bool
-    # struct buffer *b
-    # mbstate_t cur_stat = { 0, }
-
     # We allow only 1 byte characters for a slash.
-    if IS_MB_CHAR(slash):  # , &cur_stat):
+    if IS_MB_CHAR(slash):
         bad_prog(BAD_DELIM)
-
-    # memset(&cur_stat, 0, sizeof cur_stat)
 
     b = init_buffer()
 
-    # while ((ch = inchar ()) != EOF && ch != '\n')
+    # Original: while ((ch = inchar ()) != EOF && ch != '\n')
     while True:
         ch = inchar()
         if ch in (EOF, "\n"):
             break
-
-        # const mb_char = IS_MB_CHAR(ch, &cur_stat)
 
         if not IS_MB_CHAR(ch):
             if ch == slash:
@@ -841,19 +818,20 @@ def match_slash(slash, regex):  # char, bool
                 ch = inchar()
                 if ch == EOF:
                     break
-                # sedparse
-                # # GNU sed interprets \n here, we don't
+
+                # sedparse: GNU sed interprets \n here, we don't
                 # elif ch == "n" and regex:
                 #     ch = "\n"
-                # # Those exceptions remove the leading \ from known situations
-                # # For example, s/a\/b/.../ becomes "a/b" not "a\/b"
-                # # Since I want to keep the original user text, this is disabled
+
+                # sedparse: GNU sed remove the leading \ from \\n, \/, \&.
+                # We don't since we keep the original user text.
                 # elif (ch != "\n" and (ch != slash or (not regex and ch == "&"))):
                 else:
                     add1_buffer(b, "\\")
+
             elif ch == OPEN_BRACKET and regex:
                 add1_buffer(b, ch)
-                ch = snarf_char_class(b)  # , &cur_stat)
+                ch = snarf_char_class(b)
                 if ch != CLOSE_BRACKET:
                     break
 
@@ -866,8 +844,8 @@ def match_slash(slash, regex):  # char, bool
 
 
 # sedparse: this function works differently from the original.
-# In gsed, there's no return, since it just sets all the flags as properties of
-# "cmd_s". Here it collects and returns the flags as a list.
+# In GNU sed, there's no return, since it just sets all the flags as properties
+# of "cmd_s". Here it collects and returns the flags as a list.
 def mark_subst_opts(cmd_s):
     flags = []
     numb = False
@@ -876,6 +854,7 @@ def mark_subst_opts(cmd_s):
         ch = in_nonblank()
         debug("s flag candidate: %r" % ch)
 
+        # sedparse: just append the flags to the list
         if ch in ("i", "I", "m", "M", "e"):  # GNU extensions
             flags.append(ch)
 
@@ -891,8 +870,8 @@ def mark_subst_opts(cmd_s):
 
         elif ch == "w":
             flags.append(ch)
-            # This flag will always be at the end of the list, since after w
-            # cannot exist any other flag because the filename consumes
+            # sedparse: This flag will always be at the end of the list, since
+            # after w cannot exist any other flag because the filename consumes
             # everything until the end of the line.
             b = read_filename()
             if not b:
@@ -917,7 +896,7 @@ def mark_subst_opts(cmd_s):
         elif ch in (EOF, "\n"):
             return flags
 
-        # sedparse: Ignore multiple trailing blanks and ; until EOC/EOL/EOF
+        # sedparse extension: Ignore trailing blanks and ; until EOC/EOL/EOF
         elif ch == ";":
             ignore_trailing_fluff()
             return flags
@@ -929,7 +908,6 @@ def mark_subst_opts(cmd_s):
 
         else:
             bad_prog(UNKNOWN_S_OPT)
-        # NOTREACHED
 
 
 # read in a label for a `:', `b', or `t' command
@@ -951,16 +929,22 @@ def read_label():
     return ret
 
 
+# setup_label() - Translation not needed
+# release_label() - Translation not needed
+# new_replacement() - Translation not needed
+# setup_replacement() - Translation not needed
+
+
 def read_text(buf, leadin_ch):
     global pending_text
     global old_text_buf
 
+    # Should we start afresh (as opposed to continue a partial text)?
     if buf:
         if pending_text:
             free_buffer(pending_text)
         pending_text = init_buffer()
         buf.text = []
-        # buf.text_length = 0  # sedparse: not used
         old_text_buf = buf
 
     if leadin_ch == EOF:
@@ -986,17 +970,14 @@ def read_text(buf, leadin_ch):
 
     if not buf:
         buf = old_text_buf
-    # buf.text_length = normalize_text(get_buffer (pending_text),
-    #                                  size_buffer (pending_text), TEXT_BUFFER)
     buf.text = pending_text[:]
     free_buffer(pending_text)
     pending_text = NULL
 
 
-# Try to read an address for a sed command.  If it succeeds,
-#   return non-zero and store the resulting address in `*addr'.
-#   If the input doesn't look like an address read nothing
-#   and return zero.
+# Try to read an address for a sed command.  If it succeeds, return non-zero and
+# store the resulting address in `*addr'. If the input doesn't look like an
+# address read nothing and return zero.
 def compile_address(addr, ch):  # struct_addr, str
     addr.addr_type = ADDR_IS_NULL
     addr.addr_step = 0
@@ -1004,18 +985,16 @@ def compile_address(addr, ch):  # struct_addr, str
     addr.addr_regex = NULL
 
     if ch in ("/", "\\"):
-        # sedparse: Instead of using bit flags as regex.c, I'll just save the
-        # flags as text
+        # sedparse: Instead of using bit flags as in regex.c, we just save the
+        # flags into a list
         flags = []
-        # flags = 0
-        # struct buffer *b
-
         addr.addr_type = ADDR_IS_REGEX
         if ch == "\\":
             ch = inchar()
         b = match_slash(ch, True)
         if b == NULL:
             bad_prog(UNTERM_ADDR_RE)
+        # sedparse extension: we save the slash char
         slash = ch
 
         while True:
@@ -1023,10 +1002,8 @@ def compile_address(addr, ch):  # struct_addr, str
             # if posixicity == POSIXLY_BASIC:
             #     goto posix_address_modifier
             if ch == "I":  # GNU extension
-                # flags |= REG_ICASE
                 flags.append(ch)
             elif ch == "M":  # GNU extension
-                # flags |= REG_NEWLINE
                 flags.append(ch)
             else:
                 #   posix_address_modifier:  # GOTO label
@@ -1067,8 +1044,10 @@ def compile_address(addr, ch):  # struct_addr, str
     return True
 
 
-# Read a program (or a subprogram within `{' `}' pairs) in and store
-# the compiled form in `*vector'.  Return a pointer to the new vector.
+# Read a program in and store the compiled form in `vector'.
+#     Original:
+#     Read a program (or a subprogram within `{' `}' pairs) in and store the
+#     compiled form in `*vector'.  Return a pointer to the new vector.
 def compile_program(vector):
     global blocks
 
@@ -1086,7 +1065,7 @@ def compile_program(vector):
         while True:
             ch = inchar()
 
-            # sedparse:
+            # sedparse extension:
             # GNU sed parser discards the \n used as command separator.
             # Sedsed keeps all cosmetic line breaks (i.e. \n\n) when formatting
             # code. So here sedparse creates the concept of the \n command, to
@@ -1101,22 +1080,22 @@ def compile_program(vector):
             break
 
         cur_cmd = next_cmd_entry(vector)
-        cur_cmd.line = cur_input.line
+        cur_cmd.line = cur_input.line  # sedparse extension
 
         if compile_address(a, ch):
             if a.addr_type == ADDR_IS_STEP or a.addr_type == ADDR_IS_STEP_MOD:
                 bad_prog(BAD_STEP)
 
-            cur_cmd.a1 = a  # MEMDUP(&a, 1, struct addr)
+            cur_cmd.a1 = a
             debug("----- Found address 1: %r" % cur_cmd.a1)
-
             a = struct_addr()  # reset a
+
             ch = in_nonblank()
             if ch == ",":
                 if not compile_address(a, in_nonblank()):
                     bad_prog(BAD_COMMA)
 
-                cur_cmd.a2 = a  # MEMDUP(&a, 1, struct addr)
+                cur_cmd.a2 = a
                 debug("----- Found address 2: %r" % cur_cmd.a2)
                 ch = in_nonblank()
 
@@ -1134,12 +1113,12 @@ def compile_program(vector):
 
         # Do not accept extended commands in --posix mode.  Also,
         # a few commands only accept one address in that mode.
-        # SKIPPED
+        # sedparse: SKIPPED
 
         cur_cmd.cmd = ch
         debug("----- Found command: %r" % ch)
 
-        # sedparse
+        # sedparse extension
         if ch == "\n":
             # Adjust the line number for the empty lines, because they're just
             # detected in the next line
@@ -1153,22 +1132,19 @@ def compile_program(vector):
             # if (cur_cmd->a1)
             #     bad_prog (_(NO_SHARP_ADDR));
 
-            # sedparse: no #n detection, it will be considered a normal comment
-            # ch = inchar()
-            # if ch == "n" and first_script and cur_input.line < 2:
-            #     if (prog.base and prog.cur == 2 + prog.base):
-            #     # or (prog.file and not prog.base and 2 == ftell(prog.file)):
-            #       no_default_output = true
+            # sedparse: no #n detection, it will be considered a normal comment.
+            # It's up to the caller code to decide if this should be special.
 
             # sedparse: GNU sed discards the comment contents, but we must save it
+            # while ch != EOF and ch != "\n":
+            #     ch = inchar()
+            # continue
             b = read_comment()
             cur_cmd.x.comment = "".join(b)
             debug("comment: %r" % cur_cmd.x.comment)
             free_buffer(b)
-            # while ch != EOF and ch != "\n":
-            #     ch = inchar()
-            # continue
 
+        # sedparse: we just save the "v" command contents, no processing
         elif ch == "v":
             argument = read_label()
             cur_cmd.x.label_name = argument
@@ -1177,7 +1153,7 @@ def compile_program(vector):
         elif ch == "{":
             blocks += 1
 
-            # sedparse: Ignore multiple trailing blanks and ; until EOC/EOL/EOF
+            # sedparse extension: Ignore trailing blanks and ; until EOC/EOL/EOF
             ignore_trailing_fluff()
 
             # cur_cmd.addr_bang = not cur_cmd.addr_bang  # ?
@@ -1195,7 +1171,6 @@ def compile_program(vector):
         elif ch in ("a", "i", "c", "e"):
             ch = in_nonblank()
 
-            # GOTO read_text_to_slash:
             # sedparse: Empty "e" at EOF is allowed
             if ch == EOF and cur_cmd.cmd == "e":
                 break
@@ -1213,7 +1188,6 @@ def compile_program(vector):
 
             read_text(cur_cmd.x.cmd_txt, ch)
             debug("text: %r" % cur_cmd.x.cmd_txt)
-        # END GOTO
 
         elif ch in (":", "T", "b", "t"):
             # if (cur_cmd->a1)
@@ -1223,11 +1197,12 @@ def compile_program(vector):
             debug("label: %r" % label)
             if ch == ":" and not label:
                 bad_prog(COLON_LACKS_LABEL)
-            # labels = setup_label (labels, vector->v_length, label, NULL);
 
         elif ch in ("Q", "q", "L", "l"):
+            # if ch in ("Q", "q") and cur_cmd.a2:
+            #     bad_prog(ONE_ADDR)
             ch = in_nonblank()
-            if ISDIGIT(ch):
+            if ISDIGIT(ch):  # and posixicity != POSIXLY_BASIC
                 cur_cmd.x.int_arg = in_integer(ch)
                 debug("int_arg: %r" % in_integer(ch))
             else:
@@ -1254,6 +1229,7 @@ def compile_program(vector):
         ):
             read_end_of_cmd()
 
+        # sedparse: we just read the filename, nothing else
         elif ch in ("r", "R", "w", "W"):
             b = read_filename()
             if not b:
@@ -1264,38 +1240,42 @@ def compile_program(vector):
 
         elif ch == "s":
             slash = inchar()
+
             b = match_slash(slash, True)
             if b == NULL:
                 bad_prog(UNTERM_S_CMD)
+            # sedparse extension: we save the slash and the pattern
             cur_cmd.x.cmd_subst.regx.slash = slash
             cur_cmd.x.cmd_subst.regx.pattern = "".join(b)
             debug("s pattern: %r" % cur_cmd.x.cmd_subst.regx.pattern)
+            free_buffer(b)  # sedparse: freeing earlier than in original code
 
             b2 = match_slash(slash, False)
             if b2 == NULL:
                 bad_prog(UNTERM_S_CMD)
+            # sedparse: we just save the replacement text
             cur_cmd.x.cmd_subst.replacement.text = "".join(b2)
             debug("s replacement: %r" % cur_cmd.x.cmd_subst.replacement.text)
-
-            # setup_replacement(cur_cmd.x.cmd_subst, b2)
             free_buffer(b2)
 
+            # sedparse: here GNU compiles the regex, we just save the flags
             flags = "".join(mark_subst_opts(cur_cmd.x.cmd_subst))
             cur_cmd.x.cmd_subst.regx.flags = flags
             debug("s flags: %r" % flags)
-            # cur_cmd.x.cmd_subst.regx = compile_regex(
-            #     b, flags, cur_cmd.x.cmd_subst.max_id + 1
-            # )
-            free_buffer(b)
 
             # if cur_cmd.x.cmd_subst.eval and sandbox:
             #     bad_prog(_(DISALLOWED_CMD))
 
         elif ch == "y":
+            # sedparse extension: original code uses cur_cmd.x.translate and
+            # cur_cmd.x.translatemb to save the translation tables for "y". We
+            # instead, overload cur_cmd.x.cmd_subst to save the "y" unprocessed
+            # data.
             slash = inchar()
             b = match_slash(slash, False)
             if b == NULL:
                 bad_prog(UNTERM_Y_CMD)
+            # sedparse extension: we save the slash and the pattern
             cur_cmd.x.cmd_subst.regx.slash = slash
             cur_cmd.x.cmd_subst.regx.pattern = "".join(b)
             debug("y pattern: %r" % cur_cmd.x.cmd_subst.regx.pattern)
@@ -1303,6 +1283,7 @@ def compile_program(vector):
             b2 = match_slash(slash, False)
             if b2 == NULL:
                 bad_prog(UNTERM_Y_CMD)
+            # sedparse: we just save the replacement text
             cur_cmd.x.cmd_subst.replacement.text = "".join(b2)
             debug("y replacement: %r" % cur_cmd.x.cmd_subst.replacement.text)
 
@@ -1322,22 +1303,27 @@ def compile_program(vector):
         else:
             bad_command(ch)
             # /*NOTREACHED*/
-    # no return, vector edited in place
+
+    # if posixicity == POSIXLY_BASIC and pending_text:
+    #     bad_prog (INCOMPLETE_CMD)
+
+    # no return, vector is edited in place
 
 
-# /* `str' is a string (from the command line) that contains a sed command.
-#   Compile the command, and add it to the end of `cur_program'. */
+# normalize_text() - Translation not needed
+
+
+# `str' is a string (from the command line) that contains a sed command.
+# Compile the command, and add it to the end of `cur_program'.
 def compile_string(cur_program, string):  # pylint: disable=unused-variable
-    # global first_script
-
     # string_expr_count = 0
 
     # prog and cur_input are global classes
-
     prog.file = NULL
     prog.base = 0  # first char of the string (will be 1-based)
     prog.cur = prog.base
     prog.end = prog.cur + len(string)
+    # sedparse extension: original code does not have .text
     prog.text = "@" + string  # the leading @ is ignored, it's a 1-based index
 
     cur_input.line = 1  # sedparse: original was zero
@@ -1352,16 +1338,13 @@ def compile_string(cur_program, string):  # pylint: disable=unused-variable
     # prog.cur = NULL
     # prog.end = NULL
 
-    # first_script = False
-    # no return, cur_program edited in place
+    # no return, cur_program is edited in place
 
 
 # `cmdfile' is the name of a file containing sed commands.
-#   Read them in and add them to the end of `cur_program'.
-#
+# Read them in and add them to the end of `cur_program'.
 def compile_file(cur_program, cmdfile):
     # prog and cur_input are global classes
-    # global first_script
 
     prog.file = sys.stdin
     if cmdfile[0] != "-":  # or cmdfile[1] != "\0":
@@ -1378,13 +1361,15 @@ def compile_file(cur_program, cmdfile):
     # Reseting here breaks check_final_program() error messages (bad_prog())
     # prog.file = NULL
 
-    # first_script = False
-    # no return, cur_program edited in place
+    # no return, cur_program is edited in place
+
+
+# cleanup_program_filenames() - Translation not needed
 
 
 # Make any checks which require the whole program to have been read.
-#   In particular: this backpatches the jump targets.
-#   Any cleanup which can be done after these checks is done here also.
+# In particular: this backpatches the jump targets. (sedparse: we don't)
+# Any cleanup which can be done after these checks is done here also.
 def check_final_program():  # program):  # pylint: disable=unused-variable
     global pending_text
     global old_text_buf
@@ -1399,6 +1384,10 @@ def check_final_program():  # program):  # pylint: disable=unused-variable
         old_text_buf.text = pending_text[:]  # pylint: disable=unsubscriptable-object
         free_buffer(pending_text)
         pending_text = NULL
+
+
+# rewind_read_files() - Translation not needed
+# finish_program() - Translation not needed
 
 
 ######################################## end of translations
