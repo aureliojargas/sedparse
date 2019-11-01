@@ -423,6 +423,17 @@ class struct_sed_cmd(struct):
         return "".join(ret)
 
 
+# This is defined in sed.h, but calls is_mb_char() from mbcs.c, where the real
+# implementation is.
+# XXX sedparse: maybe the translation is wrong or incomplete. It seems to work,
+# but I'm not sure if there are some unhandled edge cases here.
+def IS_MB_CHAR(ch):
+    """Return True if ch is EOF or a valid single-byte character"""
+    # sedparse: the first condition is necessary because our EOF constant is a
+    # string.
+    return ch != EOF and ord(ch) > 127
+
+
 # sedparse: This is probably from regex.c, but I'll fake it here
 # just saving the collected strings
 def compile_regex(pattern, flags):
@@ -430,11 +441,6 @@ def compile_regex(pattern, flags):
     r.pattern = "".join(pattern)
     r.flags = "".join(flags)
     return r
-
-
-def IS_MB_CHAR(ch):
-    return ch != EOF and ord(ch) > 127
-    # sedparse: This exception is because I chose to store EOF as "<EOF>"
 
 
 ######################################## translated from utils.h
@@ -883,15 +889,6 @@ def mark_subst_opts(cmd_s):
                 bad_prog(EXCESS_G_OPT)
             flags.append(ch)
 
-        elif ch in "0123456789":
-            if numb:
-                bad_prog(EXCESS_N_OPT)
-            n = in_integer(ch)
-            if int(n) == 0:
-                bad_prog(ZERO_N_OPT)
-            flags.append(str(n))
-            numb = True
-
         elif ch == "w":
             flags.append(ch)
             # This flag will always be at the end of the list, since after w
@@ -904,20 +901,25 @@ def mark_subst_opts(cmd_s):
             debug("s flag filename: %r" % cmd_s.outf.name)
             return flags
 
-        elif ch == "#":
+        elif ch in "0123456789":
+            if numb:
+                bad_prog(EXCESS_N_OPT)
+            n = in_integer(ch)
+            if int(n) == 0:
+                bad_prog(ZERO_N_OPT)
+            flags.append(str(n))
+            numb = True
+
+        elif ch in (CLOSE_BRACE, "#"):
             savchar(ch)
             return flags
 
-        elif ch == CLOSE_BRACE:
-            savchar(ch)
+        elif ch in (EOF, "\n"):
             return flags
 
         # sedparse: Ignore multiple trailing blanks and ; until EOC/EOL/EOF
         elif ch == ";":
             ignore_trailing_fluff()
-            return flags
-
-        elif ch in (EOF, "\n"):
             return flags
 
         elif ch == "\r":
