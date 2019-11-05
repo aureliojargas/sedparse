@@ -69,6 +69,7 @@ class TestSedparseErrors(unittest.TestCase):  # pylint: disable=unused-variable
                 parsed = []
                 sedparse.compile_string(parsed, script)
                 sedparse.check_final_program()
+                self.fail(msg=script)  # it should never reach here
             except sedparse.ParseError as err:
                 self.assertEqual(expected, err.message, msg=script)
                 self.assertEqual(sedparse.EXIT_BAD_USAGE, err.exitcode, msg=script)
