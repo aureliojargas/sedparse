@@ -4,6 +4,8 @@
 import unittest
 
 from context import sedparse
+from utils import parse_string
+
 
 # The global holder for all the test data
 TEST_DATA = {}
@@ -671,12 +673,6 @@ TEST_DATA["trailing_fluff"] = [
     ("p ;\t; ", "p"),
     ("p ;;\tx", "p", "x"),
 ]
-
-
-def parse_string(script):
-    parsed = []
-    sedparse.compile_string(parsed, script)
-    return parsed
 
 
 class TestSedparseParser(unittest.TestCase):  # pylint: disable=unused-variable

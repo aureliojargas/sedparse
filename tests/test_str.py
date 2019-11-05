@@ -4,12 +4,7 @@
 import unittest
 
 from context import sedparse
-
-
-def parse_string(script):
-    parsed = []
-    sedparse.compile_string(parsed, script)
-    return parsed
+from utils import parse_string
 
 
 class TestSedparsestr(unittest.TestCase):  # pylint: disable=unused-variable
