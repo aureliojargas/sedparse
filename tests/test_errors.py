@@ -29,7 +29,8 @@ TEST_DATA = [
     ("dp",        2, "EXCESS_JUNK", "extra characters after command"),
     ("xx",        2, "EXCESS_JUNK", "extra characters after command"),
     ("s/a/b/2p2", 9, "EXCESS_N_OPT", "multiple number options to `s' command"),
-    ("{",         1, "EXCESS_OPEN_BRACE", "unmatched `{'"),  # GNU sed is "char 0"
+    ("{",         0, "EXCESS_OPEN_BRACE", "unmatched `{'"),
+    #             ^here it should be 1. It's a GNU sed bug that sedparse emulates.
     ("s/a/b/pp",  8, "EXCESS_P_OPT", "multiple `p' options to `s' command"),
     ("a",         1, "EXPECTED_SLASH", "expected \\ after `a', `c' or `i'"),
     #                 INCOMPLETE_CMD  incomplete command

@@ -565,9 +565,14 @@ def bad_prog(why):
         msg = "%s: -e expression #%d, char %d: %s" % (
             program_name,
             cur_input.string_expr_count,
-            prog.cur - prog.base,
+            (prog.cur or 0) - (prog.base or 0),
             why,
         )
+
+    # sedparse extension
+    # The following exception can be caught and this module can be used again.
+    # Reset to make sure data from one execution won't affect the next.
+    reset_globals()
 
     # sedparse extension
     # In this point, the original code shows the error message and exits. Doing
@@ -1333,10 +1338,10 @@ def compile_string(cur_program, string):  # pylint: disable=unused-variable
 
     compile_program(cur_program)
 
-    # Reseting here breaks check_final_program() error messages (bad_prog())
-    # prog.base = NULL
-    # prog.cur = NULL
-    # prog.end = NULL
+    prog.base = NULL
+    prog.cur = NULL
+    prog.end = NULL
+    prog.text = NULL
 
     # no return, cur_program is edited in place
 
@@ -1358,8 +1363,8 @@ def compile_file(cur_program, cmdfile):
 
     if prog.file != sys.stdin:
         prog.file.close()
-    # Reseting here breaks check_final_program() error messages (bad_prog())
-    # prog.file = NULL
+
+    prog.file = NULL
 
     # no return, cur_program is edited in place
 
@@ -1371,8 +1376,8 @@ def compile_file(cur_program, cmdfile):
 # In particular: this backpatches the jump targets. (sedparse: we don't)
 # Any cleanup which can be done after these checks is done here also.
 def check_final_program():  # program):  # pylint: disable=unused-variable
-    global pending_text
     global old_text_buf
+    global pending_text
 
     # do all "{"s have a corresponding "}"?
     if blocks:
@@ -1381,7 +1386,7 @@ def check_final_program():  # program):  # pylint: disable=unused-variable
     # was the final command an unterminated a/c/i command?
     if pending_text:
         debug("pending_text: %r" % pending_text)
-        old_text_buf.text = pending_text[:]  # pylint: disable=unsubscriptable-object
+        old_text_buf.text = pending_text[:]
         free_buffer(pending_text)
         pending_text = NULL
 
@@ -1414,6 +1419,16 @@ def debug(msg, stats=False):
             )
         else:
             print(msg, file=sys.stderr)
+
+
+def reset_globals():
+    global blocks
+    global old_text_buf
+    global pending_text
+
+    blocks = 0
+    old_text_buf = NULL
+    pending_text = NULL
 
 
 def to_json(obj, remove_empty=True):
