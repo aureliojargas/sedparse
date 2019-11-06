@@ -1422,6 +1422,12 @@ def debug(msg, stats=False):
 
 
 def reset_globals():
+    """
+    In the original C code, any error aborts the program. Here, we throw an
+    exception. This can be caught and at that point, the module globals are
+    still holding data from the previous parsing. We need to clean up everything
+    so the next call to `compile_*()` will act on fresh, uncontaminated data.
+    """
     global blocks
     global old_text_buf
     global pending_text
@@ -1429,6 +1435,15 @@ def reset_globals():
     blocks = 0
     old_text_buf = NULL
     pending_text = NULL
+
+    # Reset compile_string()-related data
+    prog.base = NULL
+    prog.cur = NULL
+    prog.end = NULL
+    prog.text = NULL
+
+    # Reset compile_file()-related data
+    prog.file = NULL
 
 
 def to_json(obj, remove_empty=True):

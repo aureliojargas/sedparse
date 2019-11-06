@@ -57,6 +57,11 @@ class TestSedparseMisc(unittest.TestCase):  # pylint: disable=unused-variable
         self.assertEqual(0, sedparse.blocks)
         self.assertIsNone(sedparse.old_text_buf)
         self.assertIsNone(sedparse.pending_text)
+        self.assertIsNone(sedparse.prog.base)
+        self.assertIsNone(sedparse.prog.cur)
+        self.assertIsNone(sedparse.prog.end)
+        self.assertIsNone(sedparse.prog.text)
+        self.assertIsNone(sedparse.prog.file)
 
 
 if __name__ == "__main__":
