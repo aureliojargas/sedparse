@@ -1,4 +1,5 @@
-Will parse file: tests/reference.sed
+
+===== Will parse file: tests/reference.sed
 exp=0 line=1 cur=None end=None text=None ch='#'
 ----- Found command: '#'
 exp=0 line=1 cur=None end=None text=None ch=' '

@@ -1,5 +1,6 @@
 # Misc tests.
 
+import json
 import os
 import tempfile
 import unittest
@@ -62,6 +63,46 @@ class TestSedparseMisc(unittest.TestCase):  # pylint: disable=unused-variable
         self.assertIsNone(sedparse.prog.end)
         self.assertIsNone(sedparse.prog.text)
         self.assertIsNone(sedparse.prog.file)
+
+    def test_expressions_and_files(self):
+        """
+        In the commmand line, the sed script to be parsed can be informed using
+        a string `-e` and/or a file `-f`. Both options can be used multiple
+        times to compose a larger script in smaller chunks. The original option
+        order is respected. This mimics how GNU sed itself works.
+
+        Option `-e` is mapped to `compile_string()` and option `-f` is mapped to
+        `compile_file()`. Both are called here in different combinations to make
+        sure they work as expected.
+        """
+
+        # Create a script file
+        with tempfile.NamedTemporaryFile(mode="w", delete=False) as file:
+            file.write("x\n")
+            filename = file.name
+
+        data = [
+            # @ means the file must be loaded (-f file)
+            (["@"], ["x"]),
+            (["p"], ["p"]),
+            (["p", "d", "q"], ["p", "d", "q"]),
+            (["@", "p"], ["x", "p"]),
+            (["p", "@"], ["p", "x"]),
+            (["p", "@", "d", "@", "q"], ["p", "x", "d", "x", "q"]),
+        ]
+        for scripts, expected_commands in data:
+            args = []
+            for script in scripts:
+                if script == "@":
+                    args.extend(["-f", filename])
+                else:
+                    args.extend(["-e", script])
+            the_json = sedparse.main(args)
+            the_program = json.loads(the_json)
+            self.assertEqual(
+                expected_commands, [x["cmd"] for x in the_program], msg=scripts
+            )
+        os.remove(filename)
 
 
 if __name__ == "__main__":

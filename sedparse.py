@@ -1320,7 +1320,7 @@ def compile_program(vector):
 
 # `str' is a string (from the command line) that contains a sed command.
 # Compile the command, and add it to the end of `cur_program'.
-def compile_string(cur_program, string):  # pylint: disable=unused-variable
+def compile_string(cur_program, string):
     # string_expr_count = 0
 
     # prog and cur_input are global classes
@@ -1375,7 +1375,7 @@ def compile_file(cur_program, cmdfile):
 # Make any checks which require the whole program to have been read.
 # In particular: this backpatches the jump targets. (sedparse: we don't)
 # Any cleanup which can be done after these checks is done here also.
-def check_final_program():  # program):  # pylint: disable=unused-variable
+def check_final_program():  # program):
     global old_text_buf
     global pending_text
 
@@ -1468,15 +1468,33 @@ def print_program(compiled_program):  # pylint: disable=unused-variable
 
 def get_argparser():
     argparser = argparse.ArgumentParser(
-        description="Parse a sed script file and dump the results as JSON in STDOUT."
+        description="Parse a sed script and show its JSON representation in STDOUT."
+    )
+    # For -e and -f we use the same name, metavar and help as in GNU sed
+    argparser.add_argument(
+        "-e",
+        "--expression",
+        metavar="script",
+        dest="inputs",
+        action="append",
+        type=lambda x: ("e", x),  # becomes a ("e", expression) tuple
+        help="add the script to the commands to be parsed",
     )
     argparser.add_argument(
-        "-v", "--verbose", action="store_true", help="turn on verbose mode"
+        "-f",
+        "--file",
+        metavar="script-file",
+        dest="inputs",
+        action="append",
+        type=lambda x: ("f", x),  # becomes a ("f", filename) tuple
+        help="add the contents of script-file to the commands to be parsed",
     )
     argparser.add_argument(
         "--full", action="store_true", help="show full JSON (has empty values)"
     )
-    argparser.add_argument("sed_file", nargs="?", default="-")
+    argparser.add_argument(
+        "-v", "--verbose", action="store_true", help="turn on verbose mode"
+    )
     return argparser
 
 
@@ -1487,9 +1505,23 @@ def main(arguments=None):
 
     PARSER_DEBUG = args.verbose
 
-    debug("Will parse file: %s" % args.sed_file)
+    if not args.inputs:
+        raise RuntimeError("No sed script to be parsed. Use -e and/or -f.")
+
+    # Read and parse the sed script informed in -e and/or -f, respecting the
+    # original argument order
     the_program = []
-    compile_file(the_program, args.sed_file)
+    for input_type, input_val in args.inputs:
+        if input_type == "e":
+            debug("\n===== Will parse expression: %s" % input_val)
+            compile_string(the_program, input_val)
+        elif input_type == "f":
+            debug("\n===== Will parse file: %s" % input_val)
+            compile_file(the_program, input_val)
+        else:
+            raise RuntimeError("Unknown input type '%s'" % input_type)
+    check_final_program()
+
     return to_json(the_program, not args.full)
 
 
@@ -1500,3 +1532,5 @@ if __name__ == "__main__":
     except ParseError as err:
         print(err.message, file=sys.stderr)
         sys.exit(err.exitcode)
+    except RuntimeError as err:
+        sys.exit("%s: %s" % (program_name, err))

@@ -25,6 +25,6 @@ echo unit tests
 python -m unittest discover -s tests/
 
 echo parse reference file
-python sedparse.py tests/reference.sed > tests/reference.json
-python sedparse.py --verbose --full tests/reference.sed > tests/reference.full.json 2> tests/reference.verbose
+python sedparse.py -f tests/reference.sed > tests/reference.json
+python sedparse.py --verbose --full -f tests/reference.sed > tests/reference.full.json 2> tests/reference.verbose
 git diff --exit-code tests/reference.*
