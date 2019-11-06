@@ -1466,25 +1466,37 @@ def print_program(compiled_program):  # pylint: disable=unused-variable
             indent_level += 1
 
 
-if __name__ == "__main__":
+def get_argparser():
     argparser = argparse.ArgumentParser(
         description="Parse a sed script file and dump the results as JSON in STDOUT."
     )
-    argparser.add_argument("-v", "--verbose", action="store_true", help="verbose mode")
+    argparser.add_argument(
+        "-v", "--verbose", action="store_true", help="turn on verbose mode"
+    )
     argparser.add_argument(
         "--full", action="store_true", help="show full JSON (has empty values)"
     )
     argparser.add_argument("sed_file", nargs="?", default="-")
-    args = argparser.parse_args()
+    return argparser
+
+
+def main(arguments=None):
+    global PARSER_DEBUG
+
+    args = get_argparser().parse_args(arguments)
 
     PARSER_DEBUG = args.verbose
 
     debug("Will parse file: %s" % args.sed_file)
     the_program = []
+    compile_file(the_program, args.sed_file)
+    return to_json(the_program, not args.full)
+
+
+if __name__ == "__main__":
     try:
-        compile_file(the_program, args.sed_file)
+        print(main())
+        sys.exit(EXIT_SUCCESS)
     except ParseError as err:
         print(err.message, file=sys.stderr)
         sys.exit(err.exitcode)
-    print(to_json(the_program, not args.full))
-    sys.exit(EXIT_SUCCESS)
