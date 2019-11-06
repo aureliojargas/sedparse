@@ -8,8 +8,13 @@ python:
   - "3.6"
   - "3.7"
 
-# Only run pylint/black in newer Python versions
 install:
+  # Download clitest
+  - curl -sOL https://raw.githubusercontent.com/aureliojargas/clitest/master/clitest
+  - chmod +x clitest
+  - mv clitest ~/bin
+
+  # Only run pylint/black in newer Python versions
   - case $TRAVIS_PYTHON_VERSION in 3.[6-9])
     pip install --quiet -r requirements-dev.txt;;
     esac

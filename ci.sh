@@ -2,6 +2,10 @@
 
 set -euo pipefail
 
+has_clitest() {
+    command -v clitest > /dev/null
+}
+
 is_python36() {
     python --version 2>&1 | grep '^Python 3\.[6-9]' > /dev/null
 }
@@ -16,6 +20,14 @@ then
 else
     echo pylint - SKIPPED
     echo black - SKIPPED
+fi
+
+if has_clitest
+then
+    echo cli tests
+    clitest --quiet README.md
+else
+    echo cli tests - SKIPPED
 fi
 
 echo doc tests
