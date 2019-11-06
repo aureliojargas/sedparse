@@ -25,7 +25,9 @@
 from __future__ import print_function  # pylint: disable=unused-variable
 import argparse
 import json
+import os
 import sys
+import tempfile
 
 # Adapt some C entities to Python
 NULL = None
@@ -628,7 +630,9 @@ def savchar(ch):
     else:
         # Original: ungetc(ch, prog.file)
         try:
-            # Go back one position in prog.file file descriptor pointer
+            # Go back one position in prog.file file descriptor pointer.
+            # This does not work when reading from STDIN, see tempfile
+            # workaround in compile_file()
             prog.file.seek(prog.file.tell() - 1)  # XXX len(ch) instead of 1?
         except ValueError:  # negative seek position -1
             pass
@@ -1351,8 +1355,16 @@ def compile_string(cur_program, string):
 def compile_file(cur_program, cmdfile):
     # prog and cur_input are global classes
 
-    prog.file = sys.stdin
-    if cmdfile[0] != "-":  # or cmdfile[1] != "\0":
+    if cmdfile == "-":
+        # sedparse extension
+        # My version of savchar() does not work when reading from STDIN. To
+        # workaround that, read STDIN now into a temporary file and only handle
+        # that file from now on.
+        with tempfile.NamedTemporaryFile(mode="w", delete=False) as file:
+            file.write(sys.stdin.read())
+            temp_filename = file.name
+        prog.file = open(temp_filename, "r")
+    else:
         prog.file = open(cmdfile, "r")
 
     cur_input.line = 1
@@ -1361,10 +1373,12 @@ def compile_file(cur_program, cmdfile):
 
     compile_program(cur_program)
 
-    if prog.file != sys.stdin:
-        prog.file.close()
-
+    prog.file.close()
     prog.file = NULL
+
+    # sedparse extension
+    if cmdfile == "-":
+        os.remove(temp_filename)
 
     # no return, cur_program is edited in place
 
