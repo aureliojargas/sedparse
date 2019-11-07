@@ -597,8 +597,8 @@ def inchar():
     if prog.cur is not None:
         if prog.cur < prog.end:
             # Original: ch = *prog.cur++;
-            prog.cur += 1
             ch = prog.text[prog.cur]
+            prog.cur += 1
     elif prog.file:
         # Original: if (!feof (prog.file)) ch = getc (prog.file);
         # https://stackoverflow.com/a/15599780
@@ -621,7 +621,7 @@ def savchar(ch):
     if prog.cur:
         # Original: if (prog.cur <= prog.base || *--prog.cur != ch)
         prog.cur -= 1
-        if prog.cur <= prog.base or prog.text[prog.cur + 1] != ch:  # XXX is it cur+1?
+        if prog.cur <= prog.base or prog.text[prog.cur] != ch:
             panic(
                 # sedparse: original code only shows `ch` in this error message
                 "Called savchar with unexpected pushback (curr=%s %s!=%s)"
@@ -1332,8 +1332,7 @@ def compile_string(cur_program, string):
     prog.base = 0  # first char of the string (will be 1-based)
     prog.cur = prog.base
     prog.end = prog.cur + len(string)
-    # sedparse extension: original code does not have .text
-    prog.text = "@" + string  # the leading @ is ignored, it's a 1-based index
+    prog.text = string  # sedparse extension
 
     cur_input.line = 1  # sedparse: original was zero
     cur_input.name = NULL
