@@ -26,6 +26,7 @@ if has_clitest
 then
     echo cli tests
     clitest --quiet README.md
+    clitest --quiet --prefix 4 tests/test_cmdline.md
 else
     echo cli tests - SKIPPED
 fi
