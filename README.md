@@ -1,13 +1,5 @@
 # sedparse
 
-This is a work in progress, not yet officially released.
-
-I'm still force pushing and doing wild west cowboy dev.
-
-For now, I do not recommend investing any time on it.
-
-----
-
 - Author: Aurelio Jargas
 - License: GPLv3
 - Tested with Python 2.7, 3.4, 3.5, 3.6 and 3.7 (see [.travis.yml](.travis.yml))
@@ -28,11 +20,11 @@ For a complete reference on how the different sed commands are mapped by the par
 
 ## About the translation
 
-I copied the original code in C and translated everything to Python.
+I copied the original code in C and translated everything to Python, line by line.
 
 To make it feasible to keep this code updated with future GNU sed code, this is a literal translation, trying to mimic as much as possible of the original code. That includes using the same API, same logic, same variable and method names and same data structures. Pythonic code? Sorry, not here.
 
-The accuracy of the parser is checked by extensive unit tests in [tests/test_parser.py](tests/test_parser.py).
+The accuracy of the parser is checked by extensive unit tests in [tests/](tests/).
 
 Sedparse was translated from this GNU sed version:
 
@@ -270,7 +262,7 @@ More info at https://packaging.python.org/guides/installing-using-pip-and-virtua
 
 ## Testing and code formatting
 
-The sedparse code is checked by pylint, formatted by [black](https://github.com/psf/black) and tested by the standard `unittest` and `doctest` Python modules.
+The sedparse code is checked by pylint, formatted by [black](https://github.com/psf/black), tested by the standard `unittest` and `doctest` Python modules, and full command lines are tested by [clitest](https://github.com/aureliojargas/clitest).
 
 The commands to run all of those are inside the [ci.sh](ci.sh) script. Just run it locally after every change:
 
