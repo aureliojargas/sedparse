@@ -1155,9 +1155,9 @@ def compile_program(vector):
 
         # sedparse: we just save the "v" command contents, no processing
         elif ch == "v":
-            argument = read_label()
-            cur_cmd.x.label_name = argument
-            debug("argument: %s" % argument)
+            # sedparse extension: using label_name to store "v" argument
+            cur_cmd.x.label_name = read_label()
+            debug("argument: %s" % cur_cmd.x.label_name)
 
         elif ch == "{":
             blocks += 1
@@ -1202,10 +1202,10 @@ def compile_program(vector):
             # if (cur_cmd->a1)
             #   bad_prog (_(NO_COLON_ADDR));
             label = read_label()
-            cur_cmd.x.label_name = label
-            debug("label: %r" % label)
             if ch == ":" and not label:
                 bad_prog(COLON_LACKS_LABEL)
+            cur_cmd.x.label_name = label
+            debug("label: %r" % cur_cmd.x.label_name)
 
         elif ch in ("Q", "q", "L", "l"):
             # if ch in ("Q", "q") and cur_cmd.a2:
@@ -1270,7 +1270,7 @@ def compile_program(vector):
             # sedparse: here GNU compiles the regex, we just save the flags
             flags = "".join(mark_subst_opts(cur_cmd.x.cmd_subst))
             cur_cmd.x.cmd_subst.regx.flags = flags
-            debug("s flags: %r" % flags)
+            debug("s flags: %r" % cur_cmd.x.cmd_subst.regx.flags)
 
             # if cur_cmd.x.cmd_subst.eval and sandbox:
             #     bad_prog(_(DISALLOWED_CMD))
