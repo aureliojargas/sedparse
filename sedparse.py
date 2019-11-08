@@ -1213,7 +1213,7 @@ def compile_program(vector):
             ch = in_nonblank()
             if ISDIGIT(ch):  # and posixicity != POSIXLY_BASIC
                 cur_cmd.x.int_arg = in_integer(ch)
-                debug("int_arg: %r" % in_integer(ch))
+                debug("int_arg: %r" % cur_cmd.x.int_arg)
             else:
                 cur_cmd.x.int_arg = -1
                 debug("int_arg: -1")
