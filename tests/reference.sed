@@ -34,9 +34,9 @@ z
 
 # Commands with numeric argument
 q 1
-Q 2
-l 3
-L 4
+Q 22
+l 333
+L 4444
 
 # Commands with labels
 : label
