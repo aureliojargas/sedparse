@@ -1456,6 +1456,8 @@ def reset_globals():
     prog.text = NULL
 
     # Reset compile_file()-related data
+    if prog.file:
+        prog.file.close()
     prog.file = NULL
 
 
