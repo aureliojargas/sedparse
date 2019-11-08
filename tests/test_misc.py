@@ -1,4 +1,5 @@
 # Misc tests.
+# coding: utf-8
 
 import json
 import os
@@ -103,6 +104,41 @@ class TestSedparseMisc(unittest.TestCase):  # pylint: disable=unused-variable
                 expected_commands, [x["cmd"] for x in the_program], msg=scripts
             )
         os.remove(filename)
+
+    def test_savchar_with_unicode(self):
+        """
+        savchar() should handle Unicode characters correctly. That means going
+        back N bytes when the input is a file, where N is the lenght in bytes of
+        the current Unicode character (i.e., ★ is composed of 3 bytes).
+
+        In this test, while reading the numeric argument for the "q" command in
+        `in_integer()`, it will detect the "9" and then a non-number "★". At
+        this point `savchar()` will be called to go back before the "★". Then
+        the parser will read "★" again and complain about "extra characters
+        after command". If Unicode backtracking is not supported, the parser
+        error would be different.
+        """
+        script = "q9★\n"
+
+        # Create a script file
+        with tempfile.NamedTemporaryFile(mode="w", delete=False) as file:
+            file.write(script)
+            filename = file.name
+
+        # Test reading from a file (-f)
+        with self.assertRaises(sedparse.ParseError) as manager:
+            sedparse.compile_file([], filename)
+        self.assertTrue(
+            manager.exception.message.endswith("extra characters after command")
+        )
+        os.remove(filename)
+
+        # Test reading from a string (-e)
+        with self.assertRaises(sedparse.ParseError) as manager:
+            sedparse.compile_string([], script)
+        self.assertTrue(
+            manager.exception.message.endswith("extra characters after command")
+        )
 
 
 if __name__ == "__main__":

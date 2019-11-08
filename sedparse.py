@@ -630,10 +630,12 @@ def savchar(ch):
     else:
         # Original: ungetc(ch, prog.file)
         try:
-            # Go back one position in prog.file file descriptor pointer.
-            # This does not work when reading from STDIN, see tempfile
-            # workaround in compile_file()
-            prog.file.seek(prog.file.tell() - 1)  # XXX len(ch) instead of 1?
+            # Go back one *character* in prog.file file descriptor pointer.
+            # Since one Unicode character can be composed of multiple bytes,
+            # we need that encoding to know how many bytes we should rewind.
+            # Note that tell() does not work when reading from STDIN, see
+            # the temporary file workaround in compile_file().
+            prog.file.seek(prog.file.tell() - len(ch.encode("utf-8")))
         except ValueError:  # negative seek position -1
             pass
 
