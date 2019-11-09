@@ -1,11 +1,68 @@
 # sedparse
 # GNU sed's parser translated from C to Python
 # https://github.com/aureliojargas/sedparse
-
-# TODO
-# - document how it works
 #
-# NOT TRANSLATED
+# HOW IT WORKS
+#
+# The original sed script can be specified via strings (option -e) or via files
+# (option -f). The main functions to handle them are compile_string() and
+# compile_file(), respectively. Both are entrypoints to prepare the input for
+# the real parsing which occurs in compile_program().
+#
+# The parser reads the sed script character by character (see inchar()). The
+# opposite function is savchar(), which goes back one character, when necessary.
+# There are also some specialized input reading functions, for example
+# in_integer() to read a sequence of integers and in_nonblank() to skip a
+# sequence of white space chars.
+#
+# The normal flow is reading the chars forward with inchar() to detect the
+# addresses, commands and their arguments. When the end of the current structure
+# is only detected after reading the next char, which is not part of that
+# structure (for example, getting any non number while reading integers in
+# in_integer()), then savchar() is called to give that char back so the main
+# parser will handle it.
+#
+# The data for every successfully parsed command is saved as an instance of the
+# struct_sed_cmd class, which is appended in-place to the cur_program list,
+# specified as an argument when calling compile_string() or compile_file().
+#
+# Any detected syntax error aborts the parsing immediately and a ParseError
+# exception is raised (see bad_prog()).
+#
+# The code uses some global variables to save state:
+#
+# prog
+#
+#     A class to hold information about the input script. If it is a file,
+#     `prog.file` will hold the open file descriptor (which during the parsing
+#     is read using fd.seek() and fd.tell()). If it the input came from a string
+#     (-e option), `prog.base`, `prog.cur` and `prog.end` will be used to save
+#     state about where the cursor is currently pointing in the string. See more
+#     details in the `prog_info` class comments.
+#
+# cur_input
+#
+#     A class to keep information used in error messages. We have the script
+#     file name and line number saved in `cur_input.name` and `cur_input.line`,
+#     and if it's not a file, `cur_input.string_expr_count` holds the index of
+#     the command line "-e" expression.
+#
+# blocks
+#
+#     An integer describing the current depth of the script. Any new block "{"
+#     adds a new depth level and its respective "}" remove a level. A script
+#     like "$ { /foo/ { p;};}" will have blocks=2 when reading the "p" command,
+#     but will become blocks=0 when reading the last "}".
+#
+# pending_text
+# old_text_buf
+#
+#     Those two variables are temporary data holders so the parser can
+#     "remember" data from the previous parsed script. This allows for scripts
+#     like "sed -e 'i\' -e foo", where a single "i" command is specified in two
+#     chunks (by using the -e option twice).
+
+# STILL NOT TRANSLATED
 # - Check if command only accepts one address
 #   if (cur_cmd->a2) bad_prog (_(ONE_ADDR))
 # - Check POSIX compatibility (all GNU sed extensions are supported here)
