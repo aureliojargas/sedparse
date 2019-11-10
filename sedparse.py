@@ -1604,7 +1604,7 @@ def main(arguments=None):
     return to_json(the_program, not args.full)
 
 
-if __name__ == "__main__":
+def entrypoint():
     try:
         print(main())
         sys.exit(EXIT_SUCCESS)
@@ -1613,3 +1613,7 @@ if __name__ == "__main__":
         sys.exit(err.exitcode)
     except RuntimeError as err:
         sys.exit("%s: %s" % (program_name, err))
+
+
+if __name__ == "__main__":
+    entrypoint()

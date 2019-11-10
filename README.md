@@ -49,10 +49,10 @@ http://git.savannah.gnu.org/cgit/sed.git/commit/?id=a9cb52bcf39f0ee307301ac73c11
 
 ## Installation
 
-Everything is in a single file ([sedparse.py](https://github.com/aureliojargas/sedparse/blob/master/sedparse.py)), with no external dependencies. Just download it and run.
+    pip install --user sedparse
+    sedparse --help
 
-    curl -sOL https://raw.githubusercontent.com/aureliojargas/sedparse/master/sedparse.py
-    python sedparse.py --help
+Alternatively, you can just download and run the [sedparse.py](https://raw.githubusercontent.com/aureliojargas/sedparse/master/sedparse.py) file, since it is self-contained with no external dependencies.
 
 
 ## Usage from the command line
@@ -240,32 +240,3 @@ Have fun!
 []
 >>>
 ```
-
-## Development environment
-
-To create (and update in the future):
-
-    python3 -m venv env
-    source env/bin/activate
-    pip install -r requirements-dev.txt
-
-To use it while developing:
-
-    source env/bin/activate
-
-To leave it when done developing:
-
-    deactivate
-
-More info at https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/
-
-
-## Testing and code formatting
-
-The sedparse code is checked by pylint, formatted by [black](https://github.com/psf/black), tested by the standard `unittest` and `doctest` Python modules, and full command lines are tested by [clitest](https://github.com/aureliojargas/clitest).
-
-The commands to run all of those are inside the [ci.sh](https://github.com/aureliojargas/sedparse/blob/master/ci.sh) script. Just run it locally after every change:
-
-    ./ci.sh
-
-This script is also automatically executed by Travis CI for every new push to the repository.
