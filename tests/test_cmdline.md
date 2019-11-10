@@ -7,7 +7,15 @@ Note that tests for combining `-e` and `-f` in the same command are made in `tes
 ## Help message
 
     $ python sedparse.py -h | sed 1q
-    usage: sedparse.py [-h] [-e script] [-f script-file] [--full] [-v]
+    usage: sedparse.py [-h] [-e script] [-f script-file] [--full] [-v] [-V]
+    $
+
+## Show version
+
+Redirecting because in Python 2.7 the version number is sent to STDERR.
+
+    $ python sedparse.py --version 2>&1 | tr -s 0-9 9
+    sedparse.py 9.9.9
     $
 
 ## No sed script informed

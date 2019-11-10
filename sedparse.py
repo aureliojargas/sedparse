@@ -86,6 +86,8 @@ import os
 import sys
 import tempfile
 
+__version__ = "0.1.0"
+
 # Adapt some C entities to Python
 NULL = None
 EOF = "<EOF>"
@@ -1568,6 +1570,9 @@ def get_argparser():
     )
     argparser.add_argument(
         "-v", "--verbose", action="store_true", help="turn on verbose mode"
+    )
+    argparser.add_argument(
+        "-V", "--version", action="version", version="%(prog)s " + __version__
     )
     return argparser
 
