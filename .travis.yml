@@ -19,7 +19,14 @@ install:
     pip install --quiet -r requirements-dev.txt;;
     esac
 
-script: ./ci.sh
+  # Install sedparse itself
+  - pip install -e .
+
+script:
+  - ./ci.sh
+
+  # This is not included in ci.sh because it needs the 'sedparse' executable
+  - clitest --progress none README.md
 
 ### Environment
 # Ubuntu 14.04.5 LTS

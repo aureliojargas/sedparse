@@ -62,7 +62,7 @@ The informed sed script will be parsed and checked for syntax errors. If everyth
 Just like in sed, you can inform the sed script using one or more `-e` options:
 
 ```console
-$ python sedparse.py -e "s/foo/bar/g" -e "5d"
+$ sedparse -e "s/foo/bar/g" -e "5d"
 [
     {
         "cmd": "s",
@@ -96,7 +96,7 @@ Or you can inform the sed script as a file argument using `-f`:
 
 ```console
 $ echo '1,10!d' > head.sed
-$ python sedparse.py -f head.sed
+$ sedparse -f head.sed
 [
     {
         "a1": {
@@ -119,7 +119,7 @@ $
 Or even as text coming from STDIN when using the special `-` file:
 
 ```console
-$ echo '\EXTREMITIES' | python sedparse.py -f -
+$ echo '\EXTREMITIES' | sedparse -f -
 [
     {
         "a1": {
