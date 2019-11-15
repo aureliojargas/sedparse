@@ -2,7 +2,7 @@
 
 - Author: Aurelio Jargas
 - License: GPLv3
-- Tested with Python 2.7, 3.4, 3.5, 3.6 and 3.7 (see [.travis.yml](https://github.com/aureliojargas/sedparse/blob/master/.travis.yml))
+- Tested with Python 2.7, 3.4, 3.5, 3.6, 3.7 and 3.8 (see [.travis.yml](https://github.com/aureliojargas/sedparse/blob/master/.travis.yml))
 
 A translation from C to Python of GNU sed's parser for sed scripts.
 
