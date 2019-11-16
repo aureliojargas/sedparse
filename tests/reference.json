@@ -16,11 +16,11 @@
     },
     {
         "a1": {
-            "addr_number": 11,
+            "addr_number": 21,
             "addr_type": 3
         },
         "a2": {
-            "addr_number": 12,
+            "addr_number": 22,
             "addr_type": 3
         },
         "cmd": "p",
@@ -28,10 +28,45 @@
     },
     {
         "a1": {
-            "addr_type": 7
+            "addr_number": 31,
+            "addr_step": 32,
+            "addr_type": 4
         },
         "cmd": "p",
         "line": 4
+    },
+    {
+        "a1": {
+            "addr_number": 41,
+            "addr_type": 3
+        },
+        "a2": {
+            "addr_number": 0,
+            "addr_step": 42,
+            "addr_type": 6
+        },
+        "cmd": "p",
+        "line": 5
+    },
+    {
+        "a1": {
+            "addr_number": 51,
+            "addr_type": 3
+        },
+        "a2": {
+            "addr_number": 0,
+            "addr_step": 52,
+            "addr_type": 5
+        },
+        "cmd": "p",
+        "line": 6
+    },
+    {
+        "a1": {
+            "addr_type": 7
+        },
+        "cmd": "p",
+        "line": 7
     },
     {
         "a1": {
@@ -42,7 +77,7 @@
             "addr_type": 2
         },
         "cmd": "p",
-        "line": 5
+        "line": 8
     },
     {
         "a1": {
@@ -54,7 +89,7 @@
             "addr_type": 2
         },
         "cmd": "p",
-        "line": 6
+        "line": 9
     },
     {
         "a1": {
@@ -63,25 +98,6 @@
             },
             "addr_type": 2
         },
-        "cmd": "p",
-        "line": 7
-    },
-    {
-        "cmd": "\n",
-        "line": 8
-    },
-    {
-        "cmd": "#",
-        "line": 9,
-        "x": {
-            "comment": " Bang to invert addresses"
-        }
-    },
-    {
-        "a1": {
-            "addr_type": 7
-        },
-        "addr_bang": true,
         "cmd": "p",
         "line": 10
     },
@@ -93,187 +109,188 @@
         "cmd": "#",
         "line": 12,
         "x": {
+            "comment": " Bang to invert addresses"
+        }
+    },
+    {
+        "a1": {
+            "addr_type": 7
+        },
+        "addr_bang": true,
+        "cmd": "p",
+        "line": 13
+    },
+    {
+        "cmd": "\n",
+        "line": 14
+    },
+    {
+        "cmd": "#",
+        "line": 15,
+        "x": {
             "comment": " Commands with no arguments"
         }
     },
     {
         "cmd": "=",
-        "line": 13
-    },
-    {
-        "cmd": "b",
-        "line": 14
-    },
-    {
-        "cmd": "d",
-        "line": 15
-    },
-    {
-        "cmd": "D",
         "line": 16
     },
     {
-        "cmd": "F",
+        "cmd": "b",
         "line": 17
     },
     {
-        "cmd": "g",
+        "cmd": "d",
         "line": 18
     },
     {
-        "cmd": "G",
+        "cmd": "D",
         "line": 19
     },
     {
-        "cmd": "h",
+        "cmd": "F",
         "line": 20
     },
     {
-        "cmd": "H",
+        "cmd": "g",
         "line": 21
     },
     {
-        "cmd": "l",
+        "cmd": "G",
         "line": 22
     },
     {
-        "cmd": "L",
+        "cmd": "h",
         "line": 23
     },
     {
-        "cmd": "n",
+        "cmd": "H",
         "line": 24
     },
     {
-        "cmd": "N",
+        "cmd": "l",
         "line": 25
     },
     {
-        "cmd": "p",
+        "cmd": "L",
         "line": 26
     },
     {
-        "cmd": "P",
+        "cmd": "n",
         "line": 27
     },
     {
-        "cmd": "q",
+        "cmd": "N",
         "line": 28
     },
     {
-        "cmd": "Q",
+        "cmd": "p",
         "line": 29
     },
     {
-        "cmd": "t",
+        "cmd": "P",
         "line": 30
     },
     {
-        "cmd": "T",
+        "cmd": "q",
         "line": 31
     },
     {
-        "cmd": "x",
+        "cmd": "Q",
         "line": 32
     },
     {
-        "cmd": "z",
+        "cmd": "t",
         "line": 33
     },
     {
-        "cmd": "\n",
+        "cmd": "T",
         "line": 34
     },
     {
+        "cmd": "x",
+        "line": 35
+    },
+    {
+        "cmd": "z",
+        "line": 36
+    },
+    {
+        "cmd": "\n",
+        "line": 37
+    },
+    {
         "cmd": "#",
-        "line": 35,
+        "line": 38,
         "x": {
             "comment": " Commands with numeric argument"
         }
     },
     {
         "cmd": "q",
-        "line": 36,
+        "line": 39,
         "x": {
             "int_arg": 1
         }
     },
     {
         "cmd": "Q",
-        "line": 37,
+        "line": 40,
         "x": {
             "int_arg": 22
         }
     },
     {
         "cmd": "l",
-        "line": 38,
+        "line": 41,
         "x": {
             "int_arg": 333
         }
     },
     {
         "cmd": "L",
-        "line": 39,
+        "line": 42,
         "x": {
             "int_arg": 4444
         }
     },
     {
         "cmd": "\n",
-        "line": 40
+        "line": 43
     },
     {
         "cmd": "#",
-        "line": 41,
+        "line": 44,
         "x": {
             "comment": " Commands with labels"
         }
     },
     {
         "cmd": ":",
-        "line": 42,
+        "line": 45,
         "x": {
             "label_name": "label"
         }
     },
     {
         "cmd": "b",
-        "line": 43,
+        "line": 46,
         "x": {
             "label_name": "label_b"
         }
     },
     {
         "cmd": "t",
-        "line": 44,
+        "line": 47,
         "x": {
             "label_name": "label_t"
         }
     },
     {
         "cmd": "T",
-        "line": 45,
-        "x": {
-            "label_name": "label_T"
-        }
-    },
-    {
-        "cmd": "\n",
-        "line": 46
-    },
-    {
-        "cmd": "#",
-        "line": 47,
-        "x": {
-            "comment": " Command v (label-like)"
-        }
-    },
-    {
-        "cmd": "v",
         "line": 48,
         "x": {
-            "label_name": "4.2"
+            "label_name": "label_T"
         }
     },
     {
@@ -284,51 +301,69 @@
         "cmd": "#",
         "line": 50,
         "x": {
+            "comment": " Command v (label-like)"
+        }
+    },
+    {
+        "cmd": "v",
+        "line": 51,
+        "x": {
+            "label_name": "4.2"
+        }
+    },
+    {
+        "cmd": "\n",
+        "line": 52
+    },
+    {
+        "cmd": "#",
+        "line": 53,
+        "x": {
             "comment": " Commands with files"
         }
     },
     {
         "cmd": "r",
-        "line": 51,
+        "line": 54,
         "x": {
             "fname": "file_r"
         }
     },
     {
         "cmd": "R",
-        "line": 52,
+        "line": 55,
         "x": {
             "fname": "file_R"
         }
     },
     {
         "cmd": "w",
-        "line": 53,
+        "line": 56,
         "x": {
             "fname": "file_w"
         }
     },
     {
         "cmd": "W",
-        "line": 54,
+        "line": 57,
         "x": {
             "fname": "file_W"
         }
     },
     {
         "cmd": "\n",
-        "line": 55
+        "line": 58
     },
     {
         "cmd": "#",
-        "line": 56,
+        "line": 59,
         "x": {
             "comment": " Commands with text"
         }
     },
     {
         "cmd": "a",
-        "line": 57,
+        "line": 60,
         "x": {
             "cmd_txt": {
                 "text": [
@@ -345,7 +380,7 @@
     },
     {
         "cmd": "i",
-        "line": 58,
+        "line": 61,
         "x": {
             "cmd_txt": {
                 "text": [
@@ -362,7 +397,7 @@
     },
     {
         "cmd": "c",
-        "line": 60,
+        "line": 63,
         "x": {
             "cmd_txt": {
                 "text": [
@@ -390,18 +425,18 @@
     },
     {
         "cmd": "\n",
-        "line": 63
+        "line": 66
     },
     {
         "cmd": "#",
-        "line": 64,
+        "line": 67,
         "x": {
             "comment": " Command e (text-like)"
         }
     },
     {
         "cmd": "e",
-        "line": 65,
+        "line": 68,
         "x": {
             "cmd_txt": {
                 "text": [
@@ -416,18 +451,18 @@
     },
     {
         "cmd": "\n",
-        "line": 66
+        "line": 69
     },
     {
         "cmd": "#",
-        "line": 67,
+        "line": 70,
         "x": {
             "comment": " Command y"
         }
     },
     {
         "cmd": "y",
-        "line": 68,
+        "line": 71,
         "x": {
             "cmd_subst": {
                 "regx": {
@@ -442,7 +477,7 @@
     },
     {
         "cmd": "y",
-        "line": 69,
+        "line": 72,
         "x": {
             "cmd_subst": {
                 "regx": {
@@ -457,18 +492,18 @@
     },
     {
         "cmd": "\n",
-        "line": 70
+        "line": 73
     },
     {
         "cmd": "#",
-        "line": 71,
+        "line": 74,
         "x": {
             "comment": " Command s"
         }
     },
     {
         "cmd": "s",
-        "line": 72,
+        "line": 75,
         "x": {
             "cmd_subst": {
                 "regx": {
@@ -479,7 +514,7 @@
     },
     {
         "cmd": "s",
-        "line": 73,
+        "line": 76,
         "x": {
             "cmd_subst": {
                 "regx": {
@@ -491,7 +526,7 @@
     },
     {
         "cmd": "s",
-        "line": 74,
+        "line": 77,
         "x": {
             "cmd_subst": {
                 "outf": {
@@ -510,11 +545,11 @@
     },
     {
         "cmd": "\n",
-        "line": 75
+        "line": 78
     },
     {
         "cmd": "#",
-        "line": 76,
+        "line": 79,
         "x": {
             "comment": " Blocks"
         }
@@ -524,14 +559,14 @@
             "addr_type": 7
         },
         "cmd": "{",
-        "line": 77
+        "line": 80
     },
     {
         "cmd": "p",
-        "line": 78
+        "line": 81
     },
     {
         "cmd": "}",
-        "line": 79
+        "line": 82
     }
 ]

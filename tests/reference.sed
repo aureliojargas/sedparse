@@ -1,6 +1,9 @@
 # Addresses
 11 p
-11,12 p
+21,22 p
+31~32 p
+41,~42 p
+51,+52 p
 $ p
 /regex-without-flags/ p
 /regex-with-flags/IM p
