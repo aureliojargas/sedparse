@@ -13,10 +13,10 @@ is_python36() {
 if is_python36
 then
     echo pylint
-    pylint *.py tests/*.py
+    pylint ./*.py tests/*.py
 
     echo black
-    black --check --quiet *.py tests/*.py
+    black --check --quiet ./*.py tests/*.py
 else
     echo pylint - SKIPPED
     echo black - SKIPPED
