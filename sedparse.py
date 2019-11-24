@@ -86,7 +86,7 @@ import os
 import sys
 import tempfile
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 # Adapt some C entities to Python
 NULL = None
