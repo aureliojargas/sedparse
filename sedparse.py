@@ -1268,6 +1268,11 @@ def compile_program(vector):
             cur_cmd.x.label_name = label
             debug("label: %r" % cur_cmd.x.label_name)
 
+        # The "L" command was added in GNU sed v3.95 (Oct 2002) and was removed
+        # in v4.3 (Dec 2016). It used to format paragraphs like the "fmt" Unix
+        # command does and accepted an optional integer argument. In those 14
+        # years present in GNU sed, many users could have written scripts using
+        # it, so sedparse will keep supporting this command.
         elif ch in ("Q", "q", "L", "l"):
             # if ch in ("Q", "q") and cur_cmd.a2:
             #     bad_prog(ONE_ADDR)
