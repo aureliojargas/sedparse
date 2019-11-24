@@ -44,6 +44,13 @@ class TestSedparsestr(unittest.TestCase):  # pylint: disable=unused-variable
         self.assertEqual("bar", str(parsed[0].x.cmd_subst.replacement))
         self.assertEqual("file", str(parsed[0].x.cmd_subst.outf))
 
+    def test_str_int_arg(self):
+        """Check str for commands with int_arg"""
+        data = [("q0", "q 0"), ("q1", "q 1"), ("q99", "q 99")]
+        for script, expected in data:
+            parsed = parse_string(script)
+            self.assertEqual(expected, str(parsed[0]), msg=script)
+
 
 if __name__ == "__main__":
     unittest.main()
