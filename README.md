@@ -6,7 +6,7 @@
 
 A translation from C to Python of GNU sed's parser for sed scripts.
 
-After running sedparse in your sed script, the resulting "[AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree)" is available in different formats:
+After running sedparse in your sed script, the complete list of all the found sed commands and their arguments will be available in different formats:
 
 - List of objects (translated C structs)
 - List of dictionaries
