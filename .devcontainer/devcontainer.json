@@ -1,5 +1,7 @@
 // https://aka.ms/devcontainer.json
 {
     "image": "ghcr.io/aureliojargas/devcontainer",
-    "remoteUser": "vscode"
+    "remoteUser": "vscode",
+    // Symlink needed by the tests (clitest)
+    "postCreateCommand": "sudo ln -s /usr/bin/python3 /usr/bin/python"
 }
