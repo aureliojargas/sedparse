@@ -1040,6 +1040,8 @@ def read_text(buf, leadin_ch):
 
     if not buf:
         buf = old_text_buf
+
+    # pylint: disable=unsubscriptable-object
     buf.text = pending_text[:]
     free_buffer(pending_text)
     pending_text = NULL
@@ -1153,7 +1155,7 @@ def compile_program(vector):
         cur_cmd.line = cur_input.line  # sedparse extension
 
         if compile_address(a, ch):
-            if a.addr_type == ADDR_IS_STEP or a.addr_type == ADDR_IS_STEP_MOD:
+            if a.addr_type in (ADDR_IS_STEP, ADDR_IS_STEP_MOD):
                 bad_prog(BAD_STEP)
 
             cur_cmd.a1 = a
@@ -1418,6 +1420,7 @@ def compile_string(cur_program, string):
 # `cmdfile' is the name of a file containing sed commands.
 # Read them in and add them to the end of `cur_program'.
 def compile_file(cur_program, cmdfile):
+    # pylint: disable=consider-using-with
     # prog and cur_input are global classes
 
     if cmdfile == "-":
@@ -1455,6 +1458,7 @@ def compile_file(cur_program, cmdfile):
 # In particular: this backpatches the jump targets. (sedparse: we don't)
 # Any cleanup which can be done after these checks is done here also.
 def check_final_program():  # program):
+    # pylint: disable=global-variable-not-assigned
     global old_text_buf
     global pending_text
 
@@ -1464,6 +1468,7 @@ def check_final_program():  # program):
 
     # was the final command an unterminated a/c/i command?
     if pending_text:
+        # pylint: disable=unsubscriptable-object
         debug("pending_text: %r" % pending_text)
         old_text_buf.text = pending_text[:]
         free_buffer(pending_text)

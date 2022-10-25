@@ -6,7 +6,6 @@ import unittest
 from context import sedparse
 
 TEST_DATA = [
-    # pylint: disable=bad-whitespace
     # fmt: off
 
     # Note: Not all possible error messages are tested, those that were left

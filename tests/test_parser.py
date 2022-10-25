@@ -10,8 +10,6 @@ from utils import parse_string
 TEST_DATA = {}
 
 # Aligning test cases makes them way more readable
-# pylint: disable=bad-whitespace
-
 # -----------------------------------------------------------------------------
 # Test data for ADDRESSES
 
