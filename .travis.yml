@@ -16,9 +16,9 @@ install:
   - chmod +x clitest
   - mv clitest ~/bin
 
-  # Only run pylint/black in newer Python versions
-  - case $TRAVIS_PYTHON_VERSION in 3.[6-9])
-    pip install --quiet -r requirements-dev.txt;;
+  # Only run pylint/black in one Python version
+  - case $TRAVIS_PYTHON_VERSION in 3.6)
+    pip install -r requirements-dev.txt;;
     esac
 
   # Install sedparse itself

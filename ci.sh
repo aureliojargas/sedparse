@@ -7,7 +7,7 @@ has_clitest() {
 }
 
 is_python36() {
-    python --version 2>&1 | grep '^Python 3\.[6-9]' > /dev/null
+    python --version 2>&1 | grep '^Python 3\.6' > /dev/null
 }
 
 if is_python36
