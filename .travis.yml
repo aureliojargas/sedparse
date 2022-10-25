@@ -6,7 +6,7 @@ python:
   - "3.4"
   - "3.5"
   - "3.6"
-  - "3.7"
+  # - "3.7" -- https://app.travis-ci.com/github/aureliojargas/sedparse/jobs/586661170
   - "3.8"
   - "3.9"
 
