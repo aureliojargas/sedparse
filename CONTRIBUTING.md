@@ -34,21 +34,18 @@ Black is used with the default settings (no command line options) and the pylint
 
 Just run them over the Python files:
 
-    pylint *.py tests/*.py
-    black  *.py tests/*.py
+    make pylint
+    make black
 
-or better yet, just run `ci.sh` after every change.
-
+These commands are also automatically executed in the CI for every new push to the repository.
 
 ## Testing
 
 Code is tested by the standard `unittest` and `doctest` Python modules, and full command lines are tested by [clitest](https://github.com/aureliojargas/clitest).
 
-The commands to run all of those are inside the [ci.sh](https://github.com/aureliojargas/sedparse/blob/master/ci.sh) script. Just run it locally after every change:
+    make test
 
-    ./ci.sh
-
-This script is also automatically executed by Travis CI for every new push to the repository.
+This command is also automatically executed in the CI for every new push to the repository.
 
 
 ## Packaging
