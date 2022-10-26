@@ -43,8 +43,8 @@ clitest:
 	https://raw.githubusercontent.com/aureliojargas/clitest/master/clitest
 
 sedparse:
-	command -v sedparse || pip install --user --editable .
+	command -v sedparse || pip install --editable .
 
 requirements:
 	{ command -v black && command -v pylint; } || \
-	pip install --user --requirement requirements-dev.txt
+	pip install --requirement requirements-dev.txt
