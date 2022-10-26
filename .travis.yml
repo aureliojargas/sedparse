@@ -10,25 +10,12 @@ python:
   - "3.8"
   - "3.9"
 
-install:
-  # Download clitest
-  - curl -sOL https://raw.githubusercontent.com/aureliojargas/clitest/master/clitest
-  - chmod +x clitest
-  - mv clitest ~/bin
-
+script:
   # Only run pylint/black in one Python version
   - case $TRAVIS_PYTHON_VERSION in 3.6)
-    pip install -r requirements-dev.txt;;
+    make lint;;
     esac
-
-  # Install sedparse itself
-  - pip install -e .
-
-script:
-  - ./ci.sh
-
-  # This is not included in ci.sh because it needs the 'sedparse' executable
-  - clitest --progress none README.md
+  - make test
 
 ### Environment
 # Ubuntu 14.04.5 LTS
