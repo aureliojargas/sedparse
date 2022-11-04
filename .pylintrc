@@ -4,10 +4,8 @@ enable=all
 disable=
     fixme,
     locally-disabled,
-    locally-enabled,
     suppressed-message,
     missing-docstring,
-    bad-continuation,  # incompatible with black
     duplicate-code,  # test_commands_with_no_args() commands list
     super-with-arguments,  # we still support python2
     unspecified-encoding,  # we still support python2
