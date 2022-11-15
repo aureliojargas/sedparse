@@ -206,7 +206,9 @@ class struct_text_buf(struct):
         return "%s(text=%r)" % (self.__class__.__name__, self.text)
 
     def __str__(self):
-        return "".join(self.text)[:-1]  # remove trailing \n
+        return (
+            "".join(self.text)[:-1] if len(self.text) > 1 else self.text[0]
+        )  # remove trailing \n
 
 
 class struct_regex(struct):
