@@ -38,6 +38,7 @@ Redirecting because in Python 2.7 the version number is sent to STDERR.
     $ echo k | python sedparse.py -f k.sed
     sedparse: file k.sed line 1: unknown command: `k'
     $ rm k.sed
+    $
 
 ## Error message when using STDIN
 
